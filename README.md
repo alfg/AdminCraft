@@ -50,9 +50,10 @@ downloaded, please follow the steps below:
 
 1. If not installed already, please install easy_install:
 
-                $ sudo apt-get install python-setuptools
+    $ sudo apt-get install python-setuptools
 
 2. Install Flask via easy_install:
+
     $ sudo easy_install Flask
 
 3. Clone AdminCraft.git:
