@@ -27,8 +27,6 @@ Features to add Post 1.0:
 
 ## Requirements ##
 
-**BEFORE INSTALLING ADMINCRAFT, PLEASE READ NOTES AT THE BOTTOM OF THIS README**
-
 - A Linux OS. AdminCraft has only been tested on Ubuntu 11.04,
 but should be compatible with at least 9.04+
 - Python 2.6+. Python 3 is not yet supported
@@ -39,13 +37,16 @@ a P4 with a minimum of 2GB of RAM. Minecraft likes to eat memory. :)
 
 ## Installation (Ubuntu 9.04+) ##
 
-*Note* Upon 1.0 release, I will have an install script as well as a deb
+**BEFORE INSTALLING ADMINCRAFT, PLEASE READ NOTES AT THE BOTTOM OF THIS README**
+
+**Note** Upon 1.0 release, I will have an install script as well as a deb
 package. For now, you'll have to deal with the manual installation. :D
 
 Assuming you have at least Python 2.6+ installed and the minecraft_server.jar 
 downloaded, please follow the steps below: 
 
 1. If not installed already, please install easy_install:
+
     $ sudo apt-get install python-setuptools
 
 2. Install Flask via easy_install:
