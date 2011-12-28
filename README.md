@@ -91,7 +91,7 @@ or to run in the background:
 11. Great success! (I hope)
 
 
-Notes: 
+## Notes ##
 
 AdminCraft is in very early, but active development. Therefore, I cannot guarantee this will install, run, or work properly. 
 
