@@ -54,7 +54,7 @@ downloaded, please follow the steps below:
 
 2. Install Flask via easy_install:
 
-    $ sudo easy_install Flask
+        $ sudo easy_install Flask
 
 3. Clone AdminCraft.git:
     $ git clone git://github.com/alf-/AdminCraft.git
