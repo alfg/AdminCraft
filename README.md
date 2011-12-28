@@ -50,35 +50,35 @@ downloaded, please follow the steps below:
 
 1. If not installed already, please install easy_install:
 
-    $ sudo apt-get install python-setuptools
+        $ sudo apt-get install python-setuptools
 
 2. Install Flask via easy_install:
 
         $ sudo easy_install Flask
 
 3. Clone AdminCraft.git:
-    $ git clone git://github.com/alf-/AdminCraft.git
+        $ git clone git://github.com/alf-/AdminCraft.git
 
 4. Open AdminCraft.py and set the minecraftDir variable to point to your 
     Minecraft Server's directory.
 
 5. Copy the Minecraft daemon to /etc/init.d/
-    $ sudo cp scripts/minecraft /etc/init.d/
+        $ sudo cp scripts/minecraft /etc/init.d/
 
 6. Configure USERNAME, WORLD, MCPATH, BACKUPPATH in
     /etc/init.d/minecraft in the text editor of your choice
 
 7. Set required permissions to the Minecraft daemon:
-    $ sudo chmod a+x /etc/init.d/minecraft
+        $ sudo chmod a+x /etc/init.d/minecraft
 
 8. Run update-rc.d to create sym links:
-    $ sudo update-rc.d minecraft defaults
+        $ sudo update-rc.d minecraft defaults
 
 9. Now finally, run AdminCraft.py:
-    $ python AdminCraft.py
+        $ python AdminCraft.py
 
 or to run in the background:
-    $ python Admincraft.py &
+        $ python Admincraft.py &
 
 10. Using your preferred web browser, open localhost:5000 (or your server's hostname:5000)
 
