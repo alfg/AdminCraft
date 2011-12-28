@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<title>AdminCraft - Dashboard</title>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="/static/style.css" type="text/css" />
+</head>
+
+
+<body>
+<h1>AdminCraft - Dashboard</h1>
+<br />
+Logging:
+<br /><br />
+{% for line in logging %}
+{{ line }}<br />
+{% endfor %}
+
+<br /><br />
+Active:
+<br /><br />
+<ul>
+{% for user in activeUsers %}
+<li>{{ user }}</li>
+{% endfor %}
+</ul>
+
+
+<br /><br />
+Server Operators:
+<br /><br />
+<ul>
+{% for ops in ops %}
+<li>{{ ops }}</li>
+{% endfor %}
+</ul>
+
+
+<br /><br />
+White List: <font color="green">
+<br /><br />
+<ul>
+{% for whiteListUsers in whiteListUsers %}
+<li>{{ whiteListUsers }}</li>
+{% endfor %}
+</ul></font>
+
+
+<br /><br />
+Banned Players: <font color="red">
+<br /><br />
+<ul>
+{% for bannedUsers in bannedUsers %}
+<li>{{ bannedUsers }}</li>
+{% endfor %}
+</ul></font>
+
+
+<br /><br />
+Banned IPs: <font color="red">
+<br /><br />
+<ul>
+{% for bannedIPs in bannedIPs %}
+<li>{{ bannedIPs }}</li>
+{% endfor %}
+</ul></font>
+
+
+<br /><br />
+Server Properties:
+<br /><br />
+<ul>
+{% for properties in properties %}
+<li>{{ properties }}</li>
+{% endfor %}
+</ul>
+</body>

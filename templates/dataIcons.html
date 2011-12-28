@@ -1,0 +1,201 @@
+
+<script type="text/javascript">
+
+$(document).ready(function()
+{
+   // Match all links with a title tag and use it as the content (default).
+   $('a[title]').qtip({
+   
+   style: {
+      classes: 'ui-tooltip-dark ui-tooltip-youtube'
+   }
+})
+
+});
+
+
+</script>
+
+<script>
+$(document).ready(function() {
+
+	//When page loads...
+	$(".dataTab_content").hide(); //Hide all content
+	$("ul.dataTabs li:first").addClass("active").show(); //Activate first tab
+	$(".dataTab_content:first").show(); //Show first tab content
+
+	//On Click Event
+	$("ul.dataTabs li").click(function() {
+
+		$("ul.dataTabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".dataTab_content").hide(); //Hide all tab content
+
+		var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active ID content
+		return false;
+	});
+
+});
+</script>
+
+
+
+<div class="dataTab_container">
+    <div id="dataTab1" class="dataTab_content">
+
+    <div id="dataValuesRow1">
+        <a href="#" title="01 Stone" item="1"><img src="{{ url_for('static', filename='images/icons/blocks/0001-stone.png') }}"></img></a>
+        <a href="#" title="02 Grass" item="2"><img src="{{ url_for('static', filename='images/icons/blocks/0002-grass.png') }}"></img></a>
+        <a href="#" title="03 Dirt" item="3"><img src="{{ url_for('static', filename='images/icons/blocks/0003-dirt.png') }}"></img></a>
+        <a href="#" title="04 Cobblestone" item="4"><img src="{{ url_for('static', filename='images/icons/blocks/0004-cobblestone.png') }}"></img></a>
+        <a href="#" title="05 Wooden Plank" item="5"><img src="{{ url_for('static', filename='images/icons/blocks/0005-wooden-plank.png') }}"></img></a>
+        <a href="#" title="06 Sapling" item="6"><img src="{{ url_for('static', filename='images/icons/blocks/0006-sapling.png') }}"></img></a>
+        <a href="#" title="07 Bedrock" item="7"><img src="{{ url_for('static', filename='images/icons/blocks/0007-bedrock.png') }}"></img></a>
+        <a href="#" title="08 Water" item="8"><img src="{{ url_for('static', filename='images/icons/blocks/0008-water.png') }}"></img></a>
+        <a href="#" title="09 Stationary Water" item="9"><img src="{{ url_for('static', filename='images/icons/blocks/0009-stationary-water.png') }}"></img></a>
+        <a href="#" title="10 Lava" item="10"><img src="{{ url_for('static', filename='images/icons/blocks/0010-lava.png') }}"></img></a>
+
+        <a href="#" title="11 Stationary Lava"><img src="{{ url_for('static', filename='images/icons/blocks/0011-stationary-lava.png') }}"></img></a>
+        <a href="#" title="12 Sand"><img src="{{ url_for('static', filename='images/icons/blocks/0012-sand.png') }}"></img></a>
+        <a href="#" title="13 Gravel"><img src="{{ url_for('static', filename='images/icons/blocks/0013-gravel.png') }}"></img></a>
+        <a href="#" title="14 Gold Ore"><img src="{{ url_for('static', filename='images/icons/blocks/0014-gold-ore.png') }}"></img></a>
+        <a href="#" title="15 Iron Ore"><img src="{{ url_for('static', filename='images/icons/blocks/0015-iron-ore.png') }}"></img></a>
+        <a href="#" title="16 Coal Ore"><img src="{{ url_for('static', filename='images/icons/blocks/0016-coal-ore.png') }}"></img></a>
+        <a href="#" title="17 Wood"><img src="{{ url_for('static', filename='images/icons/blocks/0017-wood.png') }}"></img></a>
+        <a href="#" title="18 Leaves"><img src="{{ url_for('static', filename='images/icons/blocks/0018-leaves.png') }}"></img></a>
+        <a href="#" title="19 Sponge"><img src="{{ url_for('static', filename='images/icons/blocks/0019-sponge.png') }}"></img></a>
+        <a href="#" title="20 Glass"><img src="{{ url_for('static', filename='images/icons/blocks/0020-glass.png') }}"></img></a>
+    </div>
+    <div>
+        <a href="#" title="21 Lapis Lazuli Ore"><img src="{{ url_for('static', filename='images/icons/blocks/0021-lapis-lazuli-ore.png') }}"></img></a>
+        <a href="#" title="22 Lapis Lazuli Block"><img src="{{ url_for('static', filename='images/icons/blocks/0022-lapis-lazuli-block.png') }}"></img></a>
+        <a href="#" title="23 Dispenser"><img src="{{ url_for('static', filename='images/icons/blocks/0023-dispenser.png') }}"></img></a>
+        <a href="#" title="24 Sandstone"><img src="{{ url_for('static', filename='images/icons/blocks/0024-sandstone.png') }}"></img></a>
+        <a href="#" title="25 Note Block"><img src="{{ url_for('static', filename='images/icons/blocks/0025-note-block.png') }}"></img></a>
+        <a href="#" title="26 Bed"><img src="{{ url_for('static', filename='images/icons/blocks/0026-bed.png') }}"></img></a>
+        <a href="#" title="27 Powered Rail"><img src="{{ url_for('static', filename='images/icons/blocks/0027-powered-rail.png') }}"></img></a>
+        <a href="#" title="28 Detector Rail"><img src="{{ url_for('static', filename='images/icons/blocks/0028-detector-rail.png') }}"></img></a>
+        <a href="#" title="29 Sticky Piston"><img src="{{ url_for('static', filename='images/icons/blocks/0029-sticky-piston.png') }}"></img></a>
+        <a href="#" title="30 Cobweb"><img src="{{ url_for('static', filename='images/icons/blocks/0030-cobweb.png') }}"></img></a>
+
+        <a href="#" title="31 Tall Grass"><img src="{{ url_for('static', filename='images/icons/blocks/0031-tall-grass.png') }}"></img></a>
+        <a href="#" title="32 Dead Bush"><img src="{{ url_for('static', filename='images/icons/blocks/0032-dead-bush.png') }}"></img></a>
+        <a href="#" title="33 Piston"><img src="{{ url_for('static', filename='images/icons/blocks/0033-piston.png') }}"></img></a>
+        <a href="#" title="34 Piston Extension"><img src="{{ url_for('static', filename='images/icons/blocks/0034-piston-extension.png') }}"></img></a>
+        <a href="#" title="35 Wool"><img src="{{ url_for('static', filename='images/icons/blocks/0035-wool.png') }}"></img></a>
+        <a href="#" title="36 Block Moved by Piston"><img src="{{ url_for('static', filename='images/icons/blocks/0036-block-moved-by-piston.png') }}"></img></a>
+        <a href="#" title="37 Dandelion"><img src="{{ url_for('static', filename='images/icons/blocks/0037-dandelion.png') }}"></img></a>
+        <a href="#" title="38 Rose"><img src="{{ url_for('static', filename='images/icons/blocks/0038-rose.png') }}"></img></a>
+        <a href="#" title="39 Brown Mushroom"><img src="{{ url_for('static', filename='images/icons/blocks/0039-brown-mushroom.png') }}"></img></a>
+        <a href="#" title="40 Red Mushroom"><img src="{{ url_for('static', filename='images/icons/blocks/0040-red-mushroom.png') }}"></img></a>
+    </div>
+    <div>
+        <a href="#" title="41 Block of Gold"><img src="{{ url_for('static', filename='images/icons/blocks/0041-block-of-gold.png') }}"></img></a>
+        <a href="#" title="42 Block of Iron"><img src="{{ url_for('static', filename='images/icons/blocks/0042-block-of-iron.png') }}"></img></a>
+        <a href="#" title="43 Double Slabs"><img src="{{ url_for('static', filename='images/icons/blocks/0043-double-slabs.png') }}"></img></a>
+        <a href="#" title="44 Slabs"><img src="{{ url_for('static', filename='images/icons/blocks/0044-slabs.png') }}"></img></a>
+        <a href="#" title="45 Brick Block"><img src="{{ url_for('static', filename='images/icons/blocks/0045-brick-block.png') }}"></img></a>
+        <a href="#" title="46 TNT"><img src="{{ url_for('static', filename='images/icons/blocks/0046-tnt.png') }}"></img></a>
+        <a href="#" title="47 Bookshelf"><img src="{{ url_for('static', filename='images/icons/blocks/0047-bookshelf.png') }}"></img></a>
+        <a href="#" title="48 Moss Stone"><img src="{{ url_for('static', filename='images/icons/blocks/0048-moss-stone.png') }}"></img></a>
+        <a href="#" title="49 Obsidian"><img src="{{ url_for('static', filename='images/icons/blocks/0049-obsidian.png') }}"></img></a>
+        <a href="#" title="50 Torch"><img src="{{ url_for('static', filename='images/icons/blocks/0050-torch.png') }}"></img></a>
+
+        <a href="#" title="51 Fire"><img src="{{ url_for('static', filename='images/icons/blocks/0051-fire.png') }}"></img></a>
+        <a href="#" title="52 Monster Spawner"><img src="{{ url_for('static', filename='images/icons/blocks/0052-monster-spawner.png') }}"></img></a>
+        <a href="#" title="53 Wooden Stairs"><img src="{{ url_for('static', filename='images/icons/blocks/0053-wooden-stairs.png') }}"></img></a>
+        <a href="#" title="54 Chest"><img src="{{ url_for('static', filename='images/icons/blocks/0054-chest.png') }}"></img></a>
+        <a href="#" title="55 Redstone Wire"><img src="{{ url_for('static', filename='images/icons/blocks/0055-redstone-wire.png') }}"></img></a>
+        <a href="#" title="56 Diamond Ore"><img src="{{ url_for('static', filename='images/icons/blocks/0056-diamond-ore.png') }}"></img></a>
+        <a href="#" title="57 Block of Diamond"><img src="{{ url_for('static', filename='images/icons/blocks/0057-block-of-diamond.png') }}"></img></a>
+        <a href="#" title="58 Crafting Table"><img src="{{ url_for('static', filename='images/icons/blocks/0058-crafting-table.png') }}"></img></a>
+        <a href="#" title="59 Seeds"><img src="{{ url_for('static', filename='images/icons/blocks/0059-seeds.png') }}"></img></a>
+        <a href="#" title="60 Farmland"><img src="{{ url_for('static', filename='images/icons/blocks/0060-farmland.png') }}"></img></a>
+    </div>
+    <div>
+        <a href="#" title="61 Furnace"><img src="{{ url_for('static', filename='images/icons/blocks/0061-furnace.png') }}"></img></a>
+        <a href="#" title="62 Burning Furnace"><img src="{{ url_for('static', filename='images/icons/blocks/0062-burning-furnace.png') }}"></img></a>
+        <a href="#" title="63 Sign Post"><img src="{{ url_for('static', filename='images/icons/blocks/0063-sign-post.png') }}"></img></a>
+        <a href="#" title="64 Wooden Door"><img src="{{ url_for('static', filename='images/icons/blocks/0064-wooden-door.png') }}"></img></a>
+        <a href="#" title="65 Ladders"><img src="{{ url_for('static', filename='images/icons/blocks/0065-ladders.png') }}"></img></a>
+        <a href="#" title="66 Rails"><img src="{{ url_for('static', filename='images/icons/blocks/0066-rails.png') }}"></img></a>
+        <a href="#" title="67 Cobblestone Stairs"><img src="{{ url_for('static', filename='images/icons/blocks/0067-cobblestone-stairs.png') }}"></img></a>
+        <a href="#" title="68 Wall Sign"><img src="{{ url_for('static', filename='images/icons/blocks/0068-wall-sign.png') }}"></img></a>
+        <a href="#" title="69 Lever"><img src="{{ url_for('static', filename='images/icons/blocks/0069-lever.png') }}"></img></a>
+        <a href="#" title="70 Pressure Plate"><img src="{{ url_for('static', filename='images/icons/blocks/0070-stone-pressure-plate.png') }}"></img></a>
+
+        <a href="#" title="71 Iron Door"><img src="{{ url_for('static', filename='images/icons/blocks/0071-iron-door.png') }}"></img></a>
+        <a href="#" title="72 Wooden Pressure Plate"><img src="{{ url_for('static', filename='images/icons/blocks/0072-wooden-pressure-plate.png') }}"></img></a>
+        <a href="#" title="73 Redstone Ore"><img src="{{ url_for('static', filename='images/icons/blocks/0073-redstone-ore.png') }}"></img></a>
+        <a href="#" title="74 Glowing Redstone Ore"><img src="{{ url_for('static', filename='images/icons/blocks/0074-glowing-redstone-ore.png') }}"></img></a>
+        <a href="#" title="75 Redstone Torch (off)"><img src="{{ url_for('static', filename='images/icons/blocks/0075-redstone-torch-off.png') }}"></img></a>
+        <a href="#" title="76 Redstone Torch (on)"><img src="{{ url_for('static', filename='images/icons/blocks/0076-redstone-torch-on.png') }}"></img></a>
+        <a href="#" title="77 Stone Button"><img src="{{ url_for('static', filename='images/icons/blocks/0077-stone-button.png') }}"></img></a>
+        <a href="#" title="78 Snow"><img src="{{ url_for('static', filename='images/icons/blocks/0078-snow.png') }}"></img></a>
+        <a href="#" title="79 Ice"><img src="{{ url_for('static', filename='images/icons/blocks/0079-ice.png') }}"></img></a>
+        <a href="#" title="80 Snow Block"><img src="{{ url_for('static', filename='images/icons/blocks/0080-snow-block.png') }}"></img></a>
+    </div>
+       <div>
+        <a href="#" title="81 Cactus"><img src="{{ url_for('static', filename='images/icons/blocks/0081-cactus.png') }}"></img></a>
+        <a href="#" title="82 Clay Block"><img src="{{ url_for('static', filename='images/icons/blocks/0082-clay-block.png') }}"></img></a>
+        <a href="#" title="83 Sugar Cane"><img src="{{ url_for('static', filename='images/icons/blocks/0083-sugar-cane.png') }}"></img></a>
+        <a href="#" title="84 Jukebox"><img src="{{ url_for('static', filename='images/icons/blocks/0084-jukebox.png') }}"></img></a>
+        <a href="#" title="85 Fence"><img src="{{ url_for('static', filename='images/icons/blocks/0085-fence.png') }}"></img></a>
+        <a href="#" title="86 Pumpkin"><img src="{{ url_for('static', filename='images/icons/blocks/0086-pumpkin.png') }}"></img></a>
+        <a href="#" title="87 Netherrack"><img src="{{ url_for('static', filename='images/icons/blocks/0087-netherrack.png') }}"></img></a>
+        <a href="#" title="88 Soul Sand"><img src="{{ url_for('static', filename='images/icons/blocks/0088-soul-sand.png') }}"></img></a>
+        <a href="#" title="89 Glowstone"><img src="{{ url_for('static', filename='images/icons/blocks/0089-glowstone.png') }}"></img></a>
+        <a href="#" title="90 Portal"><img src="{{ url_for('static', filename='images/icons/blocks/0090-portal.png') }}"></img></a>
+
+        <a href="#" title="91 Jack O' Lantern"><img src="{{ url_for('static', filename='images/icons/blocks/0091-jack-o-lantern.png') }}"></img></a>
+        <a href="#" title="92 Cake Block"><img src="{{ url_for('static', filename='images/icons/blocks/0092-cake-block.png') }}"></img></a>
+        <a href="#" title="93 Redstone Repeater (off)"><img src="{{ url_for('static', filename='images/icons/blocks/0093-redstone-repeater-off.png') }}"></img></a>
+        <a href="#" title="94 Redstone Repeater (on)"><img src="{{ url_for('static', filename='images/icons/blocks/0094-redstone-repeater-on.png') }}"></img></a>
+        <a href="#" title="95 Locked Chest"><img src="{{ url_for('static', filename='images/icons/blocks/0095-locked-chest.png') }}"></img></a>
+        <a href="#" title="96 Trapdoor"><img src="{{ url_for('static', filename='images/icons/blocks/0096-trapdoor.png') }}"></img></a>
+        <a href="#" title="97 Hidden Silverfish"><img src="{{ url_for('static', filename='images/icons/blocks/0097-hidden-silverfish.png') }}"></img></a>
+        <a href="#" title="98 Stone Bricks"><img src="{{ url_for('static', filename='images/icons/blocks/0098-stone-bricks.png') }}"></img></a>
+        <a href="#" title="99 Huge Brown Mushroom"><img src="{{ url_for('static', filename='images/icons/blocks/0099-huge-brown-mushroom.png') }}"></img></a>
+        <a href="#" title="100 Huge Red Mushroom"><img src="{{ url_for('static', filename='images/icons/blocks/0100-huge-red-mushroom.png') }}"></img></a>
+    </div>
+    <div>
+        <a href="#" title="101 Iron Bars"><img src="{{ url_for('static', filename='images/icons/blocks/0101-iron-bars.png') }}"></img></a>
+        <a href="#" title="102 Glass Pane"><img src="{{ url_for('static', filename='images/icons/blocks/0102-glass-pane.png') }}"></img></a>
+        <a href="#" title="103 Melon"><img src="{{ url_for('static', filename='images/icons/blocks/0103-melon.png') }}"></img></a>
+        <a href="#" title="104 Pumpkin Stem"><img src="{{ url_for('static', filename='images/icons/blocks/0104-pumpkin-stem.png') }}"></img></a>
+        <a href="#" title="105 Melon Stem"><img src="{{ url_for('static', filename='images/icons/blocks/0105-melon-stem.png') }}"></img></a>
+        <a href="#" title="106 Vines"><img src="{{ url_for('static', filename='images/icons/blocks/0106-vines.png') }}"></img></a>
+        <a href="#" title="107 Fence Gate"><img src="{{ url_for('static', filename='images/icons/blocks/0107-fence-gate.png') }}"></img></a>
+        <a href="#" title="108 Brick Stairs"><img src="{{ url_for('static', filename='images/icons/blocks/0108-brick-stairs.png') }}"></img></a>
+        <a href="#" title="109 Stone Brick Stairs"><img src="{{ url_for('static', filename='images/icons/blocks/0109-stone-brick-stairs.png') }}"></img></a>
+        <a href="#" title="110 Mycelium"><img src="{{ url_for('static', filename='images/icons/blocks/0110-mycelium.png') }}"></img></a>
+
+        <a href="#" title="111 Lily Pad"><img src="{{ url_for('static', filename='images/icons/blocks/0111-lily-pad.png') }}"></img></a>
+        <a href="#" title="112 Nether Brick"><img src="{{ url_for('static', filename='images/icons/blocks/0112-nether-brick.png') }}"></img></a>
+        <a href="#" title="113 Nether Brick Fence"><img src="{{ url_for('static', filename='images/icons/blocks/0113-nether-brick-fence.png') }}"></img></a>
+        <a href="#" title="114 Nether Brick Stairs"><img src="{{ url_for('static', filename='images/icons/blocks/0114-nether-brick-stairs.png') }}"></img></a>
+        <a href="#" title="115 Nether Wart"><img src="{{ url_for('static', filename='images/icons/blocks/0115-nether-wart.png') }}"></img></a>
+        <a href="#" title="116 Enchantment Table"><img src="{{ url_for('static', filename='images/icons/blocks/0116-enchantment-table.png') }}"></img></a>
+        <a href="#" title="117 Brewing Stand"><img src="{{ url_for('static', filename='images/icons/blocks/0117-brewing-stand.png') }}"></img></a>
+        <a href="#" title="118 Cauldron"><img src="{{ url_for('static', filename='images/icons/blocks/0118-cauldron.png') }}"></img></a>
+        <a href="#" title="119 End Portal"><img src="{{ url_for('static', filename='images/icons/blocks/0119-end-portal.png') }}"></img></a>
+        <a href="#" title="120 End Portal Frame"><img src="{{ url_for('static', filename='images/icons/blocks/0120-end-portal-frame.png') }}"></img></a>
+    </div>
+    <div>
+        <a href="#" title="121 End Stone"><img src="{{ url_for('static', filename='images/icons/blocks/0121-end-stone.png') }}"></img></a>
+        <a href="#" title="122 Dragon Egg"><img src="{{ url_for('static', filename='images/icons/blocks/0122-dragon-egg.png') }}"></img></a>
+    </div>        
+
+    </div>
+
+    <div id="dataTab2" class="dataTab_content">
+       All Right!
+    </div>
+
+</div>
+
+<ul class="dataTabs">
+    <li><a href="#dataTab1">Blocks</a></li>
+    <li><a href="#dataTab2">Items</a></li>
+</ul>

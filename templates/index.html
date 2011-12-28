@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>AdminCraft v0.1.0</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<link rel="icon" href="static/images/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="static/style.css" type="text/css" />
+<link rel="stylesheet" href="static/dataValues.css" type="text/css" />
+<link rel="stylesheet" href="static/jquery.qtip.min.css" type="text/css" />
+<link type="text/css" href="static/jquery-ui/css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+<!-- <script type="text/javascript" src="static/jquery-ui/js/jquery-1.6.2.min.js"></script> -->
+<script type="text/javascript" src="{{ url_for('static', filename='jquery-1.7.1.min.js') }} "></script>
+<script type="text/javascript" src="{{ url_for('static', filename='jquery-ui/js/jquery-ui-1.8.16.custom.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='jquery.qtip.min.js') }}"></script> 
+
+
+
+</head>
+
+<body>
+
+<div id="mainDashboard">
+    <div class="mainDashNavLeft"><div class="mainDashNavTitle">AdminCraft</div> <div class="versionNum">v0.1.0</div><div class="loggedInAs"></div></div>
+    <div class="mainDashNavRight">{{ username }}</div>
+
+    <div class="dashTop">
+
+    <div class="leftColumn">
+        <div id="consoleOutput">
+    Loading..<blink>.</blink>
+        <script>
+        function loadLog(){       
+          
+                $.ajax({
+                    url: "logging",  
+                    cache: false,  
+
+                    success: function(html){  
+                        $(".leftColumn").html(html);
+                    },  
+                });  
+            }  
+        
+        setInterval (loadLog, 5000); 
+
+        </script>
+        </div>
+    </div>
+
+	<div class="rightColumn">
+
+    {% include 'rightColumn.html' %}
+
+    </div>
+    
+    </div>
+
+<div class="dashBottomLeft">
+
+<script>
+$(document).ready(function() {
+
+	//When page loads...
+	$("ul.consoleOperator li:first").addClass("active").show(); //Activate first tab
+    
+
+	//On Click Event
+	$("ul.consoleOperator li").click(function() {
+
+		$("ul.consoleOperator li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+
+	});
+
+});
+</script>
+
+<ul class="consoleOperator">
+    <li><a href="#say" class="operator">Say</a></li>
+    <li><a href="#give" class="giveOperator">Give</a></li>
+    <li><a href="#command" class="commandOperator">Command</a></li>
+</ul>
+
+<input type="text" title="textInput" class="textInput" value="test">
+
+<!-- Show Data Icons when "Give" is selected, otherwise hide if not selected -->
+<script>
+    $(document).ready(function() {
+    $('#dataIconsContainer').insertBefore('#textInput');
+    $("#dataIconsContainer").hide();
+    $("#commandListContainer").hide();
+
+    $(".giveOperator").click(function() {
+            $("#commandListContainer").slideUp('slow');
+		    $("#dataIconsContainer").delay(0).slideDown('slow');
+            $(".textInput").val("[username] [itemID] [itemAmount]");
+	    });
+
+    $(".commandOperator").click(function() {
+		    $("#dataIconsContainer").slideUp('slow');
+		    $("#commandListContainer").delay(0).slideDown('slow');
+            $(".textInput").val("");
+	    });
+
+    $(".operator").click(function() {
+		    $("#dataIconsContainer").slideUp('slow');
+		    $("#commandListContainer").slideUp('slow');
+            $(".textInput").val("");
+	    });
+
+    });
+</script>
+
+<div id="dataIconsContainer">
+    {% include 'dataIcons.html' %}
+</div>
+
+<div id="commandListContainer">
+    {% include 'commandList.html' %}
+</div>
+
+<!-- If dataValue Icon is selected, autopopulate the textInputBox -->
+
+<script>
+$("#dataValuesRow1 a").click(function() {
+
+    var title = $(this).attr("item");
+
+    $(".textInput").val(title);
+});
+</script>
+
+
+
+
+<!-- Press ENTER key on textInput, send AJAX GET to /command -->
+<script>
+    $(".textInput").keyup(function(event){
+      if(event.keyCode == 13){
+        var text = $(".textInput").val();
+        var consoleOperator = $(".consoleOperator li.active").text();
+        var consoleOperator = consoleOperator.toLowerCase();
+
+        $.ajax({
+           type: "GET",
+           url: "command",
+           data: "operator=" + consoleOperator + "&command=" + text
+            }).done(function( msg ) {
+            alert(  msg );
+            });
+            $(".textInput").val('');
+
+          }
+    });
+</script>
+
+
+
+</div>
+
+<div class="dashBottomRight">
+
+    <script>
+	$(function() {
+		$( "input:submit, a, button", ".server-buttons" ).button();
+		$( "input:submit, a, button", ".server-buttons" ).click(function() { $("input:submit, a, button", ".server-buttons").button({ disabled: true });
+        
+        setTimeout('enableButton()', 10000); });
+	});
+
+
+
+    function enableButton(){
+        $("input:submit, a, button", ".server-buttons").button({disabled: false });
+ };
+
+
+	</script>
+
+<div>
+<!-- 
+<div class="server-buttons">
+<button class="server-buttonsAction">Restart</button>
+<button class="server-buttonsAction">Start</button>
+<button class="server-buttonsAction">Stop</button>
+<button class="server-buttonsAction">Backup</button>
+</div>
+-->
+<script>
+    $(".server-buttonsAction").click(function () {
+
+      var text = $(this).text();
+      var text = text.toLowerCase();
+
+    $.ajax({
+       type: "GET",
+       url: "server",
+       data: "option=" + text
+        }).done(function( msg ) {
+        alert(  msg );
+        });
+      
+      if( text == "restart" ) {
+            var status = "restarting..."
+        }
+      else if ( text == "start" ) {
+            var status = "starting..."
+        }
+      else if ( text == "stop" ) {
+            var status = "stopping..."
+        }
+      else if ( text == "backup" ) {
+            var status = "backing up..."
+        }
+      else {
+            var status = "???"
+        }
+
+    $("#serverStatus").html("Server is " + status);
+    });
+
+
+
+</script>
+
+</div>
+<div id="serverStatus">
+Checking server status..<blink>.</blink>
+
+        <script>
+        function serverStatus(){       
+          
+                $.ajax({
+                    url: "server?option=status",  
+                    cache: false,  
+
+                    success: function(html){  
+                        $("#serverStatus").html(html);
+                    },  
+                });  
+            }  
+        
+        setInterval (serverStatus, 15000); 
+
+        </script>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

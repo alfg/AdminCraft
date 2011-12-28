@@ -1,0 +1,72 @@
+<div id="commandList">
+
+    <div>
+    <strong>ban</strong> &lt;playername&gt; Blacklists the name playername from the server so that they can no longer connect. Note: Bans supersede any whitelisting in place. 
+    </div>
+    <div>
+    <strong>ban-ip</strong>  &lt;ip-address&gt; Blacklists an IP address so that all subsequent connections from it are rejected. 
+    </div>
+    <div>
+    <strong>banlist</strong> [ips] Displays the banlist. To display banned IP addresses, use the command <strong>banlist</strong> <em>ips</em> 
+    </div>
+    <div>
+    <strong>deop</strong> &lt;playername&gt; Revokes a player's operator status.
+    </div>
+    <div>
+    <strong>gamemode</strong> &lt;playername&gt; &lt;0|1&gt; Remember, this will only affect <em>playername</em> and no one else; it may confuse others. <strong>Note:</strong> <em>Player must currently be online for the command to work.</em>
+    </div>
+    <div>
+    <strong>give</strong> &lt;playername&gt; &lt;data-value&gt; [amount] [damage-value] Spawns <em>amount</em> (defaults to 1) of the item defined by <em>data-value</em> with the specified <em>damage-value</em> (defaults to 0) at <em>playername</em>'s location. For example typing <em>give John 4 30</em> will give a player called John 30 blocks of cobblestone.
+    </div>
+    <div>
+    <strong>help</strong> OR <strong>?</strong> Shows a list of availible server commands. Note banlist, whitelist, toggleddownfall, xp, tell, me and kill commands are not listed.
+    </div>
+    <div>
+    <strong>kick</strong> &lt;playername&gt; Forcibly disconnects <em>playername</em> from the server.
+    </div>
+    <div>
+    <strong>list</strong> Shows the names of all currently-connected players.
+    </div>
+    <div>
+    <strong>pardon</strong> &lt;playername&gt; Removes <em>playername</em> from the blacklist, allowing them to connect again.
+    </div>
+    <div>
+    <strong>pardon-ip</strong> &lt;ip-address&gt; Removes <em>ip-address</em> from the blacklist, allowing them to connect again.
+    </div>
+    <div>
+    <strong>save-all</strong> Forces the server to write all pending changes to the world to disk.
+    </div>
+    <div>
+    <strong>save-off</strong> Disables the server writing to the world files. All changes will temporarily be queued.
+    </div>
+    <div>
+    <strong>save-on</strong> Enables the server writing to the world files. This is the default behaviour.
+    </div>
+    <div>
+    <strong>say</strong> &lt;message&gt; Broadcasts <em>message</em> to all players on the server (in bright pink letters).
+    </div>
+    <div>
+    <strong>stop</strong> Gracefully shuts down the server.
+    </div>
+    <div>
+    <strong>time</strong> &lt;set|add&gt; &lt;number&gt; Set or increment (add to) the world time. &lt;number&gt; is an integer between 0 and 24000, inclusive, where 0 is dawn, 6000 midday, 12000 dusk and 18000 midnight (i.e. the clock is bisected; left side is night, right side is day). <strong>Note:</strong> <em>You can also subtract from the current time by using the 'add X' modifier, by using a negative value (i.e. 'time add -6000' would change midnight to dusk)</em>
+    </div>
+    <div>
+    <strong>toggledownfall</strong> Toggles rain and snow.
+    </div>
+    <div>
+    <strong>tp</strong> &lt;playername&gt; &lt;targetplayer&gt; Teleports <em>playername</em> to <em>targetplayer</em>'s location.
+    </div>
+    <div>
+    <strong>whitelist</strong> &lt;add|remove&gt; &lt;playername&gt; Adds or removes <em>playername</em> from whitelist.
+    </div>
+    <div>
+    <strong>whitelist</strong> &lt;on|off&gt; Enables/disables the server's use of a whitelist. <strong>Note:</strong> Server ops will <em>always</em> be able to connect when the whitelist is active, even if their names do not appear in the whitelist.
+    </div>
+    <div>
+    <strong>whitelist</strong> &lt;reload&gt; Reloads the list of playernames in white-list.txt from disk (used when whitelist.txt has been modified outside of Minecraft).
+    </div>
+    <div>
+    <strong>xpset</strong> &lt;playername&gt; &lt;amount&gt; Gives the specified user the given number of orbs. Maximum is 5000 per command. Negative amounts may be used to remove experience <em>progress</em>, but not actual levels.
+    </div>
+</div>

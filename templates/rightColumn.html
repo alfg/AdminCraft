@@ -1,0 +1,265 @@
+<script>
+$(document).ready(function() {
+
+	//When page loads...
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+
+	//On Click Event
+	$("ul.tabs li").click(function() {
+
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+
+		var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active ID content
+		return false;
+	});
+
+});
+</script>
+
+<ul class="tabs">
+    <li><a href="#tab1">Users</a></li>
+    <li><a href="#tab2">Server</a></li>
+    <!-- Disabled <li><a href="#tab3">Log History</a></li> -->
+    <!-- Disabled <li><a href="#tab4">Tasks</a></li> -->
+</ul>
+
+<div class="tab_container">
+    <div id="tab1" class="tab_content">
+
+
+    <strong>Connected Players:</strong> <br />
+
+    {{ activeUsers }}
+
+    <br /><br />
+    <strong>Server Operators:</strong>
+
+    <ul>
+    {% for ops in ops %}
+    <li>{{ ops }}</li>
+    {% endfor %}
+    </ul>
+
+
+
+    <strong>White List:</strong> Disabled <font color="green">
+
+    <ul>
+    {% for whiteListUsers in whiteListUsers %}
+    <li>{{ whiteListUsers }}</li>
+    {% endfor %}
+    </ul></font>
+
+
+
+    <strong>Banned Players:</strong> <font color="red">
+
+    <ul>
+    {% for bannedUsers in bannedUsers %}
+    <li>{{ bannedUsers }}</li>
+    {% endfor %}
+    </ul></font>
+
+    <strong>Banned IPs:</strong> <font color="red">
+
+    <ul>
+    {% for bannedIPs in bannedIPs %}
+    <li>{{ bannedIPs }}</li>
+    {% endfor %}
+    </ul></font>
+
+
+
+    </div>
+    <div id="tab2" class="tab_content">
+
+
+            <strong>Server Options:</strong><br /><br />
+            <div class="server-buttons">
+                <button class="server-buttonsAction">Restart</button>
+                <button class="server-buttonsAction">Start</button>
+                <button class="server-buttonsAction">Stop</button>
+                <button class="server-buttonsAction">Backup</button>
+            </div>
+
+        
+        <div><br />
+        <strong>Server Properties:</strong>
+            <form action="serverConfig" method="get">
+            <table>
+                <tr>
+                    <td class="serverOptionsTable1">Allow Nether:</td>
+                    <td><input type="radio" name="allow-nether" value="true" {% if "true" in properties[0] %} checked {% endif %}>True</input><input type="radio" name="allow-nether" value="false" {% if "false" in properties[0] %} checked {% endif %}>False</input></td>
+                </tr>
+                <tr>
+                    <td>Level Name:</td>
+                    <td><input type="text" name="level-name" size="10" class="serverTextInput" value="{{ properties[1]|replace("level-name=", "") }}" /></td>
+                </tr>
+                <tr>
+                    <td>Allow Flight:</td>
+                    <td><input type="radio" name="allow-flight" value="true" {% if "true" in properties[2] %} checked {% endif %}>True</input><input type="radio" name="allow-flight" value="false" {% if "false" in properties[2] %} checked {% endif %}>False</input></td>
+                </tr>
+                <tr>
+                    <td>Enable Query:</td>
+                    <td><input type="radio" name="enable-query" value="true" {% if "true" in properties[3] %} checked {% endif %}>True</input><input type="radio" name="enable-query" value="false" {% if "false" in properties[3] %} checked {% endif %}>False</input></td>
+                </tr>
+                <tr>
+                    <td>Server Port:</td>
+                    <td><input type="text" name="server-port" size="10" class="serverTextInput" value="{{ properties[4]|replace("server-port=", "") }}" /></td>
+                </tr>
+                <tr>
+                    <td>Enable Rcon:</td>
+                    <td><input type="radio" name="enable-rcon" value="true" {% if "true" in properties[5] %} checked {% endif %}>True</input><input type="radio" name="enable-rcon" value="false" {% if "false" in properties[5] %} checked {% endif %}>False</input></td>
+                </tr>
+                <tr>
+                    <td>Level Seed:</td>
+                    <td><input type="text" name="level-seed" size="10" class="serverTextInput" value="{{ properties[6]|replace("level-seed=", "") }}" /></td>
+                </tr>
+                <tr>
+                    <td>Server IP:</td>
+                    <td><input type="text" name="server-ip" size="10" class="serverTextInput" value="{{ properties[7]|replace("server-ip=", "") }}" /></td>
+                </tr>
+                <tr>
+                    <td>Enable Whitelist:</td>
+                    <td><input type="radio" name="white-list" value="true" {% if "true" in properties[8] %} checked {% endif %}>True</input><input type="radio" name="white-list" value="false" {% if "false" in properties[8] %} checked {% endif %}>False</input></td>
+                </tr>
+                <tr>
+                    <td>Spawn Animals:</td>
+                    <td><input type="radio" name="spawn-animals" value="true" {% if "true" in properties[9] %} checked {% endif %}>True</input><input type="radio" name="spawn-animals" value="false" {% if "false" in properties[9] %} checked {% endif %}>False</input></td>
+                </tr>
+                <tr>
+                    <td>Online Mode:</td>
+                    <td><input type="radio" name="online-mode" value="true" {% if "true" in properties[10] %} checked {% endif %}>True</input><input type="radio" name="online-mode" value="false" {% if "false" in properties[10] %} checked {% endif %}>False</input></td>
+                </tr>
+                <tr>
+                    <td>PVP:</td>
+                    <td><input type="radio" name="pvp" value="true" {% if "true" in properties[11] %} checked {% endif %}>True</input><input type="radio" name="pvp" value="false" {% if "false" in properties[11] %} checked {% endif %}>False</input></td>
+                </tr>
+                <tr>
+                    <td>Difficulty:</td>
+                    <td><input type="radio" name="difficulty" value="0" {% if "0" in properties[12] %} checked {% endif %}>0</input><input type="radio" name="difficulty" value="1" {% if "1" in properties[12] %} checked {% endif %}>1</input><input type="radio" name="difficulty" value="2" {% if "2" in properties[12] %} checked {% endif %}>2</input><input type="radio" name="difficulty" value="3" {% if "3" in properties[12] %} checked {% endif %}>3</input></td>
+                </tr>
+                <tr>
+                    <td>Game Mode:</td>
+                    <td><input type="radio" name="gamemode" value="0" {% if "0" in properties[13] %} checked {% endif %}>Survival</input><input type="radio" name="game-mode" value="1" {% if "1" in properties[13] %} checked {% endif %}>Creative</input></td>
+                </tr>
+                <tr>
+                    <td>Max Players:</td>
+                    <td><input type="text" name="max-players" size="2" class="serverTextInput" value="{{ properties[14]|replace("max-players=", "") }}" /></td>
+                </tr>
+                <tr>
+                    <td>Spawn Monsters:</td>
+                    <td><input type="radio" name="spawn-monsters" value="true" {% if "true" in properties[15] %} checked {% endif %}>True</input><input type="radio" name="spawn-monsters" value="false" {% if "false" in properties[15] %} checked {% endif %}>False</input></td>
+                </tr>
+                <tr>
+                    <td>View Distance:</td>
+                    <td><input type="text" name="view-distance" size="2" class="serverTextInput" value="{{ properties[16]|replace("view-distance=", "") }}" /></td>
+                </tr>
+            </table>
+            <input type="submit" value="Submit" />
+            </form>
+        </div>
+
+Debug: <br />
+{{ properties[0] }} <br />
+{{ properties[1] }}<br />
+{{ properties[2] }}<br />
+{{ properties[3] }}<br />
+{{ properties[4] }}<br />
+{{ properties[5] }}<br />
+{{ properties[6] }}<br />
+{{ properties[7] }}<br />
+{{ properties[8] }}<br />
+{{ properties[9] }}<br />
+{{ properties[10] }}<br />
+{{ properties[11] }}<br />
+{{ properties[12] }}<br />
+{{ properties[13] }}<br />
+{{ properties[14] }}<br />
+{{ properties[15] }}<br />
+{{ properties[16] }}<br />
+
+<!-- I hate using tables, but I couldn't get the alignment to look right, so I used the tables above to replicate the commented out section below :\
+
+<div class="serverOptionsLeft">
+    <ul>
+        <li>Allow Nether: </li>
+        <li>Level Name:</li>
+        <li>Allow Flight:</li>
+        <li>Enable Query:</li>
+        <li>Server Port:</li>
+        <li>Enable Rcon:</li>
+        <li>Level Seed:</li>
+        <li>Server IP:</li>
+        <li>Enable Whitelist:</li>
+        <li>Spawn Animals:</li>
+        <li>Online Mode:</li>
+        <li>PVP:</li>
+        <li>Difficulty:</li>
+        <li>Game Mode:</li>
+        <li>Max Players:</li>
+        <li>Spawn Monsters:</li>
+        <li>View Distance:</li>
+    </ul>
+</div>
+
+
+
+<div class="serverOptionsRight">
+    <ul>
+
+        <li><input type="radio" name="allow-nether" value="true" >True</input><input type="radio" name="allow-nether" value="false">False</input></li>
+
+        <li><input type="text" size="10" class="serverTextInput" /></li>
+
+        <li><input type="radio" name="allow-flight" value="true">True</input><input type="radio" name="allow-flight" value="false">False</input></li>
+
+        <li><input type="radio" name="enable-query" value="true">True</input><input type="radio" name="enable-query" value="false">False</input></li>
+
+        <li><input type="text" size="10" class="serverTextInput" /></li>
+
+        <li><input type="radio" name="enable-rcon" value="true">True</input><input type="radio" name="enable-rcon" value="false">False</input></li>
+
+        <li><input type="text" size="10" class="serverTextInput" /></li>
+
+        <li><input type="text" size="10" class="serverTextInput" /></li>
+
+        <li><input type="radio" name="white-list" value="true">True</input><input type="radio" name="white-list" value="false">False</input></li>
+
+        <li><input type="radio" name="spawn-animals" value="true">True</input><input type="radio" name="spawn-animals" value="false">False</input></li>
+
+        <li><input type="radio" name="online-mode" value="true">True</input><input type="radio" name="online-mode" value="false">False</input></li>
+
+        <li><input type="radio" name="pvp" value="true">True</input><input type="radio" name="pvp" value="false">False</input></li>
+
+        <li><input type="radio" name="difficulty" value="1">1</input><input type="radio" name="difficulty" value="2">2</input></li>
+
+        <li><input type="radio" name="game-mode" value="1">1</input><input type="radio" name="game-mode" value="2">2</input></li>
+
+        <li><input type="text" size="2" class="serverTextInput" /></li>
+
+        <li><input type="radio" name="spawn-monsters" value="true">True</input><input type="radio" name="spawn-monsters" value="false">False</input></li>
+
+        <li><input type="text" size="2" class="serverTextInput" /></li>
+
+    </ul>
+</div>
+-->
+
+
+    </div>
+    <div id="tab3" class="tab_content">
+       <!--Content-->
+    </div>
+    <div id="tab4" class="tab_content">
+       <!--Content-->
+    </div>
+</div>
+
+    
+
