@@ -4,26 +4,29 @@ AdminCraft is an open source Administration Web GUI Console for administering a
 Linux Minecraft Server. Admincraft is in early, but active development.
 
 AdminCraft provides the following features:
-* Start, Stop, Restart the Minecraft server.
-* Create backups of worlds to a separate location or mounted filesystem.
-* Web Console to monitor server logs
-* Ability to chat with users or send manual commands
-* Built-in reference for Block/Item Dec codes
-* Configure server properties via Web GUI
-* Server Status (Online/Offline/Restarting/Backing Up)
-* View User Status (Connected players, Ops, Banned IPs|Players)
+
+- Start, Stop, Restart the Minecraft server
+- Create backups of worlds to a separate location or mounted filesystem
+- Web Console to monitor server logs
+- Ability to chat with users or send manual commands
+- Built-in reference for Block/Item Dec codes
+- Configure server properties via Web GUI
+- Server Status (Online/Offline/Restarting/Backing Up)
+- View User Status (Connected players, Ops, Banned IPs|Players)
 
 Features in progress for 1.0:
-* Reworking item/block ID reference
-* Configure Ops, Whitelisted, Banned Players|IPs via GUI
-* Login sessions, security and support for multiple Admin Users
-* Schedule tasks (such as backing up world every X hours/days)
-* Support for viewing Log History
+
+- Reworking item/block ID reference
+- Configure Ops, Whitelisted, Banned Players|IPs via GUI
+- Login sessions, security and support for multiple Admin Users
+- Schedule tasks (such as backing up world every X hours/days)
+- Support for viewing Log History
 
 Features to add Post 1.0:
-* Support to deploy and administer multiple instances of Minecraft Servers
-* Support to deploy AdminCraft on a separate server than the Minecraft Server
-* More server and Minecraft monitoring features
+
+- Support to deploy and administer multiple instances of Minecraft Servers
+- Support to deploy AdminCraft on a separate server than the Minecraft Server
+- More server and Minecraft monitoring features
 
 ## Requirements ##
 
@@ -47,7 +50,7 @@ downloaded, please follow the steps below:
 
 1. If not installed already, please install easy_install:
 
-    $ sudo apt-get install python-setuptools
+                $ sudo apt-get install python-setuptools
 
 2. Install Flask via easy_install:
     $ sudo easy_install Flask
