@@ -210,6 +210,7 @@ def serverConfig():
     maxPlayersValue = request.args.get('max-players')
     spawnMonstersValue = request.args.get('spawn-monsters')
     viewDistanceValue = request.args.get('view-distance')
+    motdValue = request.args.get('motd')
 
     #Set server.properties
     p = minecraftDir + "/server.properties"
@@ -287,6 +288,9 @@ def serverConfig():
         if "view-distance" in pItem:
             pOutput = [w.replace(pItem, "view-distance" + '=' + viewDistanceValue + '\n') for w in pOutput]
 
+    for pItem in pOutput:
+        if "motd" in pItem:
+            pOutput = [w.replace(pItem, "motd" + '=' + motdValue + '\n') for w in pOutput]
 
     #Close file for reading. Re-open as write and write out pOutput to file.
     f.close()

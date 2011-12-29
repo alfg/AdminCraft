@@ -160,11 +160,16 @@ $(document).ready(function() {
                     <td>View Distance:</td>
                     <td><input type="text" name="view-distance" size="2" class="serverTextInput" value="{{ properties[16]|replace("view-distance=", "") }}" /></td>
                 </tr>
+                <tr>
+                    <td>MOTD:</td>
+                    <td><input type="text" name="motd" size="10" class="serverTextInput" value="{{ properties[17]|replace("motd=", "") }}" /></td>
+                </tr>
             </table>
             <input type="submit" value="Submit" />
             </form>
         </div>
 
+<!--
 Debug: <br />
 {{ properties[0] }} <br />
 {{ properties[1] }}<br />
@@ -183,6 +188,7 @@ Debug: <br />
 {{ properties[14] }}<br />
 {{ properties[15] }}<br />
 {{ properties[16] }}<br />
+-->
 
 <!-- I hate using tables, but I couldn't get the alignment to look right, so I used the tables above to replicate the commented out section below :\
 
