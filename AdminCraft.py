@@ -27,18 +27,10 @@ def index(name=None):
     else:
         username = 'You are not logged in'
 
-    #Open and read -10 lines from the server.log file into object. This is currently not in use.
+    #Open and read -10 lines from the server.log file into object. Used to get last line for activeUsers below.
     loggingFile = minecraftDir + "/server.log"
     loggingFile = open(loggingFile, "r")
     logging = loggingFile.readlines()[-10:]
-#    for lines in logging:
-#        lines = lines[20:]
-#        print lines
-
-#        logging = line[20:]
-#    logging = line[20:]
-    
-    #print logging
 
     #Query active users by making the command call, then reading the last line. Needs re-factoring.
     queryActiveUsers = subprocess.Popen('/etc/init.d/minecraft command list', shell=True)
@@ -49,6 +41,7 @@ def index(name=None):
     #Read ops.txt to display Server Operators on Users section.
     opsFile = minecraftDir + "/ops.txt"
     ops = open(opsFile, "r").readlines()
+    ops = [i.rstrip() for i in ops]
 
     #Read white-list.txt to display Whitelisted on Users section.
     whiteListFile = minecraftDir + "/white-list.txt"
@@ -57,15 +50,17 @@ def index(name=None):
     #Read banned-players.txt to display Banned Players on Users section.
     bannedUsersFile = minecraftDir + "/banned-players.txt"
     bannedUsers = open(bannedUsersFile, "r").readlines()
+    bannedUsers = [i.rstrip() for i in bannedUsers]
 
     #Read banned-ips.txt to display Banned IPs on Users section.
     bannedIPsFile = minecraftDir + "/banned-ips.txt"
     bannedIPs = open(bannedIPsFile, "r").readlines()
+    bannedIPs = [i.rstrip() for i in bannedIPs]
 
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
     propertiesFile = minecraftDir + "/server.properties"
     properties = open(propertiesFile, "r").readlines()[2:]
-    print properties[0]
+
 
     #Capturing status by running status command to /etc/init.d/minecraft and returning as stdout.
     stdout = subprocess.Popen(["/etc/init.d/minecraft status"], stdout=subprocess.PIPE, shell=True).communicate()[0]
@@ -152,7 +147,7 @@ def logs():
     #Open and read last 40 lines. This needs to be configurable eventually.
     loggingFile = minecraftDir + "/server.log"
     loggingFile = open(loggingFile, "r")
-    loggingHTML = loggingFile.readlines()[-40:]
+    loggingHTML = loggingFile.readlines()[-30:]
 
     return render_template('logging.html', loggingHTML=loggingHTML)
 

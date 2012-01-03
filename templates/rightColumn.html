@@ -37,17 +37,13 @@ $(document).ready(function() {
     {{ activeUsers }}
 
     <br /><br />
-    <strong>Server Operators:</strong>
+    <strong>Server Operators:</strong><br /><font color="#006600">
 
-    <ul>
-    {% for ops in ops %}
-    <li>{{ ops }}</li>
-    {% endfor %}
-    </ul>
+    {{ ops|join(', ') }}
 
+    </font><br /><br />
 
-
-    <strong>White List:</strong> Disabled <font color="green">
+    <strong>White List:</strong> Disabled <font color="#006600">
 
     <ul>
     {% for whiteListUsers in whiteListUsers %}
@@ -57,21 +53,19 @@ $(document).ready(function() {
 
 
 
-    <strong>Banned Players:</strong> <font color="red">
+    <strong>Banned Players:</strong><br /> 
 
-    <ul>
-    {% for bannedUsers in bannedUsers %}
-    <li>{{ bannedUsers }}</li>
-    {% endfor %}
-    </ul></font>
+    <font color="#CC0000">
 
-    <strong>Banned IPs:</strong> <font color="red">
+    {{ bannedUsers|join(', ') }}
 
-    <ul>
-    {% for bannedIPs in bannedIPs %}
-    <li>{{ bannedIPs }}</li>
-    {% endfor %}
-    </ul></font>
+    </font>
+    <br /><br />
+    <strong>Banned IPs:</strong><br /> <font color="#CC0000">
+
+    {{ bannedIPs|join(', ') }}
+
+    </font>
 
 
 
