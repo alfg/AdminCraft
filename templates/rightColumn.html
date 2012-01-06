@@ -30,48 +30,152 @@ $(document).ready(function() {
 
 <div class="tab_container">
     <div id="tab1" class="tab_content">
+<script>
+
+function showIt() {
+
+    if( $(this).attr("option") == "operators" && $(this).attr("submitType") == "add" ) {
+        var title = 'Add Operator:<input type="hidden" name="type" value="operators" id="inputType" submitType="add">';
+    }  
+    else if ( $(this).attr("option") == "whitelist" && $(this).attr("submitType") == "add" ) {
+        var title = 'Add to Whitelist: <input type="hidden" name="type" value="whitelist" id="inputType" submitType="add">';
+    }
+    else if ( $(this).attr("option") == "banned-players" && $(this).attr("submitType") == "add" ) {
+        var title = 'Add Banned Player: <input type="hidden" name="type" value="banned-players" id="inputType" submitType="add">';
+    }
+    else if ( $(this).attr("option") == "banned-ips" && $(this).attr("submitType") == "add" ) {
+        var title = 'Add Banned IP: <input type="hidden" name="type" value="banned-ips" id="inputType" submitType="add">';
+    }
+    else if ( $(this).attr("option") == "operators" && $(this).attr("submitType") == "remove" ) {
+        var title = 'Remove Operator:<input type="hidden" name="type" value="operators" id="inputType" submitType="remove">';
+    }  
+    else if ( $(this).attr("option") == "whitelist" && $(this).attr("submitType") == "remove" ) {
+        var title = 'Remove from Whitelist: <input type="hidden" name="type" value="whitelist" id="inputType" submitType="remove">';
+    }
+    else if ( $(this).attr("option") == "banned-players" && $(this).attr("submitType") == "remove" ) {
+        var title = 'Remove Banned Player: <input type="hidden" name="type" value="banned-players" id="inputType" submitType="remove">';
+    }
+    else if ( $(this).attr("option") == "banned-ips" && $(this).attr("submitType") == "remove" ) {
+        var title = 'Remove Banned IP: <input type="hidden" name="type" value="banned-ips" id="inputType" submitType="remove">';
+    }
+    else {
+        var title = "Error";
+    }
+    $(".messagepop").show("fast");
+    $('#title').html(title);
+
+}
+
+function hideIt() {
+    $(".messagepop").hide("fast");
+}
+
+function submitIt() {
+    var type = $("#inputType").val();
+    var user = $("#user").val();
 
 
-    <strong>Connected Players:</strong> <br />
+
+    if ( $("#inputType").attr("submitType") == "add" ) {
+        
+        var submitType = "/addUser";
+    }
+    else if ( $("#inputType").attr("submitType") == "remove" ) {
+        var submitType = "/removeUser";
+    }
+    else {
+        var submitType = "error";
+    }
+    $.ajax({
+               type: "GET",
+               url: submitType,
+               data: "type=" + type + "&user=" + user
+                });
+    $(".messagepop").hide("fast");
+    setTimeout(reloadDiv, 500);
+}
+
+function reloadDiv() {
+    $('.rightColumn').load('/rightColumn');
+}
+
+$("#addUser").live('click', showIt);
+$("#removeUser").live('click', showIt);
+$(".close").click(hideIt);
+$(".submit").click(submitIt);
+
+</script>
+
+<div class="messagepop pop">
+    <p>
+        <label for="user" id="title"></label>
+
+        <input type="text" size="10" name="user" id="user" autocomplete="off" />
+    </p>
+    <p>
+        <a href="#" class="submit">Submit</a> or <a class="close" href="#">Close</a>
+    </p>
+</div>
+
+
+    <strong>Connected Players:</strong><br />
 
     {{ activeUsers }}
 
     <br /><br />
-    <strong>Server Operators:</strong><br /><font color="#006600">
+    <strong>Server Operators:</strong> <a href="#" id="addUser" option="operators" submitType="add">Add</a> - <a href="#" id="removeUser" option="operators" submitType="remove">Remove</a> <br />
+
+    <font color="#006600">
 
     {{ ops|join(', ') }}
 
     </font><br /><br />
 
-    <strong>White List:</strong> Disabled <font color="#006600">
+    <strong>White List:</strong> <a href="#" id="addUser" option="whitelist" submitType="add">Add</a> - <a href="#" id="removeUser" option="whitelist" submitType="remove">Remove</a> <br />
 
-    <ul>
-    {% for whiteListUsers in whiteListUsers %}
-    <li>{{ whiteListUsers }}</li>
-    {% endfor %}
-    </ul></font>
+    <font color="#006600">
 
+    {{ whiteListUsers|join(', ') }}
 
+    </font><br /><br />
 
-    <strong>Banned Players:</strong><br /> 
+    <strong>Banned Players:</strong> <a href="#" id="addUser" option="banned-players" submitType="add">Add</a> - <a href="#" id="removeUser" option="banned-players" submitType="remove">Remove</a> <br /> 
 
     <font color="#CC0000">
 
     {{ bannedUsers|join(', ') }}
 
-    </font>
-    <br /><br />
-    <strong>Banned IPs:</strong><br /> <font color="#CC0000">
+    </font><br /><br />
+    
+    <strong>Banned IPs:</strong> <a href="#" id="addUser" option="banned-ips" submitType="add">Add</a> - <a href="#" id="removeUser" option="banned-ips" submitType="remove">Remove</a> <br />
+
+    <font color="#CC0000">
 
     {{ bannedIPs|join(', ') }}
 
     </font>
-
-
-
+<p>
+Note: To apply any changes here, you must restart the Minecraft service.
+</p>
     </div>
     <div id="tab2" class="tab_content">
 
+    <script>
+	$(function() {
+		$( "input:submit, a, button", ".server-buttons" ).button();
+		$( "input:submit, a, button", ".server-buttons" ).click(function() { $("input:submit, a, button", ".server-buttons").button({ disabled: true });
+        
+        setTimeout('enableButton()', 10000); });
+	});
+
+
+
+    function enableButton(){
+        $("input:submit, a, button", ".server-buttons").button({disabled: false });
+ };
+
+
+	</script>
 
             <strong>Server Options:</strong><br /><br />
             <div class="server-buttons">
@@ -81,6 +185,42 @@ $(document).ready(function() {
                 <button class="server-buttonsAction">Backup</button>
             </div>
 
+<script>
+    $(".server-buttonsAction").click(function () {
+
+      var text = $(this).text();
+      var text = text.toLowerCase();
+
+    $.ajax({
+       type: "GET",
+       url: "server",
+       data: "option=" + text
+        }).done(function( msg ) {
+        alert(  msg );
+        });
+      
+      if( text == "restart" ) {
+            var status = "restarting..."
+        }
+      else if ( text == "start" ) {
+            var status = "starting..."
+        }
+      else if ( text == "stop" ) {
+            var status = "stopping..."
+        }
+      else if ( text == "backup" ) {
+            var status = "backing up..."
+        }
+      else {
+            var status = "???"
+        }
+
+    $("#serverStatus").html("Server is " + status);
+    });
+
+
+
+</script>
         
         <div><br />
         <strong>Server Properties:</strong>

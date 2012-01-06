@@ -42,7 +42,7 @@
                 });  
             }  
         
-        setInterval (loadLog, 5000); 
+            setInterval (loadLog, 5000); 
 
         </script>
         </div>
@@ -50,7 +50,9 @@
 
 	<div class="rightColumn">
 
-    {% include 'rightColumn.html' %}
+        <script>
+            $('.rightColumn').load('/rightColumn');
+        </script>
 
     </div>
     
@@ -179,50 +181,8 @@ $("#dataValuesRow1 a").click(function() {
 	</script>
 
 <div>
-<!-- 
-<div class="server-buttons">
-<button class="server-buttonsAction">Restart</button>
-<button class="server-buttonsAction">Start</button>
-<button class="server-buttonsAction">Stop</button>
-<button class="server-buttonsAction">Backup</button>
-</div>
--->
-<script>
-    $(".server-buttonsAction").click(function () {
-
-      var text = $(this).text();
-      var text = text.toLowerCase();
-
-    $.ajax({
-       type: "GET",
-       url: "server",
-       data: "option=" + text
-        }).done(function( msg ) {
-        alert(  msg );
-        });
-      
-      if( text == "restart" ) {
-            var status = "restarting..."
-        }
-      else if ( text == "start" ) {
-            var status = "starting..."
-        }
-      else if ( text == "stop" ) {
-            var status = "stopping..."
-        }
-      else if ( text == "backup" ) {
-            var status = "backing up..."
-        }
-      else {
-            var status = "???"
-        }
-
-    $("#serverStatus").html("Server is " + status);
-    });
 
 
-
-</script>
 
 </div>
 <div id="serverStatus">

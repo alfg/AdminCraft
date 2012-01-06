@@ -12,12 +12,12 @@ AdminCraft provides the following features:
 - Built-in reference for Block/Item Dec codes
 - Configure server properties via Web GUI
 - Server Status (Online/Offline/Restarting/Backing Up)
-- View User Status (Connected players, Ops, Banned IPs|Players)
+- View and configure user status (Connected players, Ops, Banned IPs|Players)
+
 
 Features in progress for 1.0:
 
 - Reworking item/block ID reference
-- Configure Ops, Whitelisted, Banned Players|IPs via GUI
 - Login sessions, security and support for multiple Admin Users
 - Schedule tasks (such as backing up world every X hours/days)
 - Support for viewing Log History

@@ -183,6 +183,36 @@ app.secret_key = 'supersecret'
 def commandList():
     return render_template('commandList.html')
 
+@app.route('/rightColumn', methods=['GET', 'POST'])
+def rightColumn():
+
+    #Read server.properties to display Server Properties on Server Config section. -2 first lines.
+    propertiesFile = minecraftDir + "/server.properties"
+    properties = open(propertiesFile, "r").readlines()[2:]
+
+    #Read ops.txt to display Server Operators on Users section.
+    opsFile = minecraftDir + "/ops.txt"
+    ops = open(opsFile, "r").readlines()
+    ops = [i.rstrip() for i in ops]
+
+    #Read white-list.txt to display Whitelisted on Users section.
+    whiteListFile = minecraftDir + "/white-list.txt"
+    whiteListUsers = open(whiteListFile, "r").readlines()
+    
+    #Read banned-players.txt to display Banned Players on Users section.
+    bannedUsersFile = minecraftDir + "/banned-players.txt"
+    bannedUsers = open(bannedUsersFile, "r").readlines()
+    bannedUsers = [i.rstrip() for i in bannedUsers]
+
+    #Read banned-ips.txt to display Banned IPs on Users section.
+    bannedIPsFile = minecraftDir + "/banned-ips.txt"
+    bannedIPs = open(bannedIPsFile, "r").readlines()
+    bannedIPs = [i.rstrip() for i in bannedIPs]
+
+
+    return render_template('rightColumn.html', ops=ops, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties)
+
+
 #/serverConfig is used for GET request via server property configurations.
 
 @app.route('/serverConfig', methods=['GET'])
@@ -294,6 +324,70 @@ def serverConfig():
     o.close()
     return redirect(url_for('index'))
     #return render_template('serverConfig.html', pOutput=pOutput)
+
+#/usersConfig - Adds/Removes users from User Config
+@app.route('/addUser', methods=['GET', 'POST'])
+def addUser():
+
+    addType = request.args.get('type')
+    addValue = request.args.get('user')
+
+    if addType == "operators":
+        f = minecraftDir + "/ops.txt"
+    elif addType == "whitelist":
+        f =  minecraftDir + "/white-list.txt"
+    elif addType == "banned-players":
+        f = minecraftDir + "/banned-players.txt"
+    elif addType == "banned-ips":
+        f = minecraftDir + "/banned-ips.txt"
+    else:
+        print "Error reading Add Type"
+
+
+
+    #Open f as o and append value. 
+    with open(f, "a") as o:
+        o.write(addValue + "\n")
+    
+    o.close()
+
+    return "User Added"
+
+@app.route('/removeUser', methods=['GET', 'POST'])
+def removeUser():
+    
+    #Grab vars from GET request
+    removeType = request.args.get('type')
+    removeValue = request.args.get('user')
+
+    if removeType == "operators":
+        f = minecraftDir + "/ops.txt"
+    elif removeType == "whitelist":
+        f =  minecraftDir + "/white-list.txt"
+    elif removeType == "banned-players":
+        f = minecraftDir + "/banned-players.txt"
+    elif removeType == "banned-ips":
+        f = minecraftDir + "/banned-ips.txt"
+    else:
+        print "Error reading Remove Type"
+
+
+    #Open f and read out lines
+
+    o = open(f, "r").readlines()
+
+    #Create a list as ops, minus the removeValue
+    ops = []
+    ops = [names for names in o if names != removeValue + "\n"]
+
+    #Open ops.txt again for writing and write out new lines
+    o = open(f, "w")
+    o.writelines(ops)
+    o.close()
+
+    return "User Removed"
+
+
 
 #Turn on later
 #@app.errorhandler(500)
