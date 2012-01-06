@@ -95,7 +95,7 @@ or to run in the background:
 
 AdminCraft is in very early, but active development. Therefore, I cannot guarantee this will install, run, or work properly. 
 
-AdminCraft runs under Flask's builtin server with debugging enabled by default. You can turn this off in by changing debugEnabled to "False" in AdminCraft.py Global Config. It is recommended to disable debugging if deploying to an externally accessible server.
+AdminCraft runs under Flask's builtin server with debugging enabled by default. You can turn this off in by changing DEBUGMODE to "False" in AdminCraft.py Global Config. It is recommended to disable debugging if deploying to an externally accessible server.
 
 There is much cleanup and refactoring that needs to be done. So expect major changes in future maintenance versions. 
 
