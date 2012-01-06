@@ -42,7 +42,7 @@
                 });  
             }  
         
-            setInterval (loadLog, 5000); 
+            setInterval (loadLog, {{ LOGINTERVAL }} ); //Chat Interval Global Var
 
         </script>
         </div>
@@ -148,8 +148,6 @@ $("#dataValuesRow1 a").click(function() {
            type: "GET",
            url: "command",
            data: "operator=" + consoleOperator + "&command=" + text
-            }).done(function( msg ) {
-            alert(  msg );
             });
             $(".textInput").val('');
 

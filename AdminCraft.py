@@ -12,10 +12,26 @@ from flask import session, redirect, url_for, escape, request
 
 app = Flask(__name__)
 
-#Global Configuration Settings - More to be added
-minecraftDir = "/home/alf/minecraft-server" #Directory of Minecraft Server
-serverHost = "192.168.1.22" #IP of Server
-debugEnabled = "True" #Change to false if deploying to an externally accessible server
+############################### 
+#Global Configuration Settings#
+###############################
+
+# Main options required. Configure these.
+MINECRAFTDIR = "/home/alf/minecraft-server"         #Directory of Minecraft Server
+SERVERHOST = "0.0.0.0"                              #The hostname to listen on. Set this to '0.0.0.0' to have the server available externally
+SERVERPORT = 5000                                   #The Port AdminCraft will use
+
+# Extra options, but not required. Except maybe for the super secret key.
+LOGINTERVAL = 5000                                  #How often to refresh server log. 1000 = 1s
+LOGLINES = 30                                       #How many lines to display in log
+SECRETKEY = 'supersecret'                           #Set the secret sessions/cookies key here. Keep this key a secret!
+
+#For Development Use Only
+AUTORELOADER = True #Auto Reload on code changes
+DEBUGMODE = True #Debugger on? Use False if deploying to externally visible server
+
+
+
 
 #Main index.html page.
 @app.route("/")
@@ -28,7 +44,7 @@ def index(name=None):
         username = 'You are not logged in'
 
     #Open and read -10 lines from the server.log file into object. Used to get last line for activeUsers below.
-    loggingFile = minecraftDir + "/server.log"
+    loggingFile = MINECRAFTDIR + "/server.log"
     loggingFile = open(loggingFile, "r")
     logging = loggingFile.readlines()[-10:]
 
@@ -39,26 +55,26 @@ def index(name=None):
         activeUsers = users[26:]
 	
     #Read ops.txt to display Server Operators on Users section.
-    opsFile = minecraftDir + "/ops.txt"
+    opsFile = MINECRAFTDIR + "/ops.txt"
     ops = open(opsFile, "r").readlines()
     ops = [i.rstrip() for i in ops]
 
     #Read white-list.txt to display Whitelisted on Users section.
-    whiteListFile = minecraftDir + "/white-list.txt"
+    whiteListFile = MINECRAFTDIR + "/white-list.txt"
     whiteListUsers = open(whiteListFile, "r").readlines()
     
     #Read banned-players.txt to display Banned Players on Users section.
-    bannedUsersFile = minecraftDir + "/banned-players.txt"
+    bannedUsersFile = MINECRAFTDIR + "/banned-players.txt"
     bannedUsers = open(bannedUsersFile, "r").readlines()
     bannedUsers = [i.rstrip() for i in bannedUsers]
 
     #Read banned-ips.txt to display Banned IPs on Users section.
-    bannedIPsFile = minecraftDir + "/banned-ips.txt"
+    bannedIPsFile = MINECRAFTDIR + "/banned-ips.txt"
     bannedIPs = open(bannedIPsFile, "r").readlines()
     bannedIPs = [i.rstrip() for i in bannedIPs]
 
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
-    propertiesFile = minecraftDir + "/server.properties"
+    propertiesFile = MINECRAFTDIR + "/server.properties"
     properties = open(propertiesFile, "r").readlines()[2:]
 
 
@@ -76,7 +92,7 @@ def index(name=None):
     else:
         serverStatus = "Unable to check server status."
 
-    return render_template('index.html', username=username, name=name, ops=ops, logging=logging, activeUsers=activeUsers, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties, serverStatus=serverStatus)
+    return render_template('index.html', username=username, name=name, ops=ops, logging=logging, activeUsers=activeUsers, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties, serverStatus=serverStatus, LOGINTERVAL=LOGINTERVAL)
 
 #/server is used to send GET requests to Restart, Start, Stop or Backup server.
 @app.route("/server", methods=['GET'])
@@ -145,9 +161,9 @@ def sendCommand():
 def logs():
 
     #Open and read last 40 lines. This needs to be configurable eventually.
-    loggingFile = minecraftDir + "/server.log"
+    loggingFile = MINECRAFTDIR + "/server.log"
     loggingFile = open(loggingFile, "r")
-    loggingHTML = loggingFile.readlines()[-30:]
+    loggingHTML = loggingFile.readlines()[-LOGLINES:]
 
     return render_template('logging.html', loggingHTML=loggingHTML)
 
@@ -175,8 +191,7 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
-#Set the secret key here. This should be a globally configurable. Keep this key a secret!
-app.secret_key = 'supersecret'
+
 
 #/commandList is used to create a commandList.html view, which is then imported to Index. Used for "Command" on GUI.
 @app.route('/commandList', methods=['GET', 'POST'])
@@ -187,25 +202,25 @@ def commandList():
 def rightColumn():
 
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
-    propertiesFile = minecraftDir + "/server.properties"
+    propertiesFile = MINECRAFTDIR + "/server.properties"
     properties = open(propertiesFile, "r").readlines()[2:]
 
     #Read ops.txt to display Server Operators on Users section.
-    opsFile = minecraftDir + "/ops.txt"
+    opsFile = MINECRAFTDIR + "/ops.txt"
     ops = open(opsFile, "r").readlines()
     ops = [i.rstrip() for i in ops]
 
     #Read white-list.txt to display Whitelisted on Users section.
-    whiteListFile = minecraftDir + "/white-list.txt"
+    whiteListFile = MINECRAFTDIR + "/white-list.txt"
     whiteListUsers = open(whiteListFile, "r").readlines()
     
     #Read banned-players.txt to display Banned Players on Users section.
-    bannedUsersFile = minecraftDir + "/banned-players.txt"
+    bannedUsersFile = MINECRAFTDIR + "/banned-players.txt"
     bannedUsers = open(bannedUsersFile, "r").readlines()
     bannedUsers = [i.rstrip() for i in bannedUsers]
 
     #Read banned-ips.txt to display Banned IPs on Users section.
-    bannedIPsFile = minecraftDir + "/banned-ips.txt"
+    bannedIPsFile = MINECRAFTDIR + "/banned-ips.txt"
     bannedIPs = open(bannedIPsFile, "r").readlines()
     bannedIPs = [i.rstrip() for i in bannedIPs]
 
@@ -238,7 +253,7 @@ def serverConfig():
     motdValue = request.args.get('motd')
 
     #Set server.properties
-    p = minecraftDir + "/server.properties"
+    p = MINECRAFTDIR + "/server.properties"
 
     #Open properties as f and read-only. 
     f = open(p, "r")
@@ -333,13 +348,13 @@ def addUser():
     addValue = request.args.get('user')
 
     if addType == "operators":
-        f = minecraftDir + "/ops.txt"
+        f = MINECRAFTDIR + "/ops.txt"
     elif addType == "whitelist":
-        f =  minecraftDir + "/white-list.txt"
+        f =  MINECRAFTDIR + "/white-list.txt"
     elif addType == "banned-players":
-        f = minecraftDir + "/banned-players.txt"
+        f = MINECRAFTDIR + "/banned-players.txt"
     elif addType == "banned-ips":
-        f = minecraftDir + "/banned-ips.txt"
+        f = MINECRAFTDIR + "/banned-ips.txt"
     else:
         print "Error reading Add Type"
 
@@ -361,13 +376,13 @@ def removeUser():
     removeValue = request.args.get('user')
 
     if removeType == "operators":
-        f = minecraftDir + "/ops.txt"
+        f = MINECRAFTDIR + "/ops.txt"
     elif removeType == "whitelist":
-        f =  minecraftDir + "/white-list.txt"
+        f =  MINECRAFTDIR + "/white-list.txt"
     elif removeType == "banned-players":
-        f = minecraftDir + "/banned-players.txt"
+        f = MINECRAFTDIR + "/banned-players.txt"
     elif removeType == "banned-ips":
-        f = minecraftDir + "/banned-ips.txt"
+        f = MINECRAFTDIR + "/banned-ips.txt"
     else:
         print "Error reading Remove Type"
 
@@ -395,8 +410,11 @@ def removeUser():
 #    return render_template('500.html'), 500
 
 #Run App, with debugging enabled.
+
+app.secret_key = SECRETKEY                      #Set the secret sessions/cookies key here. Keep this key a secret!
+
 if __name__ == "__main__":
-    app.run(host=serverHost, debug=debugEnabled)
+    app.run(host=SERVERHOST, port=SERVERPORT, debug=DEBUGMODE, use_reloader=AUTORELOADER)
 
 
 
@@ -411,7 +429,7 @@ def serverConfig():
     value = request.args.get('value')
 
     #Set server.properties
-    p = minecraftDir + "/testconfig.properties"
+    p = MINECRAFTDIR + "/testconfig.properties"
 
     #Open properties as f and read-only. 
     f = open(p, "r")
