@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import shlex, os
 import string, re
 import json
@@ -17,6 +18,8 @@ app = Flask(__name__)
 ###############################
 
 # Main options required. Configure these.
+USERNAME = "admin"
+PASSWORD = "password"
 MINECRAFTDIR = "/home/alf/minecraft-server"         #Directory of Minecraft Server
 SERVERHOST = "0.0.0.0"                              #The hostname to listen on. Set this to '0.0.0.0' to have the server available externally
 SERVERPORT = 5000                                   #The Port AdminCraft will use
@@ -36,6 +39,9 @@ DEBUGMODE = True #Debugger on? Use False if deploying to externally visible serv
 #Main index.html page.
 @app.route("/")
 def index(name=None):
+
+    if USERNAME != session.get('username') or PASSWORD != session.get('password'):
+        return redirect(url_for("login"))
 
     #If user session, then display "Logged in as %"
     if 'username' in session:
@@ -177,18 +183,16 @@ def dataValues():
 def login():
     if request.method == 'POST':
         session['username'] = request.form['username']
+        session['password'] = request.form['password']
         return redirect(url_for('index'))
-    return '''
-        <form action="" method="post">
-            <p><input type=text name=username>
-            <p><input type=submit value=Login>
-        </form>
-    '''
+    return render_template('login.html')
+
 #Kill or Pop session when hitting /logout
 @app.route('/logout')
 def logout():
     # remove the username from the session if its there
     session.pop('username', None)
+    session.pop('password', None)
     return redirect(url_for('index'))
 
 

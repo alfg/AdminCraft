@@ -32,22 +32,63 @@ text-align: left;
 
 */
 
+
+#loginBox {
+    font-family: 'VolterGoldfishRegular', "Courier New", Courier, monospace;
+    font-size: 14px;
+    color: #3C78B5;
+    background: #cccccc;
+    width: 150px;
+    height: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px; 
+    padding-top: 20px;
+    padding-bottom: 20px; 
+    padding-left: 15px; 
+    padding-right: 15px;
+    border: #a7a7a7 2px solid; 
+    z-index: 1;
+    text-align: center;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px #555;
+
+}
+
+.loginBoxInput {
+    color: #666;
+    width: 130px;
+    height: 20px;
+    border: 1px solid #999;
+    padding: 0px;
+    background: #eee;
+    text-align: center;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#pass-clear {
+    display: none;
+}
+
 #mainDashboard {
-background: #cccccc;
-color: #333333;
-width: 1000px;
-height: 500px;
-margin-left: auto;
-margin-right: auto;
-margin-top: 10px; 
-padding-top: 10px;
-padding-bottom: 10px; 
-padding-left: 15px; 
-padding-right: 15px;
-border: #a7a7a7 2px solid; 
-z-index: 1;
--moz-border-radius: 15px;
-border-radius: 15px;
+    background: #cccccc;
+    color: #333333;
+    width: 1000px;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px; 
+    padding-top: 10px;
+    padding-bottom: 10px; 
+    padding-left: 15px; 
+    padding-right: 15px;
+    border: #a7a7a7 2px solid; 
+    z-index: 1;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px #555;
 }
 
 .mainConsole {
