@@ -77,13 +77,13 @@ downloaded, please follow the steps below:
 
         $ sudo update-rc.d minecraft defaults
 
-9. Now finally, run AdminCraft.py:
+9. Now finally, run runserver.py:
 
-        $ python AdminCraft.py
+        $ python runserver.py
 
 or to run in the background:
 
-        $ python Admincraft.py &
+        $ python runserver.py &
 
 10. Using your preferred web browser, open localhost:5000 (or your server's hostname:5000)
 

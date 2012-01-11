@@ -1,19 +1,16 @@
-#!/usr/bin/env python
-
-import shlex, os
-import string, re
-import json
 import subprocess
-import fileinput
+
 from flask import Flask
 from flask import request
 from flask import render_template
 from flask import Markup
 from flask import session, redirect, url_for, escape, request
+from flask import Blueprint
 
 import config
 
-app = Flask(__name__)
+
+app = Blueprint('app', __name__)
 
 #Main index.html page.
 @app.route("/")
@@ -81,6 +78,7 @@ def index(name=None):
 
     return render_template('index.html', username=username, name=name, ops=ops, logging=logging, activeUsers=activeUsers, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties, serverStatus=serverStatus, LOGINTERVAL=LOGINTERVAL)
 
+
 #/server is used to send GET requests to Restart, Start, Stop or Backup server.
 @app.route("/server", methods=['GET'])
 def serverState():
@@ -115,7 +113,6 @@ def serverState():
         return serverStatus
     else: 
         return 'Invalid Option'
-
 
 #/command is used when sending commands to '/etc/init.d/minecraft command' from the GUI. Used on mainConsole on index.html.
 @app.route("/command", methods=['GET'])
@@ -387,48 +384,9 @@ def removeUser():
     return "User Removed"
 
 
-
 #Turn on later
 #@app.errorhandler(500)
 #def not_found(error):
 #    return render_template('500.html'), 500
 
-#Run App, with debugging enabled.
-
-app.secret_key = config.SECRETKEY                      #Set the secret sessions/cookies key here. Keep this key a secret!
-
-if __name__ == "__main__":
-    app.run(host=config.SERVERHOST, port=config.SERVERPORT, debug=config.DEBUGMODE, use_reloader=config.AUTORELOADER)
-
-
-
-
-
-
-#Old code, not used. Saving, just in case.
-@app.route('/serverConfigOld', methods=['GET'])
-def serverConfig():
-    #Grab Vars from GET request
-    option = request.args.get('option')
-    value = request.args.get('value')
-
-    #Set server.properties
-    p = MINECRAFTDIR + "/testconfig.properties"
-
-    #Open properties as f and read-only. 
-    f = open(p, "r")
-    pText = f.readlines()
-
-    #Each line is read. If line-item contains X text, then use value. Set as pOutput.
-    for pItem in pText:
-        if option in pItem:
-            pOutput = [w.replace(pItem, option + '=' + value + '\n') for w in pText]
-
-    #Close file for reading. Re-open as write and write out pOutput to file.
-    f.close()
-    o = open(p, "w")
-    o.writelines(pOutput)
-    o.close()
-
-    return render_template('serverConfig.html', pOutput=pOutput)
 
