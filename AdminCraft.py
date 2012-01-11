@@ -11,47 +11,15 @@ from flask import render_template
 from flask import Markup
 from flask import session, redirect, url_for, escape, request
 
+import config
+
 app = Flask(__name__)
-
-############################### 
-#Global Configuration Settings#
-###############################
-
-# Main options required. Configure these.
-USERNAME = "admin"
-PASSWORD = "password"
-MINECRAFTDIR = "/home/alf/minecraft-server/"         #Directory of Minecraft Server. Must have trailing slash.
-SERVERHOST = "0.0.0.0"                              #The hostname to listen on. Set this to '0.0.0.0' to have the server available externally
-SERVERPORT = 5000                                   #The Port AdminCraft will use
-SECRETKEY = 'supersecret'                           #Set the secret sessions/cookies key here. Keep this key a secret!
-
-# Extra options, but not required.
-LOGINTERVAL = 5000                                  #How often to refresh server log. 1000 = 1s
-LOGLINES = 30                                       #How many lines to display in log
-MINECRAFTDAEMON = '/etc/init.d/minecraft'           #Location of minecraft init script
-
-# Default Minecraft Config files. Only change if you know what you're doing.
-SERVERLOG = 'server.log'
-SERVERPROPERTIES = 'server.properties'
-SERVEROPS = 'ops.txt'
-WHITELIST = 'white-list.txt'
-BANNEDPLAYERS = 'banned-players.txt'
-BANNEDIPS = 'banned-ips.txt'
-
-
-
-#For Development Use Only
-AUTORELOADER = True 								#Auto Reload on code changes
-DEBUGMODE = True 									#Debugger on? Use False if deploying to externally visible server
-
-
-
 
 #Main index.html page.
 @app.route("/")
 def index(name=None):
 
-    if USERNAME != session.get('username') or PASSWORD != session.get('password'):
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
         return redirect(url_for("login"))
 
     #If user session, then display "Logged in as %"
@@ -61,42 +29,42 @@ def index(name=None):
         username = 'You are not logged in'
 
     #Open and read -10 lines from the server.log file into object. Used to get last line for activeUsers below.
-    loggingFile = MINECRAFTDIR + SERVERLOG
+    loggingFile = config.MINECRAFTDIR + config.SERVERLOG
     loggingFile = open(loggingFile, "r")
     logging = loggingFile.readlines()[-10:]
 
     #Query active users by making the command call, then reading the last line. Needs re-factoring.
-    queryActiveUsers = subprocess.Popen(MINECRAFTDAEMON + ' command list', shell=True)
+    queryActiveUsers = subprocess.Popen(config.MINECRAFTDAEMON + ' command list', shell=True)
     activeUsers = logging[-1:]
     for users in activeUsers:
         activeUsers = users[26:]
 	
     #Read ops.txt to display Server Operators on Users section.
-    opsFile = MINECRAFTDIR + SERVEROPS
+    opsFile = config.MINECRAFTDIR + config.SERVEROPS
     ops = open(opsFile, "r").readlines()
     ops = [i.rstrip() for i in ops]
 
     #Read white-list.txt to display Whitelisted on Users section.
-    whiteListFile = MINECRAFTDIR + WHITELIST
+    whiteListFile = config.MINECRAFTDIR + config.WHITELIST
     whiteListUsers = open(whiteListFile, "r").readlines()
     
     #Read banned-players.txt to display Banned Players on Users section.
-    bannedUsersFile = MINECRAFTDIR + BANNEDPLAYERS
+    bannedUsersFile = config.MINECRAFTDIR + config.BANNEDPLAYERS
     bannedUsers = open(bannedUsersFile, "r").readlines()
     bannedUsers = [i.rstrip() for i in bannedUsers]
 
     #Read banned-ips.txt to display Banned IPs on Users section.
-    bannedIPsFile = MINECRAFTDIR + BANNEDIPS
+    bannedIPsFile = config.MINECRAFTDIR + config.BANNEDIPS
     bannedIPs = open(bannedIPsFile, "r").readlines()
     bannedIPs = [i.rstrip() for i in bannedIPs]
 
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
-    propertiesFile = MINECRAFTDIR + SERVERPROPERTIES
+    propertiesFile = config.MINECRAFTDIR + config.SERVERPROPERTIES
     properties = open(propertiesFile, "r").readlines()[2:]
 
 
     #Capturing status by running status command to /etc/init.d/minecraft and returning as stdout.
-    stdout = subprocess.Popen([MINECRAFTDAEMON + " status"], stdout=subprocess.PIPE, shell=True).communicate()[0]
+    stdout = subprocess.Popen([config.MINECRAFTDAEMON + " status"], stdout=subprocess.PIPE, shell=True).communicate()[0]
     
     #Check status and display Online or Offline to index.html (bottom-right corner) page.
     serverStatus = stdout
@@ -109,6 +77,8 @@ def index(name=None):
     else:
         serverStatus = "Unable to check server status."
 
+    LOGINTERVAL = config.LOGINTERVAL
+
     return render_template('index.html', username=username, name=name, ops=ops, logging=logging, activeUsers=activeUsers, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties, serverStatus=serverStatus, LOGINTERVAL=LOGINTERVAL)
 
 #/server is used to send GET requests to Restart, Start, Stop or Backup server.
@@ -119,21 +89,21 @@ def serverState():
 
     #Check status value and run /etc/init.d/minecraft command to restart/start/stop/backup.
     if keyword == "restart":
-        subprocess.Popen(MINECRAFTDAEMON + ' restart', shell=True)
+        subprocess.Popen(config.MINECRAFTDAEMON + ' restart', shell=True)
         return 'Restarting Minecraft Server...'
     elif keyword == "start":
-        subprocess.Popen(MINECRAFTDAEMON + ' start', shell=True)
+        subprocess.Popen(config.MINECRAFTDAEMON + ' start', shell=True)
         return 'Starting Minecraft Server...'
     elif keyword == "stop":
-        subprocess.Popen(MINECRAFTDAEMON + ' stop', shell=True)
+        subprocess.Popen(config.MINECRAFTDAEMON + ' stop', shell=True)
         return 'Stopping Minecraft Server...'
     elif keyword == "backup":
-        subprocess.Popen(MINECRAFTDAEMON + ' backup', shell=True)
+        subprocess.Popen(config.MINECRAFTDAEMON + ' backup', shell=True)
         return 'Backing Up Minecraft Server...'
 
     #If option value is 'status', then capture output and return 'Server is Online' or 'Server is Offline'
     elif keyword == "status":
-        stdout = subprocess.Popen([MINECRAFTDAEMON + " status"], stdout=subprocess.PIPE, shell=True).communicate()[0]
+        stdout = subprocess.Popen([config.MINECRAFTDAEMON + " status"], stdout=subprocess.PIPE, shell=True).communicate()[0]
         serverStatus = stdout
         if "online" in serverStatus:
             serverStatus = Markup('Server is <font color="#339933"><strong>Online</strong></font>')
@@ -153,7 +123,6 @@ def sendCommand():
     
     #Grabs operater value from GET request. say/give/command
     consoleOperator = str(request.args.get('operator'))
-    print consoleOperator
 
     #If the value was "command", then set as '' to remove redundancies when Popen is executed below.
     if consoleOperator == "command":
@@ -162,13 +131,12 @@ def sendCommand():
     else:
         consoleOperator = consoleOperator + ' '
 
-    print consoleOperator
 
     #Grab value from command GET request. This was entered via user from textInput box.
     command = str(request.args.get('command'))
 
     #Initiate full command via Popen. Return "Sending Command..."
-    commandProc = MINECRAFTDAEMON + ' command "' + consoleOperator + command + '"'
+    commandProc = config.MINECRAFTDAEMON + ' command "' + consoleOperator + command + '"'
     subprocess.Popen(commandProc, shell=True)
     print commandProc
     return 'Sending Command...'
@@ -178,9 +146,9 @@ def sendCommand():
 def logs():
 
     #Open and read last 40 lines. This needs to be configurable eventually.
-    loggingFile = MINECRAFTDIR + SERVERLOG
+    loggingFile = config.MINECRAFTDIR + config.SERVERLOG
     loggingFile = open(loggingFile, "r")
-    loggingHTML = loggingFile.readlines()[-LOGLINES:]
+    loggingHTML = loggingFile.readlines()[-config.LOGLINES:]
 
     return render_template('logging.html', loggingHTML=loggingHTML)
 
@@ -217,26 +185,26 @@ def commandList():
 def rightColumn():
 
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
-    propertiesFile = MINECRAFTDIR + SERVERPROPERTIES
+    propertiesFile = config.MINECRAFTDIR + config.SERVERPROPERTIES
     properties = open(propertiesFile, "r").readlines()[2:]
 
     #Read ops.txt to display Server Operators on Users section.
-    opsFile = MINECRAFTDIR + SERVEROPS
+    opsFile = config.MINECRAFTDIR + config.SERVEROPS
     ops = open(opsFile, "r").readlines()
     ops = [i.rstrip() for i in ops]
 
     #Read white-list.txt to display Whitelisted on Users section.
-    whiteListFile = MINECRAFTDIR + WHITELIST
+    whiteListFile = config.MINECRAFTDIR + config.WHITELIST
     whiteListUsers = open(whiteListFile, "r").readlines()
     whiteListUsers = [i.rstrip() for i in whiteListUsers]
     
     #Read banned-players.txt to display Banned Players on Users section.
-    bannedUsersFile = MINECRAFTDIR + BANNEDPLAYERS
+    bannedUsersFile = config.MINECRAFTDIR + config.BANNEDPLAYERS
     bannedUsers = open(bannedUsersFile, "r").readlines()
     bannedUsers = [i.rstrip() for i in bannedUsers]
 
     #Read banned-ips.txt to display Banned IPs on Users section.
-    bannedIPsFile = MINECRAFTDIR + BANNEDIPS
+    bannedIPsFile = config.MINECRAFTDIR + config.BANNEDIPS
     bannedIPs = open(bannedIPsFile, "r").readlines()
     bannedIPs = [i.rstrip() for i in bannedIPs]
 
@@ -269,7 +237,7 @@ def serverConfig():
     motdValue = request.args.get('motd')
 
     #Set server.properties
-    p = MINECRAFTDIR + SERVERPROPERTIES
+    p = config.MINECRAFTDIR + config.SERVERPROPERTIES
 
     #Open properties as f and read-only. 
     f = open(p, "r")
@@ -364,13 +332,13 @@ def addUser():
     addValue = request.args.get('user')
 
     if addType == "operators":
-        f = MINECRAFTDIR + SERVEROPS
+        f = config.MINECRAFTDIR + config.SERVEROPS
     elif addType == "whitelist":
-        f =  MINECRAFTDIR + WHITELIST
+        f =  config.MINECRAFTDIR + config.WHITELIST
     elif addType == "banned-players":
-        f = MINECRAFTDIR + BANNEDPLAYERS
+        f = config.MINECRAFTDIR + config.BANNEDPLAYERS
     elif addType == "banned-ips":
-        f = MINECRAFTDIR + BANNEDIPS
+        f = config.MINECRAFTDIR + config.BANNEDIPS
     else:
         print "Error reading Add Type"
 
@@ -392,13 +360,13 @@ def removeUser():
     removeValue = request.args.get('user')
 
     if removeType == "operators":
-        f = MINECRAFTDIR + SERVEROPS
+        f = config.MINECRAFTDIR + config.SERVEROPS
     elif removeType == "whitelist":
-        f =  MINECRAFTDIR + WHITELIST
+        f =  config.MINECRAFTDIR + config.WHITELIST
     elif removeType == "banned-players":
-        f = MINECRAFTDIR + BANNEDPLAYERS
+        f = config.MINECRAFTDIR + config.BANNEDPLAYERS
     elif removeType == "banned-ips":
-        f = MINECRAFTDIR + BANNEDIPS
+        f = config.MINECRAFTDIR + config.BANNEDIPS
     else:
         print "Error reading Remove Type"
 
@@ -427,10 +395,10 @@ def removeUser():
 
 #Run App, with debugging enabled.
 
-app.secret_key = SECRETKEY                      #Set the secret sessions/cookies key here. Keep this key a secret!
+app.secret_key = config.SECRETKEY                      #Set the secret sessions/cookies key here. Keep this key a secret!
 
 if __name__ == "__main__":
-    app.run(host=SERVERHOST, port=SERVERPORT, debug=DEBUGMODE, use_reloader=AUTORELOADER)
+    app.run(host=config.SERVERHOST, port=config.SERVERPORT, debug=config.DEBUGMODE, use_reloader=config.AUTORELOADER)
 
 
 

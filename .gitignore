@@ -1,2 +1,5 @@
 #Ignoring Python Virtual Environment
 env/
+
+#Ignore .pyc files
+*.pyc
