@@ -60,8 +60,7 @@ downloaded, please follow the steps below:
 
         $ git clone git://github.com/alf-/AdminCraft.git
 
-4. Open AdminCraft.py and set the minecraftDir variable to point to your 
-    Minecraft Server's directory.
+4. Open config.ini and set the required variables.
 
 5. Copy the Minecraft daemon to /etc/init.d/
 
