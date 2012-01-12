@@ -17,7 +17,7 @@ app = Blueprint('app', __name__)
 def index(name=None):
 
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for("login"))
+        return redirect(url_for('app.login'))
 
     #If user session, then display "Logged in as %"
     if 'username' in session:
@@ -160,7 +160,7 @@ def login():
     if request.method == 'POST':
         session['username'] = request.form['username']
         session['password'] = request.form['password']
-        return redirect(url_for('index'))
+        return redirect(url_for('app.index'))
     return render_template('login.html')
 
 #Kill or Pop session when hitting /logout
@@ -169,7 +169,7 @@ def logout():
     # remove the username from the session if its there
     session.pop('username', None)
     session.pop('password', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('app.index'))
 
 
 
