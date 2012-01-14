@@ -262,6 +262,10 @@ def serverConfig():
             pOutput = [w.replace(pItem, "server-port" + '=' + serverPortValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
+        if "level-type" in pItem:
+            pOutput = [w.replace(pItem, "level-type" + '=' + levelTypeValue + '\n') for w in pOutput]
+
+    for pItem in pOutput:
         if "enable-rcon" in pItem:
             pOutput = [w.replace(pItem, "enable-rcon" + '=' + enableRconValue + '\n') for w in pOutput]
 
@@ -272,6 +276,10 @@ def serverConfig():
     for pItem in pOutput:
         if "server-ip" in pItem:
             pOutput = [w.replace(pItem, "server-ip" + '=' + serverIPValue + '\n') for w in pOutput]
+
+    for pItem in pOutput:
+        if "spawn-npcs" in pItem:
+            pOutput = [w.replace(pItem, "spawn-npcs" + '=' + spawnNPCsValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
         if "white-list" in pItem:
@@ -304,6 +312,10 @@ def serverConfig():
     for pItem in pOutput:
         if "spawn-monsters" in pItem:
             pOutput = [w.replace(pItem, "spawn-monsters" + '=' + spawnMonstersValue + '\n') for w in pOutput]
+
+    for pItem in pOutput:
+        if "generate-structures" in pItem:
+            pOutput = [w.replace(pItem, "generate-structures" + '=' + generateStructuresValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
         if "view-distance" in pItem:
