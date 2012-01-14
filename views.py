@@ -16,6 +16,7 @@ app = Blueprint('app', __name__)
 @app.route("/")
 def index(name=None):
 
+    #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
         return redirect(url_for('app.login'))
 
@@ -82,6 +83,11 @@ def index(name=None):
 #/server is used to send GET requests to Restart, Start, Stop or Backup server.
 @app.route("/server", methods=['GET'])
 def serverState():
+
+    #Check if username and password in session are valid. If not, redirect to login
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        return redirect(url_for('app.login'))
+
     #Grab option value from GET request.
     keyword = request.args.get('option')
 
@@ -117,7 +123,11 @@ def serverState():
 #/command is used when sending commands to '/etc/init.d/minecraft command' from the GUI. Used on mainConsole on index.html.
 @app.route("/command", methods=['GET'])
 def sendCommand():
-    
+
+    #Check if username and password in session are valid. If not, redirect to login
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        return redirect(url_for('app.login'))
+
     #Grabs operater value from GET request. say/give/command
     consoleOperator = str(request.args.get('operator'))
 
@@ -142,6 +152,10 @@ def sendCommand():
 @app.route("/logging", methods=['GET'])
 def logs():
 
+    #Check if username and password in session are valid. If not, redirect to login
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        return redirect(url_for('app.login'))
+
     #Open and read last 40 lines. This needs to be configurable eventually.
     loggingFile = config.MINECRAFTDIR + config.SERVERLOG
     loggingFile = open(loggingFile, "r")
@@ -152,6 +166,10 @@ def logs():
 #/dataValues is used to create a dataIcons.html view, which is then imported to Index. Used for "Give" on GUI.
 @app.route("/dataValues", methods=['GET'])
 def dataValues():
+    #Check if username and password in session are valid. If not, redirect to login
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        return redirect(url_for('app.login'))
+
     return render_template('dataIcons.html')
 
 #/login will be for sessions. So far, only username is accepted with any value. Needs work here.
@@ -171,15 +189,22 @@ def logout():
     session.pop('password', None)
     return redirect(url_for('app.index'))
 
-
-
 #/commandList is used to create a commandList.html view, which is then imported to Index. Used for "Command" on GUI.
 @app.route('/commandList', methods=['GET', 'POST'])
 def commandList():
+
+    #Check if username and password in session are valid. If not, redirect to login
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        return redirect(url_for('app.login'))
+
     return render_template('commandList.html')
 
 @app.route('/rightColumn', methods=['GET', 'POST'])
 def rightColumn():
+
+    #Check if username and password in session are valid. If not, redirect to login
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        return redirect(url_for('app.login'))
 
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
     propertiesFile = config.MINECRAFTDIR + config.SERVERPROPERTIES
@@ -213,15 +238,22 @@ def rightColumn():
 
 @app.route('/serverConfig', methods=['GET'])
 def serverConfig():
+
+    #Check if username and password in session are valid. If not, redirect to login
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        return redirect(url_for('app.login'))
+
     #Grab Vars from GET request
     allowNetherValue = request.args.get('allow-nether')
     levelNameValue = request.args.get('level-name')
     allowFlightValue = request.args.get('allow-flight')
     enableQueryValue = request.args.get('enable-query')
     serverPortValue = request.args.get('server-port')
+    levelTypeValue = request.args.get('level-type')
     enableRconValue = request.args.get('enable-rcon')
     levelSeedValue = request.args.get('level-seed')
     serverIPValue = request.args.get('server-ip')
+    spawnNPCsValue = request.args.get('spawn-npcs')
     whitelistValue = request.args.get('white-list')
     spawnAnimalsValue = request.args.get('spawn-animals')
     onlineModeValue = request.args.get('online-mode')
@@ -230,6 +262,7 @@ def serverConfig():
     gamemodeValue = request.args.get('gamemode')
     maxPlayersValue = request.args.get('max-players')
     spawnMonstersValue = request.args.get('spawn-monsters')
+    generateStructuresValue = request.args.get('generate-structures')
     viewDistanceValue = request.args.get('view-distance')
     motdValue = request.args.get('motd')
 
@@ -330,12 +363,16 @@ def serverConfig():
     o = open(p, "w")
     o.writelines(pOutput)
     o.close()
-    return redirect(url_for('index'))
+    return redirect(url_for('app.index'))
     #return render_template('serverConfig.html', pOutput=pOutput)
 
 #/usersConfig - Adds/Removes users from User Config
 @app.route('/addUser', methods=['GET', 'POST'])
 def addUser():
+
+    #Check if username and password in session are valid. If not, redirect to login
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        return redirect(url_for('app.login'))
 
     addType = request.args.get('type')
     addValue = request.args.get('user')
@@ -363,6 +400,10 @@ def addUser():
 
 @app.route('/removeUser', methods=['GET', 'POST'])
 def removeUser():
+
+    #Check if username and password in session are valid. If not, redirect to login
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        return redirect(url_for('app.login'))
     
     #Grab vars from GET request
     removeType = request.args.get('type')
