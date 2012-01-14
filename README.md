@@ -8,6 +8,7 @@ AdminCraft provides the following features:
 - Start, Stop, Restart the Minecraft server
 - Create backups of worlds to a separate location or mounted filesystem
 - Web Console to monitor server logs
+- Username/Password protected
 - Ability to chat with users or send manual commands
 - Built-in reference for Block/Item Dec codes
 - Configure server properties via Web GUI
@@ -98,8 +99,6 @@ AdminCraft is in very early, but active development. Therefore, I cannot guarant
 AdminCraft runs under Flask's builtin server with debugging enabled by default. You can turn this off in by changing DEBUGMODE to "False" in AdminCraft.py Global Config. It is recommended to disable debugging if deploying to an externally accessible server.
 
 There is much cleanup and refactoring that needs to be done. So expect major changes in future maintenance versions. 
-
-There is NO security yet. This is still under development. So be advised, anyone who can access your AdminCraft console can control your Minecraft server.
 
 Support is limited as the project is still under early active development. But if you need help installing, or run into any problems, feel free to contact me at alf.g.jr[at]gmail.com. I can only support Ubuntu 9.04+ installations at this time. 
 
