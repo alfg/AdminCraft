@@ -42,8 +42,6 @@ a P4 with a minimum of 2GB of RAM. Minecraft likes to eat memory. :)
 
 ## Installation (Ubuntu 9.04+) ##
 
-**BEFORE INSTALLING ADMINCRAFT, PLEASE READ NOTES AT THE BOTTOM OF THIS README**
-
 **Note** Upon 1.0 release, I will have an install script as well as a deb
 package. For now, you'll have to deal with the manual installation. :D
 
@@ -100,7 +98,7 @@ downloaded, please follow the steps below:
 
 AdminCraft is in very early, but active development. Therefore, I cannot guarantee this will install, run, or work properly. 
 
-AdminCraft runs under Flask's built-in server with debugging enabled by default. You can turn this off in by changing DEBUGMODE to "False" in AdminCraft.py Global Config. It is recommended to disable debugging if deploying to an externally accessible server.
+AdminCraft runs under Flask's built-in server with debugging and auto-reloading disabled by default. You can turn this on by changing DEBUGMODE and AUTORELOADER to "True" in config.ini. It is recommended to disable debugging if deploying to an externally accessible server.
 
 There is much cleanup and refactoring that needs to be done. So expect major changes in future maintenance versions. 
 
