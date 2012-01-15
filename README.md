@@ -83,11 +83,11 @@ downloaded, please follow the steps below:
 
         $ python runserver.py
 
-or to run in the background:
+    Or to run in the background:
 
         $ nohup python runserver.py &
 
-If you wish to view the nohup output.
+    If you wish to view the nohup output:
 
         $ tail -f nohup.out
 
