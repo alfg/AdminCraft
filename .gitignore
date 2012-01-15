@@ -3,3 +3,6 @@ env/
 
 #Ignore .pyc files
 *.pyc
+
+#Ignore nohup output log
+nohup.out

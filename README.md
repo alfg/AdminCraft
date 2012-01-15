@@ -85,7 +85,11 @@ downloaded, please follow the steps below:
 
 or to run in the background:
 
-        $ python runserver.py &
+        $ nohup python runserver.py &
+
+If you wish to view the nohup output.
+
+        $ tail -f nohup.out
 
 10. Using your preferred web browser, open localhost:5000 (or your server's hostname:5000)
 
