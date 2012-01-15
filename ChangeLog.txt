@@ -1,1 +1,10 @@
-v0.1.0 - Initial commit of AdminCraft Project. 12-28-2011
+v0.2 - 01-15-2012
+- Added Login Sessions
+- User Management
+- Organized, separated AdminCraft.py into runserver.py, views.py and config.py
+- Added config.ini file for AdminCraft configuration
+- Re-structured blocks/items iconset
+- Removed a bunch of unnecessary code, comments and unused files
+
+v0.1 - 12-28-2011
+- Initial commit of AdminCraft Project. 
