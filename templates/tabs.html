@@ -24,7 +24,7 @@ $(document).ready(function() {
 <ul class="tabs">
     <li><a href="#tab1">Users</a></li>
     <li><a href="#tab2">Server</a></li>
-    <!-- Disabled <li><a href="#tab3">Log History</a></li> -->
+    <li><a href="#tab3">Tasks</a></li>
     <!-- Disabled <li><a href="#tab4">Tasks</a></li> -->
 </ul>
 
@@ -342,7 +342,340 @@ Debug: <br />
 
     </div>
     <div id="tab3" class="tab_content">
-       <!--Content-->
+
+<script>
+function showAddTask() {
+    $(".messagepopTask").show("fast");
+    }
+$("#addTask").live('click', showAddTask);
+
+function closeTask() {
+    $(".messagepopTask").hide("fast");
+    }
+</script>
+
+<script>
+function submitTask() {
+
+    var taskType = $("#inputTaskType").val();
+    var dom = $("#inputDOM").val();
+    var dow = $("#inputDOW").val();
+    var hour = $("#inputHour").val();
+    var minute = $("#inputMinute").val();
+
+    var taskData = "type=" + taskType + "&dom=" + dom + "&dow=" + dow + "&hour=" + hour + "&minute=" + minute
+
+    $.ajax({
+           type: "GET",
+           url: "addTask",
+           data: taskData
+            });
+
+    $(".messagepopTask").hide("fast");
+}
+
+$(".submitTask").click(submitTask);       
+$(".closeTask").click(closeTask);
+</script>
+
+    <div id="addTaskButton"><div class="addTask"><a href="#" id="addTask">Add Task</a></div></div>
+
+    <div class="messagepopTask pop">
+
+    <table>
+        <form>
+            <tr>
+                <td>
+                    <strong>Add Scheduled Task</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Task Type:
+                </td>
+                <td>
+                    <select id="inputTaskType">
+                        <option value="backup">Backup</option>
+                    <!--    <option value="restart">Restart</option>
+                        <option value="message">Message</option> -->
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>            
+                    Day of Month:
+                </td>
+                <td>
+                    <select id="inputDOM">
+                                <option value="all">All</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                        </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Day of Week:
+                </td>
+                <td>
+                            <select id="inputDOW">
+                                <option value="all">All</option>
+                                <option value="0">Mon</option>
+                                <option value="1">Tue</option>
+                                <option value="2">Wed</option>
+                                <option value="3">Thu</option>
+                                <option value="4">Fri</option>
+                                <option value="5">Sat</option>
+                                <option value="6">Sun</option>
+
+                            </select>
+                </td>
+            </tr>
+            <tr>
+                <td> 
+                    Hour:
+                </td>
+                <td>
+                    <select id="inputHour">
+                                <option value="all">All</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                            </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Minute:
+                </td>
+                <td>
+                            <select id="inputMinute">
+                                <option value="all">All</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                                <option value="51">51</option>
+                                <option value="52">52</option>
+                                <option value="53">53</option>
+                                <option value="54">54</option>
+                                <option value="55">55</option>
+                                <option value="56">56</option>
+                                <option value="57">57</option>
+                                <option value="58">58</option>
+                                <option value="59">59</option>
+                            </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="#" class="submitTask">Submit</a>
+		    <a href="#" class="closeTask">Close</a>
+                </td>
+            </tr>
+        </form>
+    </table>
+
+    </div>
+
+<div id="taskTable">
+    <table>
+        <thead>
+        <th>Scheduled Tasks</th>
+        </thead>
+    </table>
+    <table>
+        <thead>
+            <th>Task</th><th>Day</th><th>Weekday</th><th>Hour</th><th>Minute</th>
+        </thead>
+        {% for cell, cell2, cell3, cell4, cell5 in a %}
+        <tr>
+            <td>{{ cell }}</td><td>{{ cell2 }}</td><td>{{ cell3 }}</td><td>{{ cell4 }}</td><td>{{ cell5 }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+<br />
+<script>
+function startTasks() {
+    $.ajax({
+           type: "GET",
+           url: "task",
+           data: "command=start"
+            });
+
+    $.ajax({
+           url: "task?command=status",  
+           cache: false,  
+           success: function(html){  
+               $("#taskStatus").html(html);
+                 },  
+           });
+}
+
+function stopTasks() {
+    $.ajax({
+           type: "GET",
+           url: "task",
+           data: "command=stop"
+            });
+
+    $.ajax({
+           url: "task?command=status",  
+           cache: false,  
+           success: function(html){  
+               $("#taskStatus").html(html);
+                 },  
+           });
+}
+
+function restartTasks() {
+    $.ajax({
+           type: "GET",
+           url: "task",
+           data: "command=restart"
+            });
+}
+
+$(".startTasks").click(startTasks);
+$(".stopTasks").click(stopTasks);
+$(".restartTasks").click(restartTasks);
+</script>
+
+<div id="taskOptions">
+
+<div id="taskButtons">
+<a href="#" class="startTasks taskControl">Start</a> - <a href="#" class="stopTasks taskControl">Stop</a> - <a href="#" class="restartTasks taskControl">Restart</a>
+</div>
+<br />
+<div id="taskStatus" class="tasksText">
+Checking task scheduler status..<blink>.</blink>
+
+        <script>
+        function taskStatus(){       
+          
+                $.ajax({
+                    url: "task?command=status",  
+                    cache: false,  
+
+                    success: function(html){  
+                        $("#taskStatus").html(html);
+                    },  
+                });  
+            }  
+        
+        setInterval (taskStatus, 15000); 
+
+        </script>
+</div>
+
+
+<br />
+<div class="tasksText">Backup Directory:</div> 
+<div class="backupDir"> {{ backupDir }} </div>
+
+</div>
+
     </div>
     <div id="tab4" class="tab_content">
        <!--Content-->

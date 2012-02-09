@@ -6,3 +6,6 @@ env/
 
 #Ignore nohup output log
 nohup.out
+
+#Ignore sqlite3 databases
+*.db

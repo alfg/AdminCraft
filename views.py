@@ -1,4 +1,8 @@
-import subprocess
+import subprocess, os.path
+import sqlite3
+import shutil
+import tarfile
+import datetime
 
 from flask import Flask
 from flask import request
@@ -6,9 +10,10 @@ from flask import render_template
 from flask import Markup
 from flask import session, redirect, url_for, escape, request
 from flask import Blueprint
+from flask import g
 
 import config
-
+from tasks import startTaskDaemon, stopTaskDaemon, checkStatus
 
 app = Blueprint('app', __name__)
 
@@ -199,8 +204,8 @@ def commandList():
 
     return render_template('commandList.html')
 
-@app.route('/rightColumn', methods=['GET', 'POST'])
-def rightColumn():
+@app.route('/tabs', methods=['GET', 'POST'])
+def tabs():
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
@@ -230,12 +235,56 @@ def rightColumn():
     bannedIPs = open(bannedIPsFile, "r").readlines()
     bannedIPs = [i.rstrip() for i in bannedIPs]
 
+    backupDir = config.BACKUPDIR
 
-    return render_template('rightColumn.html', ops=ops, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties)
+    isRunning = Markup('Task Scheduler <font color="#339933"><strong>Online</strong></font>')
 
+    dbpath = "admincraft.db"
+
+    conn = sqlite3.connect(dbpath)
+
+    c = conn.cursor()
+
+    c.execute('select * from tasks order by type')
+    a = c.fetchall()
+
+    conn.commit()
+    c.close()
+
+    return render_template('tabs.html', a=a, isRunning=isRunning, backupDir=backupDir, ops=ops, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties)
+
+
+#to be removed
+@app.route('/test')
+def test():
+
+    print "Running backup..."
+    src = config.MINECRAFTDIR + "world"
+    dst = config.BACKUPDIR + "world"
+    
+    print "Copying file to backup source..."
+    shutil.copytree(src, dst)
+    
+    print "File copy completed"
+    print "Tarballing files"
+
+    now = datetime.datetime.now()
+    filedate = now.strftime("%Y.%m.%d_%H.%M")
+    print filedate
+
+    tar = tarfile.open(dst + "_" + filedate + ".tar.gz", "w:gz")
+
+    tar.add(dst, arcname="world")
+    tar.close()
+    print "File zipped"
+
+    print "Removing copied files..."
+    shutil.rmtree(dst)
+    print dst +  " directory removed"
+
+    return "Archive Completed"
 
 #/serverConfig is used for GET request via server property configurations.
-
 @app.route('/serverConfig', methods=['GET'])
 def serverConfig():
 
@@ -436,6 +485,67 @@ def removeUser():
 
     return "User Removed"
 
+@app.route('/task', methods=['GET'])
+def taskService():
+
+    command = request.args.get("command")
+
+    if command == "stop":   
+        stopTaskDaemon()
+        return 'Shutting down task daemon...'
+    elif command == "start":
+        startTaskDaemon()
+        return 'Starting task daemon...'
+    elif command == "restart":
+        stopTaskDaemon()
+        startTaskDaemon()
+        return 'Restarting task daemon...'
+    elif command == "status":
+        status = checkStatus()
+    return status
+        
+
+@app.route('/taskServicea', methods=['POST', 'GET'])
+def startTaskService():
+    startTaskDaemon()
+    return 'Starting task daemon...'
+
+@app.route('/addTask', methods=['POST', 'GET'])
+def addTask():
+    
+    dbpath = config.DATABASE
+
+    task = request.args.get("type")
+    dom = request.args.get("dom")
+    dow = request.args.get("dow")
+    hour = request.args.get("hour")
+    minute = request.args.get("minute")
+
+    v = [task, dom, dow, hour, minute]
+
+
+
+    if not os.path.exists(dbpath):
+        conn = sqlite3.connect(dbpath)
+        c = conn.cursor()
+        c.execute('''create table tasks (type text, month text, day text, hour text, minute text)''')
+
+        conn.commit()
+        c.close()
+
+    else:
+        conn = sqlite3.connect(dbpath)
+        c = conn.cursor()
+        c.execute("INSERT into tasks VALUES (?,?,?,?,?)", v)
+        c.execute('select * from tasks order by type')
+
+        for row in c:
+            print row
+
+        conn.commit()
+        c.close()
+        
+    return 'Task saved.'
 
 #Turn on later
 #@app.errorhandler(500)

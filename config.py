@@ -12,11 +12,13 @@ MINECRAFTDIR = config.get('global', 'MINECRAFTDIR')
 SERVERHOST = config.get('global', 'SERVERHOST')
 SERVERPORT = config.getint('global', 'SERVERPORT')
 SECRETKEY = config.get('global', 'SECRETKEY')
+BACKUPDIR = config.get('global', 'BACKUPDIR')
 
 # Extra options, but not required.
 LOGINTERVAL = config.getint('global', 'LOGINTERVAL')
 LOGLINES = config.getint('global', 'LOGLINES')
 MINECRAFTDAEMON = config.get('global', 'MINECRAFTDAEMON')
+DATABASE = config.get('global', 'DATABASE')
 
 # Default Minecraft Config files. 
 SERVERLOG = config.get('global', 'SERVERLOG')

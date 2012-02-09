@@ -77,15 +77,18 @@ text-align: left;
     color: #333333;
     width: 1000px;
     height: 500px;
-    margin-left: auto;
+    margin-left: -500px;
     margin-right: auto;
-    margin-top: 10px; 
+    top: 50%;
+    left: 50%;
+    margin-top: -270px;
     padding-top: 10px;
     padding-bottom: 10px; 
     padding-left: 15px; 
     padding-right: 15px;
     border: #a7a7a7 2px solid; 
     z-index: 1;
+    position: absolute;
     -moz-border-radius: 15px;
     border-radius: 15px;
     box-shadow: 5px 5px 15px #555;
@@ -158,7 +161,7 @@ text-align: top;
 border-radius: 5px;
 }
 
-.rightColumn {
+.tabs {
 margin-top: 0px;
 padding-left: 10px; 
 color: #000;
@@ -256,6 +259,17 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
     overflow: auto;
     height: 350px;
 
+}
+
+.tab_content a:link, a:active, a:visited {
+color: #3C78B5;
+font-weight: none;
+font-size: 12px;
+text-decoration: none;
+}
+
+.tab_content a:hover {
+    text-decoration: underline;
 }
 
 .serverOptionsLeft {
@@ -404,3 +418,112 @@ label {
     padding-bottom: 8px;
 }
 
+/* Add Tasks Modal Popup */
+
+a.selectedTask {
+    background-color:#1F75CC;
+    color:white;
+    z-index:100;
+}
+
+.messagepopTask {
+    background-color:#FFFFFF;
+    border:1px solid #999999;
+    cursor:default;
+    display:none;
+    margin-top: 0px;
+    margin-left: 200px;
+    position:absolute;
+    text-align:left;
+    width:220px;
+    z-index:50;
+    padding: 5px 5px 5px;
+}
+
+labelTask {
+    display: block;
+    margin-bottom: 3px;
+    padding-left: 15px;
+    text-indent: -15px;
+    font-size: 12px;
+}
+
+.messagepopTask p, .messagepopTask.div {
+    border-bottom: 1px solid #EFEFEF;
+    margin: 8px 0;
+    padding-bottom: 8px;
+}
+
+/* Tasks Tab */
+
+#addTaskButton {
+    background-color: #CCC;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 70px;
+    height: 25px;
+    text-align: center;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.addTask {
+    padding-top: 5px;
+}
+
+#taskTable table, 
+#taskTable tr, 
+#taskTable td {
+    border: 2px solid #CCCCCC; 
+    border-collapse:collapse;
+    width: 335px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+#taskTable th {
+    border: 2px solid #CCCCCC; 
+    border-collapse:collapse;
+    background: #BBBBBB;
+    color: #3C78B5;
+    text-align: center;
+}
+
+#taskOptions {
+    background-color: #BBB;
+    font-family:"Verdana",Georgia,Serif;
+    padding: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+}
+
+#taskButtons {
+    margin-top: 5px; 
+    margin-left: 25%;
+    position: relative;
+}
+
+.taskControl {
+    font-family:"Verdana","Georgia","Serif";
+    font-size: 8px;
+    background-color: #DDD;
+    padding: 3px 6px 3px 6px;
+    top: 3px;
+    width: 70px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.tasksText {
+    font-family:"Verdana","Georgia","Serif";
+    font-size: 10px;
+}
+
+.backupDir {
+    background-color: #EEEEEE;
+    font-family:"Monospace",Georgia,Serif;
+    font-size: 0.9em;
+    color: #666;
+    padding: 2px;
+    margin-top: 3px;
+}
