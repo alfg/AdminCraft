@@ -14,13 +14,12 @@ AdminCraft provides the following features:
 - Configure server properties via Web GUI
 - Server Status (Online/Offline/Restarting/Backing Up)
 - View and configure user status (Connected players, Ops, Banned IPs|Players)
-
+- Ability to schedule 'cron-like' backup jobs on set intervals
 
 Features in progress for 1.0:
 
 - Reworking item/block ID reference
 - Login sessions, security and support for multiple Admin Users
-- Schedule tasks (such as backing up world every X hours/days)
 - Support for viewing Log History
 
 Features to add Post 1.0:
