@@ -15,5 +15,5 @@ app.secret_key = config.SECRETKEY
 
 if __name__ == "__main__":
     app.run(host=config.SERVERHOST, port=config.SERVERPORT, debug=config.DEBUGMODE, use_reloader=config.AUTORELOADER)
-    runBackup.sched.start()
+
 
