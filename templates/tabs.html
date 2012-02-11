@@ -31,7 +31,6 @@ $(document).ready(function() {
 <div class="tab_container">
     <div id="tab1" class="tab_content">
 <script>
-
 function showIt() {
 
     if( $(this).attr("option") == "operators" && $(this).attr("submitType") == "add" ) {
@@ -103,7 +102,6 @@ $("#addUser").live('click', showIt);
 $("#removeUser").live('click', showIt);
 $(".close").click(hideIt);
 $(".submit").click(submitIt);
-
 </script>
 
 <div class="messagepop pop">
@@ -160,7 +158,7 @@ Note: To apply any changes here, you must restart the Minecraft service.
     </div>
     <div id="tab2" class="tab_content">
 
-    <script>
+<script>
 	$(function() {
 		$( "input:submit, a, button", ".server-buttons" ).button();
 		$( "input:submit, a, button", ".server-buttons" ).click(function() { $("input:submit, a, button", ".server-buttons").button({ disabled: true });
@@ -173,9 +171,7 @@ Note: To apply any changes here, you must restart the Minecraft service.
     function enableButton(){
         $("input:submit, a, button", ".server-buttons").button({disabled: false });
  };
-
-
-	</script>
+</script>
 
             <strong>Server Options:</strong><br /><br />
             <div class="server-buttons">
@@ -217,9 +213,6 @@ Note: To apply any changes here, you must restart the Minecraft service.
 
     $("#serverStatus").html("Server is " + status);
     });
-
-
-
 </script>
         
         <div><br />

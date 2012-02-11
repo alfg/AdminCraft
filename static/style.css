@@ -1,19 +1,18 @@
 
 ul {
-list-style-type:none;
-margin: 2px 0px 5px 8px;
-padding: 0px; 
+    list-style-type:none;
+    margin: 2px 0px 5px 8px;
+    padding: 0px; 
 }
-
 
 /* Body */
 body {
-background-image:url("/static/images/creeper-bg.jpg");
-color: #000305;
-font-size: 12px;
-margin: 0;
-padding: 0;
-text-align: left;
+    background-image:url("/static/images/bg.jpg");
+    color: #000305;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    text-align: left;
 }
 
 /* Minecraft Font (Volter) 
@@ -95,103 +94,101 @@ text-align: left;
 }
 
 .mainConsole {
-font-family: 'VolterGoldfishRegular', "Courier New", Courier, monospace;
-color: #333;
-font-size: 0.8em; 
-
-
+    font-family: 'VolterGoldfishRegular', "Courier New", Courier, monospace;
+    color: #333;
+    font-size: 0.8em; 
 }
 
 .mainDashNavLeft {
-color: #3C78B5;
-font-weight: bold;
-width: 610px;
-height: 30px;
-margin-top: 0px;
-float: left;
-font-size: 16px; 
-font-family: 'VolterGoldfishRegular', "Courier New", Courier, monospace;
+    color: #3C78B5;
+    font-weight: bold;
+    width: 610px;
+    height: 30px;
+    margin-top: 0px;
+    float: left;
+    font-size: 16px; 
+    font-family: 'VolterGoldfishRegular', "Courier New", Courier, monospace;
 }
 
 .mainDashNavTitle {
-font-size: 18px;
-float: left; 
+    font-size: 18px;
+    float: left; 
 }
 
 .versionNum {
-font-size: 10px; 
-float: left;
+    font-size: 10px; 
+    float: left;
 }
 
 .loggedInAs {
-font-size: 12px; 
-float: right; 
+    font-size: 12px; 
+    float: right; 
 }
 
 .mainDashNavRight {
-color: #3C78B5;
-width: 300px;
-height: 30px;
-margin-top: 0px;
-float: right;
-font-weight: bold;
-font-size: 12px; 
-text-align: right;
-font-family: 'VolterGoldfishRegular', "Courier New", Courier, monospace;
+    color: #3C78B5;
+    width: 300px;
+    height: 30px;
+    margin-top: 0px;
+    float: right;
+    font-weight: bold;
+    font-size: 12px; 
+    text-align: right;
+    font-family: 'VolterGoldfishRegular', "Courier New", Courier, monospace;
 }
 
 .mainDashNavRight a:link, a:active, a:hover, a:visited {
-color: #3C78B5;
-font-weight: none;
-font-size: 12px;
-text-decoration: none;
+    color: #3C78B5;
+    font-weight: none;
+    font-size: 12px;
+    text-decoration: none;
 }
 
 .leftColumn {
-background-color: #a7a7a7;
-margin-top: 0px;
-padding: 10px; 
-color: #000;
-width: 590px;
-float: left;
-height: 390px;
-overflow: auto;
-text-align: top;
--moz-border-radius: 5px;
-border-radius: 5px;
+    background-color: #a7a7a7;
+    margin-top: 0px;
+    padding: 10px; 
+    color: #000;
+    width: 590px;
+    float: left;
+    height: 390px;
+    overflow: auto;
+    text-align: top;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .tabs {
-margin-top: 0px;
-padding-left: 10px; 
-color: #000;
-width: 375px;
-float: right;
+    margin-top: 0px;
+    padding-left: 10px; 
+    color: #000;
+    width: 375px;
+    float: right;
 }
 
 .dashTop {
-margin-top: 10px; 
-height: 385px;
+    margin-top: 10px; 
+    height: 385px;
 }
 
 .dashBottomLeft {
-width: 600px; 
-height: 50px;
-float: left; 
-margin-top: 15px;  
+    width: 600px; 
+    height: 50px;
+    float: left; 
+    margin-top: 15px;  
 }
 
 .dashBottomRight {
-width: 375px;
-height: 60px;
-float: right;
-position: relative; 
+    width: 375px;
+    height: 60px;
+    float: right;
+    position: relative; 
 }
 
 #serverStatus {
-position: absolute;
-bottom: 0;
-right: 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 
@@ -262,10 +259,10 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 }
 
 .tab_content a:link, a:active, a:visited {
-color: #3C78B5;
-font-weight: none;
-font-size: 12px;
-text-decoration: none;
+    color: #3C78B5;
+    font-weight: none;
+    font-size: 12px;
+    text-decoration: none;
 }
 
 .tab_content a:hover {
@@ -292,48 +289,48 @@ text-decoration: none;
 }
 
 .serverTextInput {
-border: 1px solid #999;
-height: 15px;
-padding: 2px 2px 2px 2px;
-background: #eee; 
+    border: 1px solid #999;
+    height: 15px;
+    padding: 2px 2px 2px 2px;
+    background: #eee; 
 }
 
 /* Input Text Box */
 .textInput {
-border: 1px solid #999;
-width: 583px;  
-height: 20px;
-padding: 2px 2px 2px 15px;
-background: #eee; 
+    border: 1px solid #999;
+    width: 583px;  
+    height: 20px;
+    padding: 2px 2px 2px 15px;
+    background: #eee; 
 }
 
 /* Blocks/Items Icon Set below text input. */
 
 #dataIconsContainer { 
-width: 600px;
-height: 200px;
-padding: 0px; 
-margin-left: auto;
-margin-right: auto;
-margin-top: -5px; 
+    width: 600px;
+    height: 200px;
+    padding: 0px; 
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -5px; 
 }
 
 /* Server Commands List when "command" tab is selected */
 #commandListContainer { 
-background: #fff;
-width: 580px;
-height: 250px;
-padding: 10px 10px 10px 10px;
-margin-left: auto;
-margin-right: auto;
-margin-top: -5px; 
-margin-bottom: 5px; 
-border: 1px solid #999;
-overflow: auto;
+    background: #fff;
+    width: 580px;
+    height: 250px;
+    padding: 10px 10px 10px 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -5px; 
+    margin-bottom: 5px; 
+    border: 1px solid #999;
+    overflow: auto;
 }
 
 #commandList {
-font-size: 10px; 
+    font-size: 10px; 
 
 }
 
@@ -465,7 +462,13 @@ labelTask {
     text-align: center;
     -moz-border-radius: 3px;
     border-radius: 3px;
+    border: 1px solid #CCC;
 }
+
+#addTaskButton:hover {
+    border: 1px solid #3C78B5;
+}
+
 .addTask {
     padding-top: 5px;
 }
@@ -494,7 +497,6 @@ labelTask {
     padding: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-
 }
 
 #taskButtons {
@@ -512,6 +514,11 @@ labelTask {
     width: 70px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+    border: 1px solid #CCC;
+}
+
+.taskControl:hover {
+    border: 1px solid #3C78B5;
 }
 
 .tasksText {

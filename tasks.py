@@ -29,10 +29,13 @@ def startTaskDaemon():
         print sched.get_jobs()
 
 def stopTaskDaemon():
-    print "Shutting down Task daemon..."
-    sched.shutdown(wait=False, shutdown_threadpool=False)
-    sched.unschedule_func(runBackupJobs)
-    print sched.print_jobs()
+    try:
+        print "Shutting down Task daemon..."
+        sched.shutdown(wait=False, shutdown_threadpool=False)
+        sched.unschedule_func(runBackupJobs)
+        print sched.print_jobs()
+    except:
+        print "Tasks not started!"
 
 def checkStatus():
     if sched.get_jobs() == []:

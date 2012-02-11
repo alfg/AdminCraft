@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import subprocess, os.path
 import sqlite3
 import shutil
@@ -253,37 +255,6 @@ def tabs():
 
     return render_template('tabs.html', a=a, isRunning=isRunning, backupDir=backupDir, ops=ops, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties)
 
-
-#to be removed
-@app.route('/test')
-def test():
-
-    print "Running backup..."
-    src = config.MINECRAFTDIR + "world"
-    dst = config.BACKUPDIR + "world"
-    
-    print "Copying file to backup source..."
-    shutil.copytree(src, dst)
-    
-    print "File copy completed"
-    print "Tarballing files"
-
-    now = datetime.datetime.now()
-    filedate = now.strftime("%Y.%m.%d_%H.%M")
-    print filedate
-
-    tar = tarfile.open(dst + "_" + filedate + ".tar.gz", "w:gz")
-
-    tar.add(dst, arcname="world")
-    tar.close()
-    print "File zipped"
-
-    print "Removing copied files..."
-    shutil.rmtree(dst)
-    print dst +  " directory removed"
-
-    return "Archive Completed"
-
 #/serverConfig is used for GET request via server property configurations.
 @app.route('/serverConfig', methods=['GET'])
 def serverConfig():
@@ -437,8 +408,6 @@ def addUser():
     else:
         print "Error reading Add Type"
 
-
-
     #Open f as o and append value. 
     with open(f, "a") as o:
         o.write(addValue + "\n")
@@ -469,9 +438,7 @@ def removeUser():
     else:
         print "Error reading Remove Type"
 
-
     #Open f and read out lines
-
     o = open(f, "r").readlines()
 
     #Create a list as ops, minus the removeValue
@@ -488,6 +455,10 @@ def removeUser():
 @app.route('/task', methods=['GET'])
 def taskService():
 
+    #Check if username and password in session are valid. If not, redirect to login
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        return redirect(url_for('app.login'))
+
     command = request.args.get("command")
 
     if command == "stop":   
@@ -503,16 +474,14 @@ def taskService():
     elif command == "status":
         status = checkStatus()
     return status
-        
-
-@app.route('/taskServicea', methods=['POST', 'GET'])
-def startTaskService():
-    startTaskDaemon()
-    return 'Starting task daemon...'
 
 @app.route('/addTask', methods=['POST', 'GET'])
 def addTask():
-    
+
+    #Check if username and password in session are valid. If not, redirect to login
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        return redirect(url_for('app.login'))    
+
     dbpath = config.DATABASE
 
     task = request.args.get("type")
@@ -522,8 +491,6 @@ def addTask():
     minute = request.args.get("minute")
 
     v = [task, dom, dow, hour, minute]
-
-
 
     if not os.path.exists(dbpath):
         conn = sqlite3.connect(dbpath)
