@@ -47,13 +47,13 @@ package. For now, you'll have to deal with the manual installation. :D
 Assuming you have at least Python 2.6+ installed and the minecraft_server.jar 
 downloaded, please follow the steps below: 
 
-1. If not installed already, please install easy_install:
+1. If not installed already, please install easy_install and sqlite3:
 
-        $ sudo apt-get install python-setuptools
+        $ sudo apt-get install python-setuptools sqlite3
 
-2. Install Flask via easy_install:
+2. Install Flask and APScheduler dependencies via easy_install:
 
-        $ sudo easy_install Flask
+        $ sudo easy_install Flask APScheduler
 
 3. Clone AdminCraft.git:
 
