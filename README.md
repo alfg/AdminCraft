@@ -76,13 +76,13 @@ downloaded, please follow the steps below:
 
         $ sudo update-rc.d minecraft defaults
 
-9. Now finally, run runserver.py:
+9. Now finally, run run.py:
 
-        $ python runserver.py
+        $ python run.py
 
     Or to run in the background:
 
-        $ nohup python runserver.py &
+        $ nohup python run.py &
 
     If you wish to view the nohup output:
 
