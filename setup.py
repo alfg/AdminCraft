@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-setup(name'admincraft',
+setup(name='AdminCraft',
       version='0.3',
       description='Admin Web GUI Server Wrapper for Minecraft Servers',
       author='Alfred Gutierrez',

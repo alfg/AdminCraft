@@ -47,17 +47,17 @@ package. For now, you'll have to deal with the manual installation. :D
 Assuming you have at least Python 2.6+ installed and the minecraft_server.jar 
 downloaded, please follow the steps below: 
 
-1. If not installed already, please install easy_install and sqlite3:
+1. If not installed already, please install sqlite3:
 
-        $ sudo apt-get install python-setuptools sqlite3
+        $ sudo apt-get install sqlite3
 
-2. Install Flask and APScheduler dependencies via easy_install:
-
-        $ sudo easy_install Flask APScheduler
-
-3. Clone AdminCraft.git:
+2. Clone AdminCraft.git:
 
         $ git clone git://github.com/alf-/AdminCraft.git
+
+3. Run setup.py to install dependencies:
+
+        $ python setup.py install
 
 4. Open config.ini and set the required variables.
 
@@ -67,6 +67,8 @@ downloaded, please follow the steps below:
 
 6. Configure USERNAME, WORLD, MCPATH, BACKUPPATH in
     /etc/init.d/minecraft in the text editor of your choice
+
+        $ sudo vim /etc/init.d/minecraft
 
 7. Set required permissions to the Minecraft daemon:
 
