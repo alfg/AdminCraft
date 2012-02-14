@@ -5,6 +5,7 @@ import sqlite3
 import shutil
 import tarfile
 import datetime
+from time import sleep
 
 from flask import Flask
 from flask import request
@@ -17,10 +18,10 @@ from flask import g
 import config
 from tasks import startTaskDaemon, stopTaskDaemon, checkStatus
 
-app = Blueprint('app', __name__)
+admincraft = Blueprint('admincraft', __name__, template_folder='templates', static_folder='static')
 
 #Main index.html page.
-@app.route("/")
+@admincraft.route("/")
 def index(name=None):
 
     #Check if username and password in session are valid. If not, redirect to login
@@ -38,11 +39,7 @@ def index(name=None):
     loggingFile = open(loggingFile, "r")
     logging = loggingFile.readlines()[-10:]
 
-    #Query active users by making the command call, then reading the last line. Needs re-factoring.
-    queryActiveUsers = subprocess.Popen(config.MINECRAFTDAEMON + ' command list', shell=True)
-    activeUsers = logging[-1:]
-    for users in activeUsers:
-        activeUsers = users[26:]
+
 	
     #Read ops.txt to display Server Operators on Users section.
     opsFile = config.MINECRAFTDIR + config.SERVEROPS
@@ -84,11 +81,11 @@ def index(name=None):
 
     LOGINTERVAL = config.LOGINTERVAL
 
-    return render_template('index.html', username=username, name=name, ops=ops, logging=logging, activeUsers=activeUsers, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties, serverStatus=serverStatus, LOGINTERVAL=LOGINTERVAL)
+    return render_template('index.html', username=username, name=name, ops=ops, logging=logging, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties, serverStatus=serverStatus, LOGINTERVAL=LOGINTERVAL)
 
 
 #/server is used to send GET requests to Restart, Start, Stop or Backup server.
-@app.route("/server", methods=['GET'])
+@admincraft.route("/server", methods=['GET'])
 def serverState():
 
     #Check if username and password in session are valid. If not, redirect to login
@@ -128,7 +125,7 @@ def serverState():
         return 'Invalid Option'
 
 #/command is used when sending commands to '/etc/init.d/minecraft command' from the GUI. Used on mainConsole on index.html.
-@app.route("/command", methods=['GET'])
+@admincraft.route("/command", methods=['GET'])
 def sendCommand():
 
     #Check if username and password in session are valid. If not, redirect to login
@@ -156,7 +153,7 @@ def sendCommand():
     return 'Sending Command...'
 
 #/logging reads the last X amount of lines from server.log to be parsed out on GUI #mainConsole.
-@app.route("/logging", methods=['GET'])
+@admincraft.route("/logging", methods=['GET'])
 def logs():
 
     #Check if username and password in session are valid. If not, redirect to login
@@ -171,7 +168,7 @@ def logs():
     return render_template('logging.html', loggingHTML=loggingHTML)
 
 #/dataValues is used to create a dataIcons.html view, which is then imported to Index. Used for "Give" on GUI.
-@app.route("/dataValues", methods=['GET'])
+@admincraft.route("/dataValues", methods=['GET'])
 def dataValues():
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
@@ -180,7 +177,7 @@ def dataValues():
     return render_template('dataIcons.html')
 
 #/login will be for sessions. So far, only username is accepted with any value. Needs work here.
-@app.route('/login', methods=['GET', 'POST'])
+@admincraft.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         session['username'] = request.form['username']
@@ -189,7 +186,7 @@ def login():
     return render_template('login.html')
 
 #Kill or Pop session when hitting /logout
-@app.route('/logout')
+@admincraft.route('/logout')
 def logout():
     # remove the username from the session if its there
     session.pop('username', None)
@@ -197,7 +194,7 @@ def logout():
     return redirect(url_for('app.index'))
 
 #/commandList is used to create a commandList.html view, which is then imported to Index. Used for "Command" on GUI.
-@app.route('/commandList', methods=['GET', 'POST'])
+@admincraft.route('/commandList', methods=['GET', 'POST'])
 def commandList():
 
     #Check if username and password in session are valid. If not, redirect to login
@@ -206,7 +203,7 @@ def commandList():
 
     return render_template('commandList.html')
 
-@app.route('/tabs', methods=['GET', 'POST'])
+@admincraft.route('/tabs', methods=['GET', 'POST'])
 def tabs():
 
     #Check if username and password in session are valid. If not, redirect to login
@@ -236,27 +233,35 @@ def tabs():
     bannedIPsFile = config.MINECRAFTDIR + config.BANNEDIPS
     bannedIPs = open(bannedIPsFile, "r").readlines()
     bannedIPs = [i.rstrip() for i in bannedIPs]
+    
+    #Ghetto method of shelling out the 'list' command to minecraft init script, which returns
+    #the list of players in server.log. Grab last line of server.log, strip time/date
+    #and determine whether players are connected or not. Rest of logic in Jinja2 tabs.html.
+    subprocess.Popen(config.MINECRAFTDAEMON + ' command list', shell=True)
+    sleep(1) #Unfortunately, the minecraft init commands lag a bit, so this is required to grab the last line correctly.
+    activeUsersFile = config.MINECRAFTDIR + config.SERVERLOG
+    activeUsers = open(activeUsersFile, "r").readlines()[-1:]
+    activeUsers = [i.rstrip()[46:] for i in activeUsers]
+    noUsers = "No players connected" #If activeUsers list is empty, Jinja2 will use this variable instead.
 
     backupDir = config.BACKUPDIR
 
     isRunning = Markup('Task Scheduler <font color="#339933"><strong>Online</strong></font>')
 
-    dbpath = "admincraft.db"
+    #Connects to db to list scheduled jobs in a table
+    dbpath = config.DATABASE
 
     conn = sqlite3.connect(dbpath)
-
     c = conn.cursor()
-
     c.execute('select * from tasks order by type')
     a = c.fetchall()
-
     conn.commit()
     c.close()
 
-    return render_template('tabs.html', a=a, isRunning=isRunning, backupDir=backupDir, ops=ops, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties)
+    return render_template('tabs.html', a=a, activeUsers=activeUsers, isRunning=isRunning, backupDir=backupDir, ops=ops, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties)
 
 #/serverConfig is used for GET request via server property configurations.
-@app.route('/serverConfig', methods=['GET'])
+@admincraft.route('/serverConfig', methods=['GET'])
 def serverConfig():
 
     #Check if username and password in session are valid. If not, redirect to login
@@ -387,7 +392,7 @@ def serverConfig():
     #return render_template('serverConfig.html', pOutput=pOutput)
 
 #/usersConfig - Adds/Removes users from User Config
-@app.route('/addUser', methods=['GET', 'POST'])
+@admincraft.route('/addUser', methods=['GET', 'POST'])
 def addUser():
 
     #Check if username and password in session are valid. If not, redirect to login
@@ -416,7 +421,7 @@ def addUser():
 
     return "User Added"
 
-@app.route('/removeUser', methods=['GET', 'POST'])
+@admincraft.route('/removeUser', methods=['GET', 'POST'])
 def removeUser():
 
     #Check if username and password in session are valid. If not, redirect to login
@@ -452,7 +457,7 @@ def removeUser():
 
     return "User Removed"
 
-@app.route('/task', methods=['GET'])
+@admincraft.route('/task', methods=['GET'])
 def taskService():
 
     #Check if username and password in session are valid. If not, redirect to login
@@ -475,7 +480,7 @@ def taskService():
         status = checkStatus()
     return status
 
-@app.route('/addTask', methods=['POST', 'GET'])
+@admincraft.route('/addTask', methods=['POST', 'GET'])
 def addTask():
 
     #Check if username and password in session are valid. If not, redirect to login
