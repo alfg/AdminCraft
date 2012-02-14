@@ -26,7 +26,7 @@ def index(name=None):
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))
+        return redirect(url_for('admincraft.login'))
 
     #If user session, then display "Logged in as %"
     if 'username' in session:
@@ -90,7 +90,7 @@ def serverState():
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))
+        return redirect(url_for('admincraft.login'))
 
     #Grab option value from GET request.
     keyword = request.args.get('option')
@@ -130,7 +130,7 @@ def sendCommand():
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))
+        return redirect(url_for('admincraft.login'))
 
     #Grabs operater value from GET request. say/give/command
     consoleOperator = str(request.args.get('operator'))
@@ -158,7 +158,7 @@ def logs():
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))
+        return redirect(url_for('admincraft.login'))
 
     #Open and read last 40 lines. This needs to be configurable eventually.
     loggingFile = config.MINECRAFTDIR + config.SERVERLOG
@@ -172,7 +172,7 @@ def logs():
 def dataValues():
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))
+        return redirect(url_for('admincraft.login'))
 
     return render_template('dataIcons.html')
 
@@ -182,7 +182,7 @@ def login():
     if request.method == 'POST':
         session['username'] = request.form['username']
         session['password'] = request.form['password']
-        return redirect(url_for('app.index'))
+        return redirect(url_for('admincraft.index'))
     return render_template('login.html')
 
 #Kill or Pop session when hitting /logout
@@ -191,7 +191,7 @@ def logout():
     # remove the username from the session if its there
     session.pop('username', None)
     session.pop('password', None)
-    return redirect(url_for('app.index'))
+    return redirect(url_for('admincraft.index'))
 
 #/commandList is used to create a commandList.html view, which is then imported to Index. Used for "Command" on GUI.
 @admincraft.route('/commandList', methods=['GET', 'POST'])
@@ -199,7 +199,7 @@ def commandList():
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))
+        return redirect(url_for('admincraft.login'))
 
     return render_template('commandList.html')
 
@@ -208,7 +208,7 @@ def tabs():
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))
+        return redirect(url_for('admincraft.login'))
 
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
     propertiesFile = config.MINECRAFTDIR + config.SERVERPROPERTIES
@@ -266,7 +266,7 @@ def serverConfig():
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))
+        return redirect(url_for('admincraft.login'))
 
     #Grab Vars from GET request
     allowNetherValue = request.args.get('allow-nether')
@@ -388,7 +388,7 @@ def serverConfig():
     o = open(p, "w")
     o.writelines(pOutput)
     o.close()
-    return redirect(url_for('app.index'))
+    return redirect(url_for('admincraft.index'))
     #return render_template('serverConfig.html', pOutput=pOutput)
 
 #/usersConfig - Adds/Removes users from User Config
@@ -397,7 +397,7 @@ def addUser():
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))
+        return redirect(url_for('admincraft.login'))
 
     addType = request.args.get('type')
     addValue = request.args.get('user')
@@ -426,7 +426,7 @@ def removeUser():
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))
+        return redirect(url_for('admincraft.login'))
     
     #Grab vars from GET request
     removeType = request.args.get('type')
@@ -462,7 +462,7 @@ def taskService():
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))
+        return redirect(url_for('admincraft.login'))
 
     command = request.args.get("command")
 
@@ -485,7 +485,7 @@ def addTask():
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('app.login'))    
+        return redirect(url_for('admincraft.login'))    
 
     dbpath = config.DATABASE
 
@@ -520,7 +520,7 @@ def addTask():
     return 'Task saved.'
 
 #Turn on later
-#@app.errorhandler(500)
+#@admincraft.errorhandler(500)
 #def not_found(error):
 #    return render_template('500.html'), 500
 
