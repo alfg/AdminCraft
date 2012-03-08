@@ -278,6 +278,7 @@ def serverConfig():
     enableRconValue = request.args.get('enable-rcon')
     levelSeedValue = request.args.get('level-seed')
     serverIPValue = request.args.get('server-ip')
+    maxBuildHeightValue = request.args.get('max-build-height')
     spawnNPCsValue = request.args.get('spawn-npcs')
     whitelistValue = request.args.get('white-list')
     spawnAnimalsValue = request.args.get('spawn-animals')
@@ -334,6 +335,10 @@ def serverConfig():
     for pItem in pOutput:
         if "server-ip" in pItem:
             pOutput = [w.replace(pItem, "server-ip" + '=' + serverIPValue + '\n') for w in pOutput]
+
+    for pItem in pOutput:
+        if "max-build-height" in pItem:
+            pOutput = [w.replace(pItem, "max-build-height" + '=' + maxBuildHeightValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
         if "spawn-npcs" in pItem:
