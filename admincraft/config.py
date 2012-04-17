@@ -1,9 +1,14 @@
 # config.py reads config.ini and sets variable. This file does not need to be modified.
 
+import os
+import sys
 from ConfigParser import SafeConfigParser
 
+path = os.path.split(sys.argv[0])[0]
+
 config = SafeConfigParser()
-config.read('config.ini')
+config.read(path + '/config.ini')
+print path
 
 # Main options required.
 USERNAME = config.get('global', 'USERNAME')
