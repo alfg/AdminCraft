@@ -7,7 +7,7 @@ from ConfigParser import SafeConfigParser
 path = os.path.split(sys.argv[0])[0]
 
 config = SafeConfigParser()
-config.read(path + '/config.ini')
+config.read('config.ini')
 print path
 
 # Main options required.
