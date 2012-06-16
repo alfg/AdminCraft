@@ -53,7 +53,7 @@ downloaded, please follow the steps below:
 
 2. Clone AdminCraft.git:
 
-        $ git clone git://github.com/alf-/AdminCraft.git
+        $ git clone git://github.com/alfg/AdminCraft.git
 
 3. Run setup.py to install dependencies:
 
