@@ -47,9 +47,9 @@ package. For now, you'll have to deal with the manual installation. :D
 Assuming you have at least Python 2.6+ installed and the minecraft_server.jar 
 downloaded, please follow the steps below: 
 
-1. If not installed already, please install sqlite3:
+1. If not installed already, please install sqlite3 and python-setuptools:
 
-        $ sudo apt-get install sqlite3
+        $ sudo apt-get install sqlite3 python-setuptools
 
 2. Clone AdminCraft.git:
 
