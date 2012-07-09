@@ -38,9 +38,6 @@ a P4 with a minimum of 2GB of RAM. Minecraft likes to eat memory. :)
 
 ## Installation (Ubuntu 9.04+) ##
 
-**Note** Upon 1.0 release, I will have an install script as well as a deb
-package. For now, you'll have to deal with the manual installation. :D
-
 Assuming you have at least Python 2.6+ installed and the minecraft_server.jar 
 downloaded, please follow the steps below: 
 
