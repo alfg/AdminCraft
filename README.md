@@ -1,7 +1,7 @@
 # AdminCraft #
 
 AdminCraft is an open source Administration Web GUI Console for administering a
-Linux Minecraft Server. Admincraft is in early, but active development.
+Linux Minecraft Server. Admincraft is still in early development.
 
 AdminCraft provides the following features:
 
@@ -16,21 +16,18 @@ AdminCraft provides the following features:
 - View and configure user status (Connected players, Ops, Banned IPs|Players)
 - Ability to schedule 'cron-like' backup jobs on set intervals
 
-Features in progress for 1.0:
+TODO:
 
 - Reworking item/block ID reference
 - Login sessions, security and support for multiple Admin Users
 - Support for viewing Log History
-
-Features to add Post 1.0:
-
 - Support to deploy and administer multiple instances of Minecraft Servers
 - Support to deploy AdminCraft on a separate server than the Minecraft Server
 - More server and Minecraft monitoring features
 
 ## Requirements ##
 
-- Minecraft Server 1.1+
+- Minecraft Server 1.2+
 - A Linux OS. AdminCraft has only been tested on Ubuntu 11.04,
 but should be compatible with at least 9.04+
 - Python 2.6+. Python 3 is not yet supported
@@ -97,11 +94,11 @@ downloaded, please follow the steps below:
 
 ## Notes ##
 
-AdminCraft is in very early, but active development. Therefore, I cannot guarantee this will install, run, or work properly. 
+AdminCraft is in very early development. Therefore, I cannot guarantee this will install, run, or work properly. 
 
 AdminCraft runs under Flask's built-in server with debugging and auto-reloading disabled by default. You can turn this on by changing DEBUGMODE and AUTORELOADER to "True" in config.ini. It is recommended to disable debugging if deploying to an externally accessible server.
 
 There is much cleanup and refactoring that needs to be done. So expect major changes in future maintenance versions. 
 
-Support is limited as the project is still under early active development. But if you need help installing, or run into any problems, feel free to contact me at alf.g.jr[at]gmail.com. I can only support Ubuntu 9.04+ installations at this time. 
+Support is limited as the project is still in early development. But if you need help installing, or run into any problems, feel free to contact me at alf.g.jr[at]gmail.com. I can only support Ubuntu 9.04+ installations at this time. 
 
