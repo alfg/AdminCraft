@@ -353,6 +353,14 @@ def serverConfig():
             pOutput = [w.replace(pItem, "spawn-animals" + '=' + spawnAnimalsValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
+        if "snooper-enabled" in pItem:
+            pOutput = [w.replace(pItem, "snooper-enabled" + '=' + snooperEnabledValue + '\n') for w in pOutput]
+            
+    for pItem in pOutput:
+        if "texture-pack" in pItem:
+            pOutput = [w.replace(pItem, "texture-pack" + '=' + texturePackValue + '\n') for w in pOutput]
+            
+    for pItem in pOutput:
         if "online-mode" in pItem:
             pOutput = [w.replace(pItem, "online-mode" + '=' + onlineModeValue + '\n') for w in pOutput]
 

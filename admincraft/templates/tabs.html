@@ -274,40 +274,48 @@ Note: To apply any changes here, you must restart the Minecraft service.
                     <td><input type="radio" name="spawn-animals" value="true" {% if "true" in properties[12] %} checked {% endif %}>True</input><input type="radio" name="spawn-animals" value="false" {% if "false" in properties[12] %} checked {% endif %}>False</input></td>
                 </tr>
                 <tr>
+                    <td>Snooper Enabled:</td>
+                    <td><input type="radio" name="snooper-enabled" value="true" {% if "true" in properties[13] %} checked {% endif %}>True</input><input type="radio" name="snooper-enabled" value="false" {% if "false" in properties[13] %} checked {% endif %}>False</input></td>
+                </tr>
+                <tr>
+                    <td>Texture Pack URL:</td>
+                    <td><input type="text" name="texture-pack" size="10" class="serverTextInput" value="{{ properties[14]|replace("texture-pack=", "") }}" /></td>
+                </tr>
+                <tr>
                     <td>Online Mode:</td>
-                    <td><input type="radio" name="online-mode" value="true" {% if "true" in properties[13] %} checked {% endif %}>True</input><input type="radio" name="online-mode" value="false" {% if "false" in properties[13] %} checked {% endif %}>False</input></td>
+                    <td><input type="radio" name="online-mode" value="true" {% if "true" in properties[15] %} checked {% endif %}>True</input><input type="radio" name="online-mode" value="false" {% if "false" in properties[15] %} checked {% endif %}>False</input></td>
                 </tr>
                 <tr>
                     <td>PVP:</td>
-                    <td><input type="radio" name="pvp" value="true" {% if "true" in properties[14] %} checked {% endif %}>True</input><input type="radio" name="pvp" value="false" {% if "false" in properties[14] %} checked {% endif %}>False</input></td>
+                    <td><input type="radio" name="pvp" value="true" {% if "true" in properties[16] %} checked {% endif %}>True</input><input type="radio" name="pvp" value="false" {% if "false" in properties[16] %} checked {% endif %}>False</input></td>
                 </tr>
                 <tr>
                     <td>Difficulty:</td>
-                    <td><input type="radio" name="difficulty" value="0" {% if "0" in properties[15] %} checked {% endif %}>0</input><input type="radio" name="difficulty" value="1" {% if "1" in properties[15] %} checked {% endif %}>1</input><input type="radio" name="difficulty" value="2" {% if "2" in properties[14] %} checked {% endif %}>2</input><input type="radio" name="difficulty" value="3" {% if "3" in properties[14] %} checked {% endif %}>3</input></td>
+                    <td><input type="radio" name="difficulty" value="0" {% if "0" in properties[17] %} checked {% endif %}>0</input><input type="radio" name="difficulty" value="1" {% if "1" in properties[17] %} checked {% endif %}>1</input><input type="radio" name="difficulty" value="2" {% if "2" in properties[14] %} checked {% endif %}>2</input><input type="radio" name="difficulty" value="3" {% if "3" in properties[14] %} checked {% endif %}>3</input></td>
                 </tr>
                 <tr>
                     <td>Game Mode:</td>
-                    <td><input type="radio" name="gamemode" value="0" {% if "0" in properties[16] %} checked {% endif %}>Survival</input><input type="radio" name="game-mode" value="1" {% if "1" in properties[16] %} checked {% endif %}>Creative</input></td>
+                    <td><input type="radio" name="gamemode" value="0" {% if "0" in properties[18] %} checked {% endif %}>Survival</input><input type="radio" name="gamemode" value="1" {% if "1" in properties[18] %} checked {% endif %}>Creative</input></td>
                 </tr>
                 <tr>
                     <td>Max Players:</td>
-                    <td><input type="text" name="max-players" size="2" class="serverTextInput" value="{{ properties[17]|replace("max-players=", "") }}" /></td>
+                    <td><input type="text" name="max-players" size="2" class="serverTextInput" value="{{ properties[19]|replace("max-players=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>Spawn Monsters:</td>
-                    <td><input type="radio" name="spawn-monsters" value="true" {% if "true" in properties[18] %} checked {% endif %}>True</input><input type="radio" name="spawn-monsters" value="false" {% if "false" in properties[18] %} checked {% endif %}>False</input></td>
+                    <td><input type="radio" name="spawn-monsters" value="true" {% if "true" in properties[20] %} checked {% endif %}>True</input><input type="radio" name="spawn-monsters" value="false" {% if "false" in properties[20] %} checked {% endif %}>False</input></td>
                 </tr>
                 <tr>
                     <td>Generate Structures:</td>
-                    <td><input type="radio" name="generate-structures" value="true" {% if "true" in properties[19] %} checked {% endif %}>True</input><input type="radio" name="generate-structures" value="false" {% if "false" in properties[19] %} checked {% endif %}>False</input></td>
+                    <td><input type="radio" name="generate-structures" value="true" {% if "true" in properties[21] %} checked {% endif %}>True</input><input type="radio" name="generate-structures" value="false" {% if "false" in properties[21] %} checked {% endif %}>False</input></td>
                 </tr>
                 <tr>
                     <td>View Distance:</td>
-                    <td><input type="text" name="view-distance" size="2" class="serverTextInput" value="{{ properties[20]|replace("view-distance=", "") }}" /></td>
+                    <td><input type="text" name="view-distance" size="2" class="serverTextInput" value="{{ properties[22]|replace("view-distance=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>MOTD:</td>
-                    <td><input type="text" name="motd" size="10" class="serverTextInput" value="{{ properties[21]|replace("motd=", "") }}" /></td>
+                    <td><input type="text" name="motd" size="10" class="serverTextInput" value="{{ properties[23]|replace("motd=", "") }}" /></td>
                 </tr>
             </table>
             <input type="submit" value="Submit" />
