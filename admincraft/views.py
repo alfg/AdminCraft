@@ -5,6 +5,7 @@ import sqlite3
 import shutil
 import tarfile
 import datetime
+import csv
 from time import sleep
 
 from flask import Flask
@@ -49,17 +50,15 @@ def index(name=None):
     #Read white-list.txt to display Whitelisted on Users section.
     whiteListFile = config.MINECRAFTDIR + config.WHITELIST
     whiteListUsers = open(whiteListFile, "r").readlines()
-    
-    #Read banned-players.txt to display Banned Players on Users section.
-    bannedUsersFile = config.MINECRAFTDIR + config.BANNEDPLAYERS
-    bannedUsers = open(bannedUsersFile, "r").readlines()
-    bannedUsers = [i.rstrip() for i in bannedUsers]
+
 
     #Read banned-ips.txt to display Banned IPs on Users section.
     bannedIPsFile = config.MINECRAFTDIR + config.BANNEDIPS
-    bannedIPs = open(bannedIPsFile, "r").readlines()
-    bannedIPs = [i.rstrip() for i in bannedIPs]
-
+    bannedIPs = csv.reader(open(bannedIPsFile, "r").readlines(), delimiter='|')
+    #bannedIPs = [i.rstrip() for i in bannedIPs] #pre 1.3
+    for b in bannedIPs:
+        print b
+    
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
     propertiesFile = config.MINECRAFTDIR + config.SERVERPROPERTIES
     properties = open(propertiesFile, "r").readlines()[2:]
@@ -81,7 +80,7 @@ def index(name=None):
 
     LOGINTERVAL = config.LOGINTERVAL
 
-    return render_template('index.html', username=username, name=name, ops=ops, logging=logging, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties, serverStatus=serverStatus, LOGINTERVAL=LOGINTERVAL)
+    return render_template('index.html', username=username, name=name, ops=ops, logging=logging, whiteListUsers=whiteListUsers, bannedIPs=bannedIPs, properties=properties, serverStatus=serverStatus, LOGINTERVAL=LOGINTERVAL)
 
 
 #/server is used to send GET requests to Restart, Start, Stop or Backup server.
@@ -226,13 +225,20 @@ def tabs():
     
     #Read banned-players.txt to display Banned Players on Users section.
     bannedUsersFile = config.MINECRAFTDIR + config.BANNEDPLAYERS
-    bannedUsers = open(bannedUsersFile, "r").readlines()
-    bannedUsers = [i.rstrip() for i in bannedUsers]
+    bannedUsers = csv.reader(open(bannedUsersFile, "r").readlines()[3:], delimiter='|', quoting=csv.QUOTE_ALL)
+    #bannedUsers = [i.rstrip() for i in bannedUsers] #pre 1.3
+    bannedUsersList = []
+    for u in bannedUsers:
+        bannedUsersList.append(u[0])
 
     #Read banned-ips.txt to display Banned IPs on Users section.
     bannedIPsFile = config.MINECRAFTDIR + config.BANNEDIPS
-    bannedIPs = open(bannedIPsFile, "r").readlines()
-    bannedIPs = [i.rstrip() for i in bannedIPs]
+    bannedIPs = csv.reader(open(bannedIPsFile, "r").readlines()[3:], delimiter='|', quoting=csv.QUOTE_ALL)
+    #bannedIPs = [i.rstrip() for i in bannedIPs]
+    bannedIPsList = []
+    for i in bannedIPs:
+        bannedIPsList.append(i[0])
+    
     
     #Ghetto method of shelling out the 'list' command to minecraft init script, which returns
     #the list of players in server.log. Grab last line of server.log, strip time/date
@@ -258,7 +264,7 @@ def tabs():
     conn.commit()
     c.close()
 
-    return render_template('tabs.html', a=a, activeUsers=activeUsers, isRunning=isRunning, backupDir=backupDir, ops=ops, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties)
+    return render_template('tabs.html', a=a, activeUsers=activeUsers, isRunning=isRunning, backupDir=backupDir, ops=ops, whiteListUsers=whiteListUsers, bannedUsersList=bannedUsersList, bannedIPsList=bannedIPsList, properties=properties)
 
 #/serverConfig is used for GET request via server property configurations.
 @admincraft.route('/serverConfig', methods=['GET'])

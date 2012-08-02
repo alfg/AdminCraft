@@ -134,7 +134,7 @@ $(".submit").click(submitIt);
     <strong>White List:</strong> <a href="#" id="addUser" option="whitelist" submitType="add">Add</a> - <a href="#" id="removeUser" option="whitelist" submitType="remove">Remove</a> <br />
 
     <font color="#006600">
-
+    
     {{ whiteListUsers|join(', ') }}
 
     </font><br /><br />
@@ -143,7 +143,7 @@ $(".submit").click(submitIt);
 
     <font color="#CC0000">
 
-    {{ bannedUsers|join(', ') }}
+    {{ bannedUsersList|join(', ') }}
 
     </font><br /><br />
     
@@ -151,7 +151,7 @@ $(".submit").click(submitIt);
 
     <font color="#CC0000">
 
-    {{ bannedIPs|join(', ') }}
+    {{ bannedIPsList|join(', ') }}
 
     </font>
 <p>
