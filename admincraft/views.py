@@ -257,7 +257,7 @@ def tabs():
     sleep(1) #Unfortunately, the minecraft init commands lag a bit, so this is required to grab the last line correctly.
     activeUsersFile = config.MINECRAFTDIR + config.SERVERLOG
     activeUsers = open(activeUsersFile, "r").readlines()[-1:]
-    activeUsers = [i.rstrip()[46:] for i in activeUsers]
+    activeUsers = [i.rstrip()[27:] for i in activeUsers]
     noUsers = "No players connected" #If activeUsers list is empty, Jinja2 will use this variable instead.
 
     backupDir = config.BACKUPDIR
