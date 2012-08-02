@@ -7,6 +7,7 @@ import tarfile
 import datetime
 import csv
 from time import sleep
+import datetime
 
 from flask import Flask
 from flask import request
@@ -126,6 +127,11 @@ def serverState():
 #/command is used when sending commands to '/etc/init.d/minecraft command' from the GUI. Used on mainConsole on index.html.
 @admincraft.route("/command", methods=['GET'])
 def sendCommand():
+    #server.log file for logging command entered
+    loggingFile = config.MINECRAFTDIR + config.SERVERLOG
+    now = datetime.datetime.now()
+    time = now.strftime("%Y-%m-%d %H:%M:%S")
+    print time
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
@@ -149,6 +155,10 @@ def sendCommand():
     commandProc = config.MINECRAFTDAEMON + ' command "' + consoleOperator + command + '"'
     subprocess.Popen(commandProc, shell=True)
     print commandProc
+    
+    # Post Minecraft 1.3, Console logging was removed, so appending command entered to file manually.
+    with open(loggingFile, "a") as f:
+        f.write(time + " [CONSOLE] " + command + "\n")
     return 'Sending Command...'
 
 #/logging reads the last X amount of lines from server.log to be parsed out on GUI #mainConsole.
