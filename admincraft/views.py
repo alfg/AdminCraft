@@ -5,7 +5,9 @@ import sqlite3
 import shutil
 import tarfile
 import datetime
+import csv
 from time import sleep
+import datetime
 
 from flask import Flask
 from flask import request
@@ -49,17 +51,15 @@ def index(name=None):
     #Read white-list.txt to display Whitelisted on Users section.
     whiteListFile = config.MINECRAFTDIR + config.WHITELIST
     whiteListUsers = open(whiteListFile, "r").readlines()
-    
-    #Read banned-players.txt to display Banned Players on Users section.
-    bannedUsersFile = config.MINECRAFTDIR + config.BANNEDPLAYERS
-    bannedUsers = open(bannedUsersFile, "r").readlines()
-    bannedUsers = [i.rstrip() for i in bannedUsers]
+
 
     #Read banned-ips.txt to display Banned IPs on Users section.
     bannedIPsFile = config.MINECRAFTDIR + config.BANNEDIPS
-    bannedIPs = open(bannedIPsFile, "r").readlines()
-    bannedIPs = [i.rstrip() for i in bannedIPs]
-
+    bannedIPs = csv.reader(open(bannedIPsFile, "r").readlines(), delimiter='|')
+    #bannedIPs = [i.rstrip() for i in bannedIPs] #pre 1.3
+    for b in bannedIPs:
+        print b
+    
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
     propertiesFile = config.MINECRAFTDIR + config.SERVERPROPERTIES
     properties = open(propertiesFile, "r").readlines()[2:]
@@ -81,7 +81,7 @@ def index(name=None):
 
     LOGINTERVAL = config.LOGINTERVAL
 
-    return render_template('index.html', username=username, name=name, ops=ops, logging=logging, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties, serverStatus=serverStatus, LOGINTERVAL=LOGINTERVAL)
+    return render_template('index.html', username=username, name=name, ops=ops, logging=logging, whiteListUsers=whiteListUsers, bannedIPs=bannedIPs, properties=properties, serverStatus=serverStatus, LOGINTERVAL=LOGINTERVAL)
 
 
 #/server is used to send GET requests to Restart, Start, Stop or Backup server.
@@ -127,6 +127,11 @@ def serverState():
 #/command is used when sending commands to '/etc/init.d/minecraft command' from the GUI. Used on mainConsole on index.html.
 @admincraft.route("/command", methods=['GET'])
 def sendCommand():
+    #server.log file for logging command entered
+    loggingFile = config.MINECRAFTDIR + config.SERVERLOG
+    now = datetime.datetime.now()
+    time = now.strftime("%Y-%m-%d %H:%M:%S")
+    print time
 
     #Check if username and password in session are valid. If not, redirect to login
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
@@ -150,6 +155,10 @@ def sendCommand():
     commandProc = config.MINECRAFTDAEMON + ' command "' + consoleOperator + command + '"'
     subprocess.Popen(commandProc, shell=True)
     print commandProc
+    
+    # Post Minecraft 1.3, Console logging was removed, so appending command entered to file manually.
+    with open(loggingFile, "a") as f:
+        f.write(time + " [CONSOLE] " + command + "\n")
     return 'Sending Command...'
 
 #/logging reads the last X amount of lines from server.log to be parsed out on GUI #mainConsole.
@@ -226,6 +235,7 @@ def tabs():
     
     #Read banned-players.txt to display Banned Players on Users section.
     bannedUsersFile = config.MINECRAFTDIR + config.BANNEDPLAYERS
+    """
     bannedUsers = open(bannedUsersFile, "r").readlines()[2:]
     bannedUsers = [i.rstrip() for i in bannedUsers]
 
@@ -233,6 +243,21 @@ def tabs():
     bannedIPsFile = config.MINECRAFTDIR + config.BANNEDIPS
     bannedIPs = open(bannedIPsFile, "r").readlines()[2:]
     bannedIPs = [i.rstrip() for i in bannedIPs]
+    """
+
+    bannedUsers = csv.reader(open(bannedUsersFile, "r").readlines()[3:], delimiter='|', quoting=csv.QUOTE_ALL)
+    #bannedUsers = [i.rstrip() for i in bannedUsers] #pre 1.3
+    bannedUsersList = []
+    for u in bannedUsers:
+        bannedUsersList.append(u[0])
+
+    #Read banned-ips.txt to display Banned IPs on Users section.
+    bannedIPsFile = config.MINECRAFTDIR + config.BANNEDIPS
+    bannedIPs = csv.reader(open(bannedIPsFile, "r").readlines()[3:], delimiter='|', quoting=csv.QUOTE_ALL)
+    #bannedIPs = [i.rstrip() for i in bannedIPs]
+    bannedIPsList = []
+    for i in bannedIPs:
+        bannedIPsList.append(i[0])
     
     #Ghetto method of shelling out the 'list' command to minecraft init script, which returns
     #the list of players in server.log. Grab last line of server.log, strip time/date
@@ -241,7 +266,7 @@ def tabs():
     sleep(1) #Unfortunately, the minecraft init commands lag a bit, so this is required to grab the last line correctly.
     activeUsersFile = config.MINECRAFTDIR + config.SERVERLOG
     activeUsers = open(activeUsersFile, "r").readlines()[-1:]
-    activeUsers = [i.rstrip()[46:] for i in activeUsers]
+    activeUsers = [i.rstrip()[27:] for i in activeUsers]
     noUsers = "No players connected" #If activeUsers list is empty, Jinja2 will use this variable instead.
 
     backupDir = config.BACKUPDIR
@@ -258,7 +283,7 @@ def tabs():
     conn.commit()
     c.close()
 
-    return render_template('tabs.html', a=a, activeUsers=activeUsers, isRunning=isRunning, backupDir=backupDir, ops=ops, whiteListUsers=whiteListUsers, bannedUsers=bannedUsers, bannedIPs=bannedIPs, properties=properties)
+    return render_template('tabs.html', a=a, activeUsers=activeUsers, isRunning=isRunning, backupDir=backupDir, ops=ops, whiteListUsers=whiteListUsers, bannedUsersList=bannedUsersList, bannedIPsList=bannedIPsList, properties=properties)
 
 #/serverConfig is used for GET request via server property configurations.
 @admincraft.route('/serverConfig', methods=['GET'])

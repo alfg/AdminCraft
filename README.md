@@ -27,7 +27,7 @@ TODO:
 
 ## Requirements ##
 
-- Minecraft Server 1.2+
+- Minecraft Server 1.3.1+
 - A Linux OS. AdminCraft has only been tested on Ubuntu 11.04,
 but should be compatible with at least 9.04+
 - Python 2.6+. Python 3 is not yet supported
