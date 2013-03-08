@@ -226,12 +226,12 @@ def tabs():
     
     #Read banned-players.txt to display Banned Players on Users section.
     bannedUsersFile = config.MINECRAFTDIR + config.BANNEDPLAYERS
-    bannedUsers = open(bannedUsersFile, "r").readlines()
+    bannedUsers = open(bannedUsersFile, "r").readlines()[2:]
     bannedUsers = [i.rstrip() for i in bannedUsers]
 
     #Read banned-ips.txt to display Banned IPs on Users section.
     bannedIPsFile = config.MINECRAFTDIR + config.BANNEDIPS
-    bannedIPs = open(bannedIPsFile, "r").readlines()
+    bannedIPs = open(bannedIPsFile, "r").readlines()[2:]
     bannedIPs = [i.rstrip() for i in bannedIPs]
     
     #Ghetto method of shelling out the 'list' command to minecraft init script, which returns
@@ -269,10 +269,11 @@ def serverConfig():
         return redirect(url_for('admincraft.login'))
 
     #Grab Vars from GET request
+    generatorSettingsValue = request.args.get('generator-settings')
     allowNetherValue = request.args.get('allow-nether')
     levelNameValue = request.args.get('level-name')
-    allowFlightValue = request.args.get('allow-flight')
     enableQueryValue = request.args.get('enable-query')
+    allowFlightValue = request.args.get('allow-flight')
     serverPortValue = request.args.get('server-port')
     levelTypeValue = request.args.get('level-type')
     enableRconValue = request.args.get('enable-rcon')
@@ -282,14 +283,17 @@ def serverConfig():
     spawnNPCsValue = request.args.get('spawn-npcs')
     whitelistValue = request.args.get('white-list')
     spawnAnimalsValue = request.args.get('spawn-animals')
+    snooperEnabledValue = request.args.get('snooper-enabled')
+    hardcoreValue = request.args.get('hardcore')
+    texturePackValue = request.args.get('texture-pack')
     onlineModeValue = request.args.get('online-mode')
     pvpValue = request.args.get('pvp')
     difficultyValue = request.args.get('difficulty')
     gamemodeValue = request.args.get('gamemode')
     maxPlayersValue = request.args.get('max-players')
     spawnMonstersValue = request.args.get('spawn-monsters')
-    generateStructuresValue = request.args.get('generate-structures')
     viewDistanceValue = request.args.get('view-distance')
+    generateStructuresValue = request.args.get('generate-structures')
     motdValue = request.args.get('motd')
 
     #Set server.properties
@@ -301,20 +305,24 @@ def serverConfig():
 
     #Each line is read. If line-item contains X text, then use value. Set as pOutput.
     for pItem in pText:
+        if "generator-settings" in pItem:
+            pOutput = [w.replace(pItem, "generator-settings" + '=' + generatorSettingsValue + '\n') for w in pText]
+
+    for pItem in pOutput:
         if "allow-nether" in pItem:
-            pOutput = [w.replace(pItem, "allow-nether" + '=' + allowNetherValue + '\n') for w in pText]
+            pOutput = [w.replace(pItem, "allow-nether" + '=' + allowNetherValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
         if "level-name" in pItem:
             pOutput = [w.replace(pItem, "level-name" + '=' + levelNameValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
-        if "allow-flight" in pItem:
-            pOutput = [w.replace(pItem, "allow-flight" + '=' + allowFlightValue + '\n') for w in pOutput]
-
-    for pItem in pOutput:
         if "enable-query" in pItem:
             pOutput = [w.replace(pItem, "enable-query" + '=' + enableQueryValue + '\n') for w in pOutput]
+
+    for pItem in pOutput:
+        if "allow-flight" in pItem:
+            pOutput = [w.replace(pItem, "allow-flight" + '=' + allowFlightValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
         if "server-port" in pItem:
@@ -353,6 +361,18 @@ def serverConfig():
             pOutput = [w.replace(pItem, "spawn-animals" + '=' + spawnAnimalsValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
+        if "snooper-enabled" in pItem:
+            pOutput = [w.replace(pItem, "snooper-enabled" + '=' + snooperEnabledValue + '\n') for w in pOutput]
+
+    for pItem in pOutput:
+        if "hardcore" in pItem:
+            pOutput = [w.replace(pItem, "hardcore" + '=' + hardcoreValue + '\n') for w in pOutput]
+
+    for pItem in pOutput:
+        if "texture-pack" in pItem:
+            pOutput = [w.replace(pItem, "texture-pack" + '=' + texturePackValue + '\n') for w in pOutput]
+
+    for pItem in pOutput:
         if "online-mode" in pItem:
             pOutput = [w.replace(pItem, "online-mode" + '=' + onlineModeValue + '\n') for w in pOutput]
 
@@ -377,12 +397,12 @@ def serverConfig():
             pOutput = [w.replace(pItem, "spawn-monsters" + '=' + spawnMonstersValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
-        if "generate-structures" in pItem:
-            pOutput = [w.replace(pItem, "generate-structures" + '=' + generateStructuresValue + '\n') for w in pOutput]
-
-    for pItem in pOutput:
         if "view-distance" in pItem:
             pOutput = [w.replace(pItem, "view-distance" + '=' + viewDistanceValue + '\n') for w in pOutput]
+
+    for pItem in pOutput:
+        if "generate-structures" in pItem:
+            pOutput = [w.replace(pItem, "generate-structures" + '=' + generateStructuresValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
         if "motd" in pItem:

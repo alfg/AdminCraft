@@ -222,92 +222,158 @@ Note: To apply any changes here, you must restart the Minecraft service.
             <form action="serverConfig" method="get">
             <table>
                 <tr>
+                    <td>Generator Settings:</td>
+                    <td><input type="text" name="generator-settings" size="10" class="serverTextInput" value="{{ properties[0]|replace("generator-settings=", "") }}" /></td>
+                </tr>
+                <tr>
                     <td class="serverOptionsTable1">Allow Nether:</td>
-                    <td><input type="radio" name="allow-nether" value="true" {% if "true" in properties[0] %} checked {% endif %}>True</input><input type="radio" name="allow-nether" value="false" {% if "false" in properties[0] %} checked {% endif %}>False</input></td>
+                    <td>
+                        <input type="radio" name="allow-nether" value="true" {% if "true" in properties[1] %} checked {% endif %}>True</input>
+                        <input type="radio" name="allow-nether" value="false" {% if "false" in properties[1] %} checked {% endif %}>False</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>Level Name:</td>
-                    <td><input type="text" name="level-name" size="10" class="serverTextInput" value="{{ properties[1]|replace("level-name=", "") }}" /></td>
-                </tr>
-                <tr>
-                    <td>Allow Flight:</td>
-                    <td><input type="radio" name="allow-flight" value="true" {% if "true" in properties[2] %} checked {% endif %}>True</input><input type="radio" name="allow-flight" value="false" {% if "false" in properties[2] %} checked {% endif %}>False</input></td>
+                    <td><input type="text" name="level-name" size="10" class="serverTextInput" value="{{ properties[2]|replace("level-name=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>Enable Query:</td>
-                    <td><input type="radio" name="enable-query" value="true" {% if "true" in properties[3] %} checked {% endif %}>True</input><input type="radio" name="enable-query" value="false" {% if "false" in properties[3] %} checked {% endif %}>False</input></td>
+                    <td>
+                        <input type="radio" name="enable-query" value="true" {% if "true" in properties[3] %} checked {% endif %}>True</input>
+                        <input type="radio" name="enable-query" value="false" {% if "false" in properties[3] %} checked {% endif %}>False</input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Allow Flight:</td>
+                    <td>
+                        <input type="radio" name="allow-flight" value="true" {% if "true" in properties[4] %} checked {% endif %}>True</input>
+                        <input type="radio" name="allow-flight" value="false" {% if "false" in properties[4] %} checked {% endif %}>False</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>Server Port:</td>
-                    <td><input type="text" name="server-port" size="10" class="serverTextInput" value="{{ properties[4]|replace("server-port=", "") }}" /></td>
+                    <td><input type="text" name="server-port" size="10" class="serverTextInput" value="{{ properties[5]|replace("server-port=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>Level Type:</td>
-                    <td><input type="radio" name="level-type" value="DEFAULT" {% if "DEFAULT" in properties[5] %} checked {% endif %}>Default</input><input type="radio" name="level-type" value="FLAT" {% if "FLAT" in properties[5] %} checked {% endif %}>Flat</input></td>
+                    <td>
+                        <input type="radio" name="level-type" value="DEFAULT" {% if "DEFAULT" in properties[6] %} checked {% endif %}>Default</input>
+                        <input type="radio" name="level-type" value="FLAT" {% if "FLAT" in properties[6] %} checked {% endif %}>Flat</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>Enable Rcon:</td>
-                    <td><input type="radio" name="enable-rcon" value="true" {% if "true" in properties[6] %} checked {% endif %}>True</input><input type="radio" name="enable-rcon" value="false" {% if "false" in properties[6] %} checked {% endif %}>False</input></td>
+                    <td>
+                        <input type="radio" name="enable-rcon" value="true" {% if "true" in properties[7] %} checked {% endif %}>True</input>
+                        <input type="radio" name="enable-rcon" value="false" {% if "false" in properties[7] %} checked {% endif %}>False</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>Level Seed:</td>
-                    <td><input type="text" name="level-seed" size="10" class="serverTextInput" value="{{ properties[7]|replace("level-seed=", "") }}" /></td>
+                    <td><input type="text" name="level-seed" size="10" class="serverTextInput" value="{{ properties[8]|replace("level-seed=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>Server IP:</td>
-                    <td><input type="text" name="server-ip" size="10" class="serverTextInput" value="{{ properties[8]|replace("server-ip=", "") }}" /></td>
+                    <td><input type="text" name="server-ip" size="10" class="serverTextInput" value="{{ properties[9]|replace("server-ip=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>Max Build Height:</td>
-                    <td><input type="text" name="max-build-height" size="2" class="serverTextInput" value="{{ properties[9]|replace("max-build-height=", "") }}" /></td>
+                    <td><input type="text" name="max-build-height" size="2" class="serverTextInput" value="{{ properties[10]|replace("max-build-height=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>Spawn NPCS:</td>
-                    <td><input type="radio" name="spawn-npcs" value="true" {% if "true" in properties[10] %} checked {% endif %}>True</input><input type="radio" name="spawn-npcs" value="false" {% if "false" in properties[10] %} checked {% endif %}>False</input></td>
+                    <td>
+                        <input type="radio" name="spawn-npcs" value="true" {% if "true" in properties[11] %} checked {% endif %}>True</input>
+                        <input type="radio" name="spawn-npcs" value="false" {% if "false" in properties[11] %} checked {% endif %}>False</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>Enable Whitelist:</td>
-                    <td><input type="radio" name="white-list" value="true" {% if "true" in properties[11] %} checked {% endif %}>True</input><input type="radio" name="white-list" value="false" {% if "false" in properties[11] %} checked {% endif %}>False</input></td>
+                    <td>
+                        <input type="radio" name="white-list" value="true" {% if "true" in properties[12] %} checked {% endif %}>True</input>
+                        <input type="radio" name="white-list" value="false" {% if "false" in properties[12] %} checked {% endif %}>False</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>Spawn Animals:</td>
-                    <td><input type="radio" name="spawn-animals" value="true" {% if "true" in properties[12] %} checked {% endif %}>True</input><input type="radio" name="spawn-animals" value="false" {% if "false" in properties[12] %} checked {% endif %}>False</input></td>
+                    <td>
+                        <input type="radio" name="spawn-animals" value="true" {% if "true" in properties[13] %} checked {% endif %}>True</input>
+                        <input type="radio" name="spawn-animals" value="false" {% if "false" in properties[13] %} checked {% endif %}>False</input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Snooper Enabled:</td>
+                    <td>
+                        <input type="radio" name="snooper-enabled" value="true" {% if "true" in properties[14] %} checked {% endif %}>True</input>
+                        <input type="radio" name="snooper-enabled" value="false" {% if "false" in properties[14] %} checked {% endif %}>False</input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hardcore Enabled:</td>
+                    <td>
+                        <input type="radio" name="hardcore" value="true" {% if "true" in properties[15] %} checked {% endif %}>True</input>
+                        <input type="radio" name="hardcore" value="false" {% if "false" in properties[15] %} checked {% endif %}>False</input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Texture Pack:</td>
+                    <td><input type="text" name="texture-pack" size="10" class="texturePackInput" value="{{ properties[16]|replace("texture-pack=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>Online Mode:</td>
-                    <td><input type="radio" name="online-mode" value="true" {% if "true" in properties[13] %} checked {% endif %}>True</input><input type="radio" name="online-mode" value="false" {% if "false" in properties[13] %} checked {% endif %}>False</input></td>
+                    <td>
+                        <input type="radio" name="online-mode" value="true" {% if "true" in properties[17] %} checked {% endif %}>True</input>
+                        <input type="radio" name="online-mode" value="false" {% if "false" in properties[17] %} checked {% endif %}>False</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>PVP:</td>
-                    <td><input type="radio" name="pvp" value="true" {% if "true" in properties[14] %} checked {% endif %}>True</input><input type="radio" name="pvp" value="false" {% if "false" in properties[14] %} checked {% endif %}>False</input></td>
+                    <td>
+                        <input type="radio" name="pvp" value="true" {% if "true" in properties[18] %} checked {% endif %}>True</input>
+                        <input type="radio" name="pvp" value="false" {% if "false" in properties[18] %} checked {% endif %}>False</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>Difficulty:</td>
-                    <td><input type="radio" name="difficulty" value="0" {% if "0" in properties[15] %} checked {% endif %}>0</input><input type="radio" name="difficulty" value="1" {% if "1" in properties[15] %} checked {% endif %}>1</input><input type="radio" name="difficulty" value="2" {% if "2" in properties[14] %} checked {% endif %}>2</input><input type="radio" name="difficulty" value="3" {% if "3" in properties[14] %} checked {% endif %}>3</input></td>
+                    <td>
+                        <input type="radio" name="difficulty" value="0" {% if "0" in properties[19] %} checked {% endif %}>0</input>
+                        <input type="radio" name="difficulty" value="1" {% if "1" in properties[19] %} checked {% endif %}>1</input>
+                        <input type="radio" name="difficulty" value="2" {% if "2" in properties[19] %} checked {% endif %}>2</input>
+                        <input type="radio" name="difficulty" value="3" {% if "3" in properties[19] %} checked {% endif %}>3</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>Game Mode:</td>
-                    <td><input type="radio" name="gamemode" value="0" {% if "0" in properties[16] %} checked {% endif %}>Survival</input><input type="radio" name="game-mode" value="1" {% if "1" in properties[16] %} checked {% endif %}>Creative</input></td>
+                    <td>
+                        <input type="radio" name="gamemode" value="0" {% if "0" in properties[20] %} checked {% endif %}>Survival</input>
+                        <input type="radio" name="game-mode" value="1" {% if "1" in properties[20] %} checked {% endif %}>Creative</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>Max Players:</td>
-                    <td><input type="text" name="max-players" size="2" class="serverTextInput" value="{{ properties[17]|replace("max-players=", "") }}" /></td>
+                    <td><input type="text" name="max-players" size="2" class="serverTextInput" value="{{ properties[21]|replace("max-players=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>Spawn Monsters:</td>
-                    <td><input type="radio" name="spawn-monsters" value="true" {% if "true" in properties[18] %} checked {% endif %}>True</input><input type="radio" name="spawn-monsters" value="false" {% if "false" in properties[18] %} checked {% endif %}>False</input></td>
-                </tr>
-                <tr>
-                    <td>Generate Structures:</td>
-                    <td><input type="radio" name="generate-structures" value="true" {% if "true" in properties[19] %} checked {% endif %}>True</input><input type="radio" name="generate-structures" value="false" {% if "false" in properties[19] %} checked {% endif %}>False</input></td>
+                    <td>
+                        <input type="radio" name="spawn-monsters" value="true" {% if "true" in properties[22] %} checked {% endif %}>True</input>
+                        <input type="radio" name="spawn-monsters" value="false" {% if "false" in properties[22] %} checked {% endif %}>False</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>View Distance:</td>
-                    <td><input type="text" name="view-distance" size="2" class="serverTextInput" value="{{ properties[20]|replace("view-distance=", "") }}" /></td>
+                    <td><input type="text" name="view-distance" size="2" class="serverTextInput" value="{{ properties[23]|replace("view-distance=", "") }}" /></td>
+                </tr>
+                <tr>
+                    <td>Generate Structures:</td>
+                    <td>
+                        <input type="radio" name="generate-structures" value="true" {% if "true" in properties[24] %} checked {% endif %}>True</input>
+                        <input type="radio" name="generate-structures" value="false" {% if "false" in properties[24] %} checked {% endif %}>False</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>MOTD:</td>
-                    <td><input type="text" name="motd" size="10" class="serverTextInput" value="{{ properties[21]|replace("motd=", "") }}" /></td>
+                    <td><input type="text" name="motd" size="10" class="serverTextInput" value="{{ properties[25]|replace("motd=", "") }}" /></td>
                 </tr>
             </table>
             <input type="submit" value="Submit" />

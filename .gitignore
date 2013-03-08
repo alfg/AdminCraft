@@ -1,8 +1,7 @@
-#Ignoring Python Virtual Environment
 env/
-
-#Ignore .pyc files
 *.pyc
+*.swp
+*.egg-info
 
 #Ignore nohup output log
 nohup.out
