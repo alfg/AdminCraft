@@ -361,15 +361,15 @@ Note: To apply any changes here, you must restart the Minecraft service.
                     </td>
                 </tr>
                 <tr>
-                    <td>Generate Structures:</td>
-                    <td>
-                        <input type="radio" name="generate-structures" value="true" {% if "true" in properties[23] %} checked {% endif %}>True</input>
-                        <input type="radio" name="generate-structures" value="false" {% if "false" in properties[23] %} checked {% endif %}>False</input>
-                    </td>
+                    <td>View Distance:</td>
+                    <td><input type="text" name="view-distance" size="2" class="serverTextInput" value="{{ properties[23]|replace("view-distance=", "") }}" /></td>
                 </tr>
                 <tr>
-                    <td>View Distance:</td>
-                    <td><input type="text" name="view-distance" size="2" class="serverTextInput" value="{{ properties[24]|replace("view-distance=", "") }}" /></td>
+                    <td>Generate Structures:</td>
+                    <td>
+                        <input type="radio" name="generate-structures" value="true" {% if "true" in properties[24] %} checked {% endif %}>True</input>
+                        <input type="radio" name="generate-structures" value="false" {% if "false" in properties[24] %} checked {% endif %}>False</input>
+                    </td>
                 </tr>
                 <tr>
                     <td>Spawn Protection:</td>
