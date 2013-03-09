@@ -157,9 +157,11 @@ def sendCommand():
     print commandProc
     
     # Post Minecraft 1.3, Console logging was removed, so appending command entered to file manually.
+    """ seems like console logging is back as of 1.4.7
     with open(loggingFile, "a") as f:
         f.write(time + " [CONSOLE] " + command + "\n")
     return 'Sending Command...'
+    """
 
 #/logging reads the last X amount of lines from server.log to be parsed out on GUI #mainConsole.
 @admincraft.route("/logging", methods=['GET'])
@@ -317,8 +319,9 @@ def serverConfig():
     gamemodeValue = request.args.get('gamemode')
     maxPlayersValue = request.args.get('max-players')
     spawnMonstersValue = request.args.get('spawn-monsters')
-    viewDistanceValue = request.args.get('view-distance')
     generateStructuresValue = request.args.get('generate-structures')
+    viewDistanceValue = request.args.get('view-distance')
+    spawnProtectionValue = request.args.get('spawn-protection')
     motdValue = request.args.get('motd')
 
     #Set server.properties
@@ -422,12 +425,16 @@ def serverConfig():
             pOutput = [w.replace(pItem, "spawn-monsters" + '=' + spawnMonstersValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
+        if "generate-structures" in pItem:
+            pOutput = [w.replace(pItem, "generate-structures" + '=' + generateStructuresValue + '\n') for w in pOutput]
+
+    for pItem in pOutput:
         if "view-distance" in pItem:
             pOutput = [w.replace(pItem, "view-distance" + '=' + viewDistanceValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
-        if "generate-structures" in pItem:
-            pOutput = [w.replace(pItem, "generate-structures" + '=' + generateStructuresValue + '\n') for w in pOutput]
+        if "spawn-protection" in pItem:
+            pOutput = [w.replace(pItem, "spawn-protection" + '=' + spawnProtectionValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
         if "motd" in pItem:
