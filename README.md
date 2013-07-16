@@ -5,15 +5,15 @@ Linux Minecraft Server. Admincraft is still in early development.
 
 AdminCraft provides the following features:
 
-- Start, Stop, Restart the Minecraft server
-- Create backups of worlds to a separate location or mounted filesystem
+- Start, stop and restart a Minecraft server
+- Create backups of worlds to a separate location or a mounted filesystem
 - Web Console to monitor server logs
 - Username/Password protected
-- Ability to chat with users or send manual commands
+- Ability to chat with users or send custom commands
 - Built-in reference for Block/Item Dec codes
 - Configure server properties via Web GUI
 - Server Status (Online/Offline/Restarting/Backing Up)
-- View and configure user status (Connected players, Ops, Banned IPs|Players)
+- View and configure user status (Connected players, Ops, Banned IPs or Players)
 - Ability to schedule 'cron-like' backup jobs on set intervals
 
 TODO:
@@ -29,7 +29,7 @@ TODO:
 
 - Minecraft Server 1.4.7+
 - A Linux OS. AdminCraft has only been tested on Ubuntu 11.04,
-but should be compatible with at least 9.04+
+but should be compatible with at least Ubuntu 9.04+
 - Python 2.6+. Python 3 is not yet supported
 - Python dependencies: Flask Framework 0.8
 - Enough server power to run a Minecraft Server. Basically at least
@@ -84,7 +84,7 @@ downloaded, please follow the steps below:
 
         $ tail -f nohup.out
 
-10. Using your preferred web browser, open localhost:5000 (or your server's hostname:5000)
+10. Using your preferred web browser, open 0.0.0.0:5000 (or your server's hostname:5000)
 
 11. Great success! (I hope)
 
@@ -95,7 +95,7 @@ AdminCraft is in very early development. Therefore, I cannot guarantee this will
 
 AdminCraft runs under Flask's built-in server with debugging and auto-reloading disabled by default. You can turn this on by changing DEBUGMODE and AUTORELOADER to "True" in config.ini. It is recommended to disable debugging if deploying to an externally accessible server.
 
-There is much cleanup and refactoring that needs to be done. So expect major changes in future maintenance versions. 
+There is much cleanup and refactoring that needs to be done. So expect major changes in future versions. 
 
 Support is limited as the project is still in early development. But if you need help installing, or run into any problems, feel free to contact me at alf.g.jr[at]gmail.com. I can only support Ubuntu 9.04+ installations at this time. 
 
