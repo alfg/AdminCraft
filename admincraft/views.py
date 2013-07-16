@@ -319,6 +319,7 @@ def serverConfig():
     levelTypeValue = request.args.get('level-type')
     enableRconValue = request.args.get('enable-rcon')
     levelSeedValue = request.args.get('level-seed')
+    forceGamemodeValue = request.args.get('force-gamemode')
     serverIPValue = request.args.get('server-ip')
     maxBuildHeightValue = request.args.get('max-build-height')
     spawnNPCsValue = request.args.get('spawn-npcs')
@@ -383,6 +384,10 @@ def serverConfig():
             pOutput = [w.replace(pItem, "level-seed" + '=' + levelSeedValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
+        if "force-gamemode" in pItem:
+            pOutput = [w.replace(pItem, "force-gamemode" + '=' + forceGamemodeValue + '\n') for w in pOutput]
+            
+    for pItem in pOutput:
         if "server-ip" in pItem:
             pOutput = [w.replace(pItem, "server-ip" + '=' + serverIPValue + '\n') for w in pOutput]
 
@@ -405,10 +410,6 @@ def serverConfig():
     for pItem in pOutput:
         if "snooper-enabled" in pItem:
             pOutput = [w.replace(pItem, "snooper-enabled" + '=' + snooperEnabledValue + '\n') for w in pOutput]
-
-    for pItem in pOutput:
-        if "hardcore" in pItem:
-            pOutput = [w.replace(pItem, "hardcore" + '=' + hardcoreValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
         if "texture-pack" in pItem:
@@ -445,10 +446,6 @@ def serverConfig():
     for pItem in pOutput:
         if "view-distance" in pItem:
             pOutput = [w.replace(pItem, "view-distance" + '=' + viewDistanceValue + '\n') for w in pOutput]
-
-    for pItem in pOutput:
-        if "spawn-protection" in pItem:
-            pOutput = [w.replace(pItem, "spawn-protection" + '=' + spawnProtectionValue + '\n') for w in pOutput]
 
     for pItem in pOutput:
         if "motd" in pItem:

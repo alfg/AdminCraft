@@ -273,46 +273,46 @@ Note: To apply any changes here, you must restart the Minecraft service.
                     <td><input type="text" name="level-seed" size="10" class="serverTextInput" value="{{ properties[8]|replace("level-seed=", "") }}" /></td>
                 </tr>
                 <tr>
+                    <td>Force Gamemode:</td>
+                    <td>
+                        <input type="radio" name="force-gamemode" value="true" {% if "true" in properties[9] %} checked {% endif %}>True</input>
+                        <input type="radio" name="force-gamemode" value="false" {% if "false" in properties[9] %} checked {% endif %}>False</input>
+                    </td>
+                </tr>
+                <tr>
                     <td>Server IP:</td>
-                    <td><input type="text" name="server-ip" size="10" class="serverTextInput" value="{{ properties[9]|replace("server-ip=", "") }}" /></td>
+                    <td><input type="text" name="server-ip" size="10" class="serverTextInput" value="{{ properties[10]|replace("server-ip=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>Max Build Height:</td>
-                    <td><input type="text" name="max-build-height" size="2" class="serverTextInput" value="{{ properties[10]|replace("max-build-height=", "") }}" /></td>
+                    <td><input type="text" name="max-build-height" size="2" class="serverTextInput" value="{{ properties[11]|replace("max-build-height=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>Spawn NPCS:</td>
                     <td>
-                        <input type="radio" name="spawn-npcs" value="true" {% if "true" in properties[11] %} checked {% endif %}>True</input>
-                        <input type="radio" name="spawn-npcs" value="false" {% if "false" in properties[11] %} checked {% endif %}>False</input>
+                        <input type="radio" name="spawn-npcs" value="true" {% if "true" in properties[12] %} checked {% endif %}>True</input>
+                        <input type="radio" name="spawn-npcs" value="false" {% if "false" in properties[12] %} checked {% endif %}>False</input>
                     </td>
                 </tr>
                 <tr>
                     <td>Enable Whitelist:</td>
                     <td>
-                        <input type="radio" name="white-list" value="true" {% if "true" in properties[12] %} checked {% endif %}>True</input>
-                        <input type="radio" name="white-list" value="false" {% if "false" in properties[12] %} checked {% endif %}>False</input>
+                        <input type="radio" name="white-list" value="true" {% if "true" in properties[13] %} checked {% endif %}>True</input>
+                        <input type="radio" name="white-list" value="false" {% if "false" in properties[13] %} checked {% endif %}>False</input>
                     </td>
                 </tr>
                 <tr>
                     <td>Spawn Animals:</td>
                     <td>
-                        <input type="radio" name="spawn-animals" value="true" {% if "true" in properties[13] %} checked {% endif %}>True</input>
-                        <input type="radio" name="spawn-animals" value="false" {% if "false" in properties[13] %} checked {% endif %}>False</input>
+                        <input type="radio" name="spawn-animals" value="true" {% if "true" in properties[14] %} checked {% endif %}>True</input>
+                        <input type="radio" name="spawn-animals" value="false" {% if "false" in properties[14] %} checked {% endif %}>False</input>
                     </td>
                 </tr>
                 <tr>
                     <td>Snooper Enabled:</td>
                     <td>
-                        <input type="radio" name="snooper-enabled" value="true" {% if "true" in properties[14] %} checked {% endif %}>True</input>
-                        <input type="radio" name="snooper-enabled" value="false" {% if "false" in properties[14] %} checked {% endif %}>False</input>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Hardcore Enabled:</td>
-                    <td>
-                        <input type="radio" name="hardcore" value="true" {% if "true" in properties[15] %} checked {% endif %}>True</input>
-                        <input type="radio" name="hardcore" value="false" {% if "false" in properties[15] %} checked {% endif %}>False</input>
+                        <input type="radio" name="snooper-enabled" value="true" {% if "true" in properties[15] %} checked {% endif %}>True</input>
+                        <input type="radio" name="snooper-enabled" value="false" {% if "false" in properties[15] %} checked {% endif %}>False</input>
                     </td>
                 </tr>
                 <tr>
@@ -361,23 +361,19 @@ Note: To apply any changes here, you must restart the Minecraft service.
                     </td>
                 </tr>
                 <tr>
-                    <td>View Distance:</td>
-                    <td><input type="text" name="view-distance" size="2" class="serverTextInput" value="{{ properties[23]|replace("view-distance=", "") }}" /></td>
-                </tr>
-                <tr>
                     <td>Generate Structures:</td>
                     <td>
-                        <input type="radio" name="generate-structures" value="true" {% if "true" in properties[24] %} checked {% endif %}>True</input>
-                        <input type="radio" name="generate-structures" value="false" {% if "false" in properties[24] %} checked {% endif %}>False</input>
+                        <input type="radio" name="generate-structures" value="true" {% if "true" in properties[23] %} checked {% endif %}>True</input>
+                        <input type="radio" name="generate-structures" value="false" {% if "false" in properties[23] %} checked {% endif %}>False</input>
                     </td>
                 </tr>
                 <tr>
-                    <td>Spawn Protection:</td>
-                    <td><input type="text" name="spawn-protection" size="2" class="serverTextInput" value="{{ properties[25]|replace("spawn-protection=", "") }}" /></td>
+                    <td>View Distance:</td>
+                    <td><input type="text" name="view-distance" size="2" class="serverTextInput" value="{{ properties[24]|replace("view-distance=", "") }}" /></td>
                 </tr>
                 <tr>
                     <td>MOTD:</td>
-                    <td><input type="text" name="motd" size="10" class="serverTextInput" value="{{ properties[26]|replace("motd=", "") }}" /></td>
+                    <td><input type="text" name="motd" size="10" class="serverTextInput" value="{{ properties[25]|replace("motd=", "") }}" /></td>
                 </tr>
             </table>
             <input type="submit" value="Submit" />
