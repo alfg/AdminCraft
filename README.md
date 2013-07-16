@@ -27,7 +27,7 @@ TODO:
 
 ## Requirements ##
 
-- Minecraft Server 1.4.7+
+- Minecraft Server 1.6.2+
 - A Linux OS. AdminCraft has only been tested on Ubuntu 11.04,
 but should be compatible with at least Ubuntu 9.04+
 - Python 2.6+. Python 3 is not yet supported
@@ -97,5 +97,4 @@ AdminCraft runs under Flask's built-in server with debugging and auto-reloading 
 
 There is much cleanup and refactoring that needs to be done. So expect major changes in future versions. 
 
-Support is limited as the project is still in early development. But if you need help installing, or run into any problems, feel free to contact me at alf.g.jr[at]gmail.com. I can only support Ubuntu 9.04+ installations at this time. 
-
+Support is limited as the project is still in early development. But if you need help installing, or run into any problems, feel free to contact me at alf.g.jr[at]gmail.com. I can only support Ubuntu 9.04+ installations at this time.
