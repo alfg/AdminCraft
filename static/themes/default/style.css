@@ -7,7 +7,7 @@ ul {
 
 /* Body */
 body {
-    background-image:url("/static/images/bg.jpg");
+    background-image:url("/static/themes/default/images/bg.jpg");
     color: #000305;
     font-size: 12px;
     margin: 0;
@@ -19,11 +19,11 @@ body {
 
 @font-face {
     font-family: 'VolterGoldfishRegular';
-    src: url('/static/webfont/volter.eot');
-    src: url('/static/webfont/volter.eot?#iefix') format('embedded-opentype'),
-         url('/static/webfont/volter.woff') format('woff'),
-         url('/static/webfont/volter.ttf') format('truetype'),
-         url('/static/webfont/volter.svg#VolterGoldfishRegular') format('svg');
+    src: url('/static/themes/default/webfont/volter.eot');
+    src: url('/static/themes/default/webfont/volter.eot?#iefix') format('embedded-opentype'),
+         url('/static/themes/default/webfont/volter.woff') format('woff'),
+         url('/static/themes/default/webfont/volter.ttf') format('truetype'),
+         url('/static/themes/default/webfont/volter.svg#VolterGoldfishRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 
