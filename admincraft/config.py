@@ -20,6 +20,7 @@ SECRETKEY = config.get('global', 'SECRETKEY')
 BACKUPDIR = config.get('global', 'BACKUPDIR')
 
 # Extra options, but not required.
+THEME = config.get('global', 'THEME')
 LOGINTERVAL = config.getint('global', 'LOGINTERVAL')
 LOGLINES = config.getint('global', 'LOGLINES')
 MINECRAFTDAEMON = config.get('global', 'MINECRAFTDAEMON')

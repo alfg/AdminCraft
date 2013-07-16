@@ -79,9 +79,18 @@ def index(name=None):
     else:
         serverStatus = "Unable to check server status."
 
-    LOGINTERVAL = config.LOGINTERVAL
+    selectedTheme = 'themes/%s/index.html' % config.THEME
 
-    return render_template('index.html', username=username, name=name, ops=ops, logging=logging, whiteListUsers=whiteListUsers, bannedIPs=bannedIPs, properties=properties, serverStatus=serverStatus, LOGINTERVAL=LOGINTERVAL)
+    return render_template(selectedTheme, username=username,
+                                         name=name,
+                                         ops=ops,
+                                         logging=logging,
+                                         whiteListUsers=whiteListUsers,
+                                         bannedIPs=bannedIPs,
+                                         properties=properties,
+                                         serverStatus=serverStatus,
+                                         LOGINTERVAL=config.LOGINTERVAL,
+                                         THEME=config.THEME)
 
 
 #/server is used to send GET requests to Restart, Start, Stop or Backup server.
@@ -176,7 +185,8 @@ def logs():
     loggingFile = open(loggingFile, "r")
     loggingHTML = loggingFile.readlines()[-config.LOGLINES:]
 
-    return render_template('logging.html', loggingHTML=loggingHTML)
+    selectedTheme = 'themes/%s/logging.html' % config.THEME
+    return render_template(selectedTheme, loggingHTML=loggingHTML)
 
 #/dataValues is used to create a dataIcons.html view, which is then imported to Index. Used for "Give" on GUI.
 @admincraft.route("/dataValues", methods=['GET'])
@@ -185,7 +195,8 @@ def dataValues():
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
         return redirect(url_for('admincraft.login'))
 
-    return render_template('dataIcons.html')
+    selectedTheme = 'themes/%s/dataIcons.html' % config.THEME
+    return render_template(selectedTheme)
 
 #/login will be for sessions. So far, only username is accepted with any value. Needs work here.
 @admincraft.route('/login', methods=['GET', 'POST'])
@@ -194,7 +205,8 @@ def login():
         session['username'] = request.form['username']
         session['password'] = request.form['password']
         return redirect(url_for('admincraft.index'))
-    return render_template('login.html')
+    selectedTheme = 'themes/%s/login.html' % config.THEME
+    return render_template(selectedTheme)
 
 #Kill or Pop session when hitting /logout
 @admincraft.route('/logout')
@@ -212,7 +224,8 @@ def commandList():
     if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
         return redirect(url_for('admincraft.login'))
 
-    return render_template('commandList.html')
+    selectedTheme = 'themes/%s/commandList.html' % config.THEME
+    return render_template(selectedTheme)
 
 @admincraft.route('/tabs', methods=['GET', 'POST'])
 def tabs():
@@ -285,7 +298,8 @@ def tabs():
     conn.commit()
     c.close()
 
-    return render_template('tabs.html', a=a, activeUsers=activeUsers, isRunning=isRunning, backupDir=backupDir, ops=ops, whiteListUsers=whiteListUsers, bannedUsersList=bannedUsersList, bannedIPsList=bannedIPsList, properties=properties)
+    selectedTheme = 'themes/%s/tabs.html' % config.THEME
+    return render_template(selectedTheme, a=a, activeUsers=activeUsers, isRunning=isRunning, backupDir=backupDir, ops=ops, whiteListUsers=whiteListUsers, bannedUsersList=bannedUsersList, bannedIPsList=bannedIPsList, properties=properties)
 
 #/serverConfig is used for GET request via server property configurations.
 @admincraft.route('/serverConfig', methods=['GET'])
