@@ -14,7 +14,7 @@
 ### END INIT INFO
 
 #Settings
-SERVICE='minecraft_server.jar'
+SERVICE='minecraft_server.1.6.2.jar'
 OPTIONS='nogui'
 USERNAME='user'
 WORLD='world'
