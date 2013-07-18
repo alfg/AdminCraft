@@ -8,6 +8,7 @@ import datetime
 import csv
 from time import sleep
 import datetime
+from functools import wraps
 
 from flask import Flask
 from flask import request
@@ -22,12 +23,19 @@ from tasks import startTaskDaemon, stopTaskDaemon, checkStatus
 
 admincraft = Blueprint('admincraft', __name__, template_folder='templates', static_folder='static')
 
+def requires_auth(f):
+    """Decorator to check if username and password are valid"""
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+            return redirect(url_for('admincraft.login'))
+        return f(*args, **kwargs)
+    return decorated
+
 #Main index.html page.
 @admincraft.route("/")
+@requires_auth
 def index(name=None):
-
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()
 
     #If user session, then display "Logged in as %"
     if 'username' in session:
@@ -94,10 +102,8 @@ def index(name=None):
 
 #/server is used to send GET requests to Restart, Start, Stop or Backup server.
 @admincraft.route("/server", methods=['GET'])
+@requires_auth
 def serverState():
-
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()
 
     #Grab option value from GET request.
     keyword = request.args.get('option')
@@ -133,6 +139,7 @@ def serverState():
 
 #/logs returns the *entire* server log.
 @admincraft.route("/logs", methods=['GET'])
+@requires_auth
 def showLog():
     loggingFile = config.MINECRAFTDIR + config.SERVERLOG
     loggingFile = open(loggingFile, "r")
@@ -144,15 +151,12 @@ def showLog():
 
 #/command is used when sending commands to '/etc/init.d/minecraft command' from the GUI. Used on mainConsole on index.html.
 @admincraft.route("/command", methods=['GET'])
+@requires_auth
 def sendCommand():
     #server.log file for logging command entered
     loggingFile = config.MINECRAFTDIR + config.SERVERLOG
     now = datetime.datetime.now()
     time = now.strftime("%Y-%m-%d %H:%M:%S")
-    print time
-
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()
 
     #Grabs operater value from GET request. say/give/command
     consoleOperator = str(request.args.get('operator'))
@@ -182,10 +186,8 @@ def sendCommand():
 
 #/logging reads the last X amount of lines from server.log to be parsed out on GUI #mainConsole.
 @admincraft.route("/logging", methods=['GET'])
+@requires_auth
 def logs():
-
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()
 
     #Open and read last 40 lines. This needs to be configurable eventually.
     loggingFile = config.MINECRAFTDIR + config.SERVERLOG
@@ -197,10 +199,8 @@ def logs():
 
 #/dataValues is used to create a dataIcons.html view, which is then imported to Index. Used for "Give" on GUI.
 @admincraft.route("/dataValues", methods=['GET'])
+@requires_auth
 def dataValues():
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()
-
     selectedTheme = 'themes/%s/dataIcons.html' % config.THEME
     return render_template(selectedTheme)
 
@@ -222,28 +222,16 @@ def logout():
     session.pop('password', None)
     return redirect(url_for('admincraft.index'))
 
-
-def checkLogin():
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        print 'you shall not pass'
-        return redirect(url_for('admincraft.login'))
-        
 #/commandList is used to create a commandList.html view, which is then imported to Index. Used for "Command" on GUI.
 @admincraft.route('/commandList', methods=['GET', 'POST'])
+@requires_auth
 def commandList():
-
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()
-
     selectedTheme = 'themes/%s/commandList.html' % config.THEME
     return render_template(selectedTheme)
 
 @admincraft.route('/tabs', methods=['GET', 'POST'])
+@requires_auth
 def tabs():
-
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()
-
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
     propertiesFile = config.MINECRAFTDIR + config.SERVERPROPERTIES
     properties = open(propertiesFile, "r").readlines()[2:]
@@ -313,11 +301,8 @@ def tabs():
 
 #/serverConfig is used for GET request via server property configurations.
 @admincraft.route('/serverConfig', methods=['GET'])
+@requires_auth
 def serverConfig():
-
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()
-
     #Grab Vars from GET request
     generatorSettingsValue  = request.args.get('generator-settings')
     allowNetherValue        = request.args.get('allow-nether')
@@ -500,11 +485,8 @@ def serverConfig():
 
 #/usersConfig - Adds/Removes users from User Config
 @admincraft.route('/addUser', methods=['GET', 'POST'])
+@requires_auth
 def addUser():
-
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()
-
     addType = request.args.get('type')
     addValue = request.args.get('user')
 
@@ -528,11 +510,8 @@ def addUser():
     return "User Added"
 
 @admincraft.route('/removeUser', methods=['GET', 'POST'])
+@requires_auth
 def removeUser():
-
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()
-    
     #Grab vars from GET request
     removeType = request.args.get('type')
     removeValue = request.args.get('user')
@@ -562,11 +541,8 @@ def removeUser():
     return "User Removed"
 
 @admincraft.route('/task', methods=['GET'])
+@requires_auth
 def taskService():
-
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()
-
     command = request.args.get("command")
 
     if command == "stop":   
@@ -584,11 +560,8 @@ def taskService():
     return status
 
 @admincraft.route('/addTask', methods=['POST', 'GET'])
+@requires_auth
 def addTask():
-
-    #Check if username and password in session are valid. If not, redirect to login
-    checkLogin()   
-
     dbpath = config.DATABASE
 
     task    = request.args.get("type")
