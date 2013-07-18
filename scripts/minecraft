@@ -14,14 +14,20 @@
 ### END INIT INFO
 
 #Settings
-SERVICE='minecraft_server.1.6.2.jar'
+SERVICE='minecraft_server.jar'
 OPTIONS='nogui'
-USERNAME='user'
+USERNAME='user' # Your username for your computer; "whoami"
 WORLD='world'
 MCPATH='/location/to/minecraft-server'
 BACKUPPATH='/location/to/backup/directory'
-CPU_COUNT=1
-INVOCATION="java -Xmx1024M -Xms1024M -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalPacing -XX:ParallelGCThreads=$CPU_COUNT -XX:+AggressiveOpts -jar $SERVICE $OPTIONS"
+CPU_COUNT=1 #incase CPU count is lower than 0 (odd, but might happen)
+CPU_COUNT=`grep -c ^processor /proc/cpuinfo` #http://stackoverflow.com/questions/6481005/to-obtain-of-cores-in-linux
+RAM_AVAILABLE="1024M" #incase meminfo does not exist
+RAM_AVAILABLE=`cat /proc/meminfo | grep -E -o "[0-9]+" | head -n 1`
+RAM_AVAILABLE=$RAM_AVAILABLE/1024
+M="M"
+RAM_AVAILABLE=$RAM_AVAILABLE$M
+INVOCATION="java -Xmx$RAM_AVAILABLE -Xms$RAM_AVAILABLE -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalPacing -XX:ParallelGCThreads=$CPU_COUNT -XX:+AggressiveOpts -jar $SERVICE $OPTIONS"
 
 ME=`whoami`
 as_user() {

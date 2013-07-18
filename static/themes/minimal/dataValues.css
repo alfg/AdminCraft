@@ -1,0 +1,74 @@
+#dataValuesWindow {
+
+width: 600px;
+background: #ccc;
+border-style: solid;
+border-width: 1px;
+border-color: #a7a7a7;
+padding: 5px;
+
+-moz-border-radius: 15px;
+border-radius: 15px;
+
+}
+
+
+ul.dataTabs {
+	margin: 0;
+	padding: 0;
+	float: left;
+	list-style: none;
+	height: 26px; /*--Set height of tabs--*/
+	border-top: 1px solid #999;
+	border-left: 1px solid #999;
+	width: 100%;
+}
+ul.dataTabs li {
+	float: left;
+	margin: 0;
+	padding: 0;
+	height: 25px; /*--Subtract 1px from the height of the unordered list--*/
+	line-height: 24px; /*--Vertically aligns the text within the tab--*/
+	border: 1px solid #999;
+	border-left: none;
+	margin-top: -1px; /*--Pull the list item down 1px--*/
+	overflow: hidden;
+	position: relative;
+	background: #e0e0e0;
+}
+ul.dataTabs li a {
+	text-decoration: none;
+	color: #000;
+	display: block;
+	font-size: 11px;
+	padding: 0 20px;
+	border: 1px solid #eee; /*--Gives the bevel look with a 1px white border inside the list item--*/
+	outline: none;
+    
+}
+ul.dataTabs li a:hover {
+	background: #ccc;
+}
+html ul.dataTabs li.active, html ul.dataTabs li.active a:hover  { /*--Makes sure that the active tab does not listen to the hover properties--*/
+	background: #eee;
+	border-top: 1px solid #eee; /*--Makes the active tab look like it's connected with its content--*/
+}
+
+/* Right Tab Content */
+
+.dataTab_container {
+	border: 1px solid #999;
+	border-bottom: none;
+	overflow: hidden;
+	clear: both;
+	float: left; width: 100%;
+	background: #eee;
+    margin-left: auto;
+    margin-right: auto;
+}
+.dataTab_content {
+    margin-left: 5px;
+    margin-right: auto;
+	padding: 5px;
+	font-size: 11px;
+}

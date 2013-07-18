@@ -1,0 +1,12 @@
+<div class="mainConsole">
+
+
+<script>
+    //Scrolls to bottom of page
+    $(".leftColumn").scrollTop($(".leftColumn")[0].scrollHeight);
+</script>
+
+{% for line in loggingHTML %}
+{{ line[10:] }}<br />
+{% endfor %}
+</div>

@@ -12,15 +12,15 @@ AdminCraft provides the following features:
 - Ability to chat with users or send custom commands
 - Built-in reference for Block/Item Dec codes
 - Configure server properties via Web GUI
-- Server Status (Online/Offline/Restarting/Backing Up)
-- View and configure user status (Connected players, Ops, Banned IPs or Players)
+- Server Status (Online/Offline/Restarting/Backing Up/Viewing Logs)
+- View and configure user status (Connected players, Operators, Banned IPs or Players)
 - Ability to schedule 'cron-like' backup jobs on set intervals
 
 TODO:
 
 - Reworking item/block ID reference
 - Login sessions, security and support for multiple Admin Users
-- Support for viewing Log History
+- Support for viewing Log History (done)
 - Support to deploy and administer multiple instances of Minecraft Servers
 - Support to deploy AdminCraft on a separate server than the Minecraft Server
 - More server and Minecraft monitoring features

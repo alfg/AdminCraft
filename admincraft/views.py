@@ -27,8 +27,7 @@ admincraft = Blueprint('admincraft', __name__, template_folder='templates', stat
 def index(name=None):
 
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))
+    checkLogin()
 
     #If user session, then display "Logged in as %"
     if 'username' in session:
@@ -40,8 +39,6 @@ def index(name=None):
     loggingFile = config.MINECRAFTDIR + config.SERVERLOG
     loggingFile = open(loggingFile, "r")
     logging = loggingFile.readlines()[-10:]
-
-
 	
     #Read ops.txt to display Server Operators on Users section.
     opsFile = config.MINECRAFTDIR + config.SERVEROPS
@@ -61,6 +58,8 @@ def index(name=None):
         print b
     
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
+    #NOTE: if the user edits their server configuration file, the last two lines may not be what
+    #you are expecting.
     propertiesFile = config.MINECRAFTDIR + config.SERVERPROPERTIES
     properties = open(propertiesFile, "r").readlines()[2:]
 
@@ -72,16 +71,16 @@ def index(name=None):
     serverStatus = stdout
     print serverStatus
     if "online" in serverStatus:
-        serverStatus = Markup('<font color="#339933"><strong>Online</strong></font>')
+        serverStatus = Markup('<p style="color:#339933;font-weight:bold">Online</p>')
 
     elif "offline" in serverStatus:
-        serverStatus = Markup('<font color="#339933"><strong>Offline</strong></font>')
+        serverStatus = Markup('<p style="color:#339933;font-weight:bold">Offline</p>')
     else:
         serverStatus = "Unable to check server status."
 
     selectedTheme = 'themes/%s/index.html' % config.THEME
 
-    return render_template(selectedTheme, username=username,
+    return render_template(selectedTheme,username=username,
                                          name=name,
                                          ops=ops,
                                          logging=logging,
@@ -98,8 +97,7 @@ def index(name=None):
 def serverState():
 
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))
+    checkLogin()
 
     #Grab option value from GET request.
     keyword = request.args.get('option')
@@ -116,7 +114,7 @@ def serverState():
         return 'Stopping Minecraft Server...'
     elif keyword == "backup":
         subprocess.Popen(config.MINECRAFTDAEMON + ' backup', shell=True)
-        return 'Backing Up Minecraft Server...'
+        return 'Backing up Minecraft Server...'
 
     #If option value is 'status', then capture output and return 'Server is Online' or 'Server is Offline'
     elif keyword == "status":
@@ -131,7 +129,18 @@ def serverState():
             serverStatus = "Unable to check server status."
         return serverStatus
     else: 
-        return 'Invalid Option'
+        return 'Invalid option!'
+
+#/logs returns the *entire* server log.
+@admincraft.route("/logs", methods=['GET'])
+def showLog():
+    loggingFile = config.MINECRAFTDIR + config.SERVERLOG
+    loggingFile = open(loggingFile, "r")
+    loggingHTML = loggingFile.readlines()
+
+    selectedTheme = 'themes/%s/logging.html' % config.THEME
+    return render_template(selectedTheme, loggingHTML=loggingHTML)
+
 
 #/command is used when sending commands to '/etc/init.d/minecraft command' from the GUI. Used on mainConsole on index.html.
 @admincraft.route("/command", methods=['GET'])
@@ -143,8 +152,7 @@ def sendCommand():
     print time
 
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))
+    checkLogin()
 
     #Grabs operater value from GET request. say/give/command
     consoleOperator = str(request.args.get('operator'))
@@ -169,16 +177,15 @@ def sendCommand():
     """ seems like console logging is back as of 1.4.7
     with open(loggingFile, "a") as f:
         f.write(time + " [CONSOLE] " + command + "\n")
-    return 'Sending Command...'
     """
+    return 'Sending Command...'
 
 #/logging reads the last X amount of lines from server.log to be parsed out on GUI #mainConsole.
 @admincraft.route("/logging", methods=['GET'])
 def logs():
 
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))
+    checkLogin()
 
     #Open and read last 40 lines. This needs to be configurable eventually.
     loggingFile = config.MINECRAFTDIR + config.SERVERLOG
@@ -192,8 +199,7 @@ def logs():
 @admincraft.route("/dataValues", methods=['GET'])
 def dataValues():
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))
+    checkLogin()
 
     selectedTheme = 'themes/%s/dataIcons.html' % config.THEME
     return render_template(selectedTheme)
@@ -216,13 +222,18 @@ def logout():
     session.pop('password', None)
     return redirect(url_for('admincraft.index'))
 
+
+def checkLogin():
+    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
+        print 'you shall not pass'
+        return redirect(url_for('admincraft.login'))
+        
 #/commandList is used to create a commandList.html view, which is then imported to Index. Used for "Command" on GUI.
 @admincraft.route('/commandList', methods=['GET', 'POST'])
 def commandList():
 
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))
+    checkLogin()
 
     selectedTheme = 'themes/%s/commandList.html' % config.THEME
     return render_template(selectedTheme)
@@ -231,8 +242,7 @@ def commandList():
 def tabs():
 
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))
+    checkLogin()
 
     #Read server.properties to display Server Properties on Server Config section. -2 first lines.
     propertiesFile = config.MINECRAFTDIR + config.SERVERPROPERTIES
@@ -286,7 +296,7 @@ def tabs():
 
     backupDir = config.BACKUPDIR
 
-    isRunning = Markup('Task Scheduler <font color="#339933"><strong>Online</strong></font>')
+    isRunning = Markup('Task Scheduler <p style="color:#339933;font-weight:bold">Online</p>')
 
     #Connects to db to list scheduled jobs in a table
     dbpath = config.DATABASE
@@ -306,44 +316,75 @@ def tabs():
 def serverConfig():
 
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))
+    checkLogin()
 
     #Grab Vars from GET request
-    generatorSettingsValue = request.args.get('generator-settings')
-    allowNetherValue = request.args.get('allow-nether')
-    levelNameValue = request.args.get('level-name')
-    enableQueryValue = request.args.get('enable-query')
-    allowFlightValue = request.args.get('allow-flight')
-    serverPortValue = request.args.get('server-port')
-    levelTypeValue = request.args.get('level-type')
-    enableRconValue = request.args.get('enable-rcon')
-    levelSeedValue = request.args.get('level-seed')
-    forceGamemodeValue = request.args.get('force-gamemode')
-    serverIPValue = request.args.get('server-ip')
-    maxBuildHeightValue = request.args.get('max-build-height')
-    spawnNPCsValue = request.args.get('spawn-npcs')
-    whitelistValue = request.args.get('white-list')
-    spawnAnimalsValue = request.args.get('spawn-animals')
-    snooperEnabledValue = request.args.get('snooper-enabled')
-    hardcoreValue = request.args.get('hardcore')
-    texturePackValue = request.args.get('texture-pack')
-    onlineModeValue = request.args.get('online-mode')
-    pvpValue = request.args.get('pvp')
-    difficultyValue = request.args.get('difficulty')
-    gamemodeValue = request.args.get('gamemode')
-    maxPlayersValue = request.args.get('max-players')
-    spawnMonstersValue = request.args.get('spawn-monsters')
+    generatorSettingsValue  = request.args.get('generator-settings')
+    allowNetherValue        = request.args.get('allow-nether')
+    levelNameValue          = request.args.get('level-name')
+    enableQueryValue        = request.args.get('enable-query')
+    allowFlightValue        = request.args.get('allow-flight')
+    serverPortValue         = request.args.get('server-port')
+    levelTypeValue          = request.args.get('level-type')
+    enableRconValue         = request.args.get('enable-rcon')
+    levelSeedValue          = request.args.get('level-seed')
+    forceGamemodeValue      = request.args.get('force-gamemode')
+    serverIPValue           = request.args.get('server-ip')
+    maxBuildHeightValue     = request.args.get('max-build-height')
+    spawnNPCsValue          = request.args.get('spawn-npcs')
+    whitelistValue          = request.args.get('white-list')
+    spawnAnimalsValue       = request.args.get('spawn-animals')
+    snooperEnabledValue     = request.args.get('snooper-enabled')
+    hardcoreValue           = request.args.get('hardcore')
+    texturePackValue        = request.args.get('texture-pack')
+    onlineModeValue         = request.args.get('online-mode')
+    pvpValue                = request.args.get('pvp')
+    difficultyValue         = request.args.get('difficulty')
+    gamemodeValue           = request.args.get('gamemode')
+    maxPlayersValue         = request.args.get('max-players')
+    spawnMonstersValue      = request.args.get('spawn-monsters')
     generateStructuresValue = request.args.get('generate-structures')
-    viewDistanceValue = request.args.get('view-distance')
-    spawnProtectionValue = request.args.get('spawn-protection')
-    motdValue = request.args.get('motd')
+    viewDistanceValue       = request.args.get('view-distance')
+    spawnProtectionValue    = request.args.get('spawn-protection')
+    motdValue               = request.args.get('motd')
 
+
+    GET_VARS = [
+    (generatorSettingsValue, request.args.get('generator-settings') ),
+    (allowNetherValue,       request.args.get('allow-nether')       ),
+    (levelNameValue,         request.args.get('level-name')         ),
+    (enableQueryValue,       request.args.get('enable-query')       ),
+    (allowFlightValue,       request.args.get('allow-flight')       ),
+    (serverPortValue,        request.args.get('server-port')        ),
+    (levelTypeValue,         request.args.get('level-type')         ),
+    (enableRconValue,        request.args.get('enable-rcon')        ),
+    (levelSeedValue,         request.args.get('level-seed')         ),
+    (forceGamemodeValue,     request.args.get('force-gamemode')     ),
+    (serverIPValue,          request.args.get('server-ip')          ),
+    (maxBuildHeightValue,    request.args.get('build-height')       ),
+    (spawnNPCsValue,         request.args.get('spawn-npcs')         ),
+    (whitelistValue,         request.args.get('white-list')         ),
+    (spawnAnimalsValue,      request.args.get('spawn-animals')      ),
+    (snooperEnabledValue,    request.args.get('snooper-enabled')    ),
+    (hardcoreValue,          request.args.get('request.args.get-hardcore')),
+    (texturePackValue,       request.args.get('texture-pack')       ),
+    (onlineModeValue,        request.args.get('online-mode')        ),
+    (pvpValue,               request.args.get('request.args.get-pvp')),
+    (difficultyValue,        request.args.get('request.args.get-difficulty')),
+    (gamemodeValue,          request.args.get('request.args.get-gamemode')),
+    (maxPlayersValue,        request.args.get('max-players')         ),
+    (spawnMonstersValue,     request.args.get('spawn-monsters')      ),
+    (generateStructuresValue,request.args.get('generate-structures') ),
+    (viewDistanceValue,      request.args.get('view-distance')       ),
+    (spawnProtectionValue,   request.args.get('spawn-protection')    ),
+    (motdValue,              request.args.get('request.args.get-motd'))
+    ]
+    
     #Set server.properties
     p = config.MINECRAFTDIR + config.SERVERPROPERTIES
 
-    #Open properties as f and read-only. 
-    f = open(p, "r")
+    #Open properties as f with read and write permissions. 
+    f = open(p, "r+")
     pText = f.readlines()
 
     #Each line is read. If line-item contains X text, then use value. Set as pOutput.
@@ -452,10 +493,8 @@ def serverConfig():
             pOutput = [w.replace(pItem, "motd" + '=' + motdValue + '\n') for w in pOutput]
 
     #Close file for reading. Re-open as write and write out pOutput to file.
+    f.writelines(pOutput)
     f.close()
-    o = open(p, "w")
-    o.writelines(pOutput)
-    o.close()
     return redirect(url_for('admincraft.index'))
     #return render_template('serverConfig.html', pOutput=pOutput)
 
@@ -464,8 +503,7 @@ def serverConfig():
 def addUser():
 
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))
+    checkLogin()
 
     addType = request.args.get('type')
     addValue = request.args.get('user')
@@ -493,8 +531,7 @@ def addUser():
 def removeUser():
 
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))
+    checkLogin()
     
     #Grab vars from GET request
     removeType = request.args.get('type')
@@ -512,14 +549,13 @@ def removeUser():
         print "Error reading Remove Type"
 
     #Open f and read out lines
-    o = open(f, "r").readlines()
+    o = open(f, "r+").readlines()
 
     #Create a list as ops, minus the removeValue
     ops = []
     ops = [names for names in o if names != removeValue + "\n"]
 
-    #Open ops.txt again for writing and write out new lines
-    o = open(f, "w")
+    #Open ops.txt for writing and write out new lines
     o.writelines(ops)
     o.close()
 
@@ -529,8 +565,7 @@ def removeUser():
 def taskService():
 
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))
+    checkLogin()
 
     command = request.args.get("command")
 
@@ -552,44 +587,43 @@ def taskService():
 def addTask():
 
     #Check if username and password in session are valid. If not, redirect to login
-    if config.USERNAME != session.get('username') or config.PASSWORD != session.get('password'):
-        return redirect(url_for('admincraft.login'))    
+    checkLogin()   
 
     dbpath = config.DATABASE
 
-    task = request.args.get("type")
-    dom = request.args.get("dom")
-    dow = request.args.get("dow")
-    hour = request.args.get("hour")
-    minute = request.args.get("minute")
+    task    = request.args.get("type")
+    dom     = request.args.get("dom")
+    dow     = request.args.get("dow")
+    hour    = request.args.get("hour")
+    minute  = request.args.get("minute")
 
-    v = [task, dom, dow, hour, minute]
+    v       = [task, dom, dow, hour, minute]
 
+    conn    = sqlite3.connect(dbpath)
+    c       = conn.cursor()
+    
     if not os.path.exists(dbpath):
-        conn = sqlite3.connect(dbpath)
-        c = conn.cursor()
         c.execute('''create table tasks (type text, month text, day text, hour text, minute text)''')
 
-        conn.commit()
-        c.close()
-
     else:
-        conn = sqlite3.connect(dbpath)
-        c = conn.cursor()
         c.execute("INSERT into tasks VALUES (?,?,?,?,?)", v)
         c.execute('select * from tasks order by type')
 
         for row in c:
             print row
 
-        conn.commit()
-        c.close()
-        
+
+    conn.commit()
+    c.close()   
     return 'Task saved.'
 
 #Turn on later
 #@admincraft.errorhandler(500)
 #def not_found(error):
-#    return render_template('500.html'), 500
+#    return render_template('themes/%s/500.html' % config.THEME), 500
+
+#@admincraft.errorhandler(404)
+#def not_found(error):
+#    return render_template('themes/%s/404.html' % config.THEME), 404
 
 
