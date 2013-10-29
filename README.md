@@ -16,7 +16,9 @@ AdminCraft provides the following features:
 - View and configure user status (Connected players, Operators, Banned IPs or Players)
 - Ability to schedule 'cron-like' backup jobs on set intervals
 
-TODO:
+![AdminCraft](http://i.imgur.com/JbnSl.png)
+
+#### TODO ####
 
 - Reworking item/block ID reference
 - Login sessions, security and support for multiple Admin Users
