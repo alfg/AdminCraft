@@ -1,5 +1,8 @@
 # AdminCraft #
 
+##### This project has discontinued. Install at your own risk. Check out the list of other Minecraft server wrappers and admin consoles here: http://minecraft.gamepedia.com/Programs_and_editors/Server_wrappers
+
+
 AdminCraft is an open source Administration Web GUI Console for administering a
 Linux Minecraft Server. Admincraft is still in early development.
 
@@ -93,10 +96,4 @@ downloaded, please follow the steps below:
 
 ## Notes ##
 
-AdminCraft is in very early development. Therefore, I cannot guarantee this will install, run, or work properly. 
-
 AdminCraft runs under Flask's built-in server with debugging and auto-reloading disabled by default. You can turn this on by changing DEBUGMODE and AUTORELOADER to "True" in config.ini. It is recommended to disable debugging if deploying to an externally accessible server.
-
-There is much cleanup and refactoring that needs to be done. So expect major changes in future versions. 
-
-Support is limited as the project is still in early development. But if you need help installing, or run into any problems, feel free to contact me at alf.g.jr[at]gmail.com. I can only support Ubuntu 9.04+ installations at this time.
